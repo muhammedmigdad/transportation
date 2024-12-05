@@ -2,7 +2,11 @@ from django.shortcuts import render, reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from .models import Category
 
 def index(request):
-
-    return render(request, 'web/index.html')
+    categories = Category.objects.all()
+    context = {
+        'categories': categories,
+    }
+    return render(request, 'web/index.html', context=context)

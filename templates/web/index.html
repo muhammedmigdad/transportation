@@ -6,8 +6,35 @@
 
 {% include 'includes/header.html' %}
 
-<section class="wrapper"> 
-  
+<section class="wrapper p-10"> 
+    <div class="flex justify-between">
+      <div class="flex  items-center">
+        {% for category in categories %}
+          <a href="#" class="flex ml-10 items-center">
+            <img class=" w-[150px] h-[100px] transition-transform duration-300 hover:scale-110 rounded-xl" src="{{category.image.url}}" alt="images">
+            <h1 class="text-[30px] font-bold transition-transform duration-300 hover:scale-110 hover:text-[#000] text-[#434242] ml-2">{{category.name}}</h1>
+          </a>
+        {% endfor %}
+        </div>
+        <h3 class="text-[30px] text-[#242424] font-medium">Book Flights, Trains & Buses</h3>
+    </div>
+    <div>
+      <div class="border bg-white p-10 mt-5 rounded-xl">
+        <form action="">
+          <ul class="flex items-center justify-center">
+              <input class="py-6 px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede]"   type="text" name="name" placeholder="Form">
+              <input class="py-6 px-20 border border-gray-300 ml-3 rounded-xl bg-[#edebeb] hover:bg-[#e0dede]"   type="text" name="name" placeholder="To">
+              <input class=" border border-gray-300 py-6 px-14 ml-3 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] " type="date" name="Date" required>
+              <input class=" border border-gray-300 py-6 px-14 ml-3 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] " type="date" name="Date" required>
+          </ul>
+          <ul class="flex mt-5 justify-center item-center">
+            <div class=" border border-gray-300 py-6 mt-5 px-14 ml-3 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] ">Traveller & Class</div>
+            <button type="submit" class="border border-gray-300 py-5 px-20 ml-3 text-white text-[24px] transition-transform duration-300 hover:scale-100 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7]">Search</button>
+          </ul>
+        </form>
+
+      </div>
+    </div>
 </section>
 
 {% endblock %}
