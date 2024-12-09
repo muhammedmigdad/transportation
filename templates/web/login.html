@@ -1,0 +1,63 @@
+{% extends 'base/web-base.html' %}
+{% block container %}
+{% load static %}
+
+<section class="bg-cover bg-center " style="background-image: url(/static/images/bg.jpg);">
+    <div class="col-span-1 h-screen  flex justify-center items-center">
+        <div class="text-center bg-[#ffffff]  py-40  rounded-xl opacity-80 text-[#000]">
+            <h1 class="text-[32px] font-bold mb-5">LOGIN NOW</h1>
+            <p class="w-[90%] md:w-[70%] text-[#723737] font-semibold text-[20px] m-auto mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel soluta, quidem reiciendis necessitatibus unde culpa?</p>
+            <form action="" id="login-form" method="post" class="w-[90%] md:w-[70%] m-auto">
+                {% csrf_token %}   
+                <div class="flex items-center justify-between border border-gray-300 mb-4 rounded-2xl">
+                    <input 
+                        type="text" 
+                        name="email" 
+                        id="email" 
+                        placeholder="Enter Your Email" 
+                        class="flex-grow w-full px-4 py-3 rounded-2xl outline-none"
+                    >
+                    <span id="email-feedback" class="mx-2 text-2xl flex items-center space-x-5 ">
+                    </span>
+                </div>
+                
+                <input type="password" name="password" placeholder="Enter Your Password" class="w-full outline-none border rounded-2xl py-3 px-5 mb-5">
+                <button type="submit" class="fadeOutLeftBig py-3 transition-transform duration-300 hover:scale-110 px-5 bg-red-500 text-white text-[14px] font-semibold rounded-xl">LOGIN</button>
+            </form>
+            <p class="text-[14px] mt-5">Don't have an Account? <a href="{% url 'web:register' %}" class="text-[14px] text-red-500">Sign Up</a></p>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+        $("#email").on("input", function(){
+            var email = $(this).val();
+            if (email.length > 0) {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'web:validate_email' %}",
+                    data: {
+                        'email': email
+                    },
+                    success: function(response){
+                        var feedbackSpan = $("#email-feedback");
+                        if (response.is_valid) {
+                            feedbackSpan.html("<i class='shake bx bxs-check-circle'></i>").removeClass("text-red-600").addClass("text-green-600");
+                        } else {
+                            feedbackSpan.html("<i class='bx bx-x-circle'></i>").removeClass("text-green-600").addClass("text-red-600");
+                        }
+                        
+                    },
+                    error: function(){
+                        $("#email-feedback").text("Error occurred. Please try again later.").addClass("text-red-600");
+                    }
+                });
+            } else {
+                $("#email-feedback").text("");
+            }
+        });
+    });
+    </script>
+    
+
+{%endblock %}

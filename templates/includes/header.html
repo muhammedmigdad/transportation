@@ -1,23 +1,30 @@
 {% load static %}
 
 
-<header class=" bg-white rounded-xl">
+<header class=" w-full fixed bg-white rounded-xl">
     <div class="flex justify-between items-center">
         <ul class="flex items-center">
         <img class=" w-[130px] h-[130px] " src="{% static 'images/logo.jpg' %}" alt="logo">
-        <h1 class="ml-4 text-[40px] transition-transform duration-300 hover:scale-110 hover:text-[#969494] italic font-bold text-[#b8b5b5]">Yatra</h1>
-
+        <h1 class="ml-4 text-[40px] transition-transform duration-300 hover:scale-110 hover:text-[#ed864e] italic font-bold text-[#eb996d]">Yatra</h1>
         </ul>
+        <div class=" flex  items-center">
+            {% for category in categories %}
+              <a href="#" class="flex ml-10 items-center">
+                <img class=" w-[150px] h-[100px] transition-transform duration-300 hover:scale-110 rounded-xl" src="{{category.image.url}}" alt="images">
+                <h1 class="text-[30px] font-bold transition-transform duration-300 hover:scale-110 hover:text-[#000] text-[#434242] ml-2">{{category.name}}</h1>
+              </a>
+            {% endfor %}
+          </div>
         <div class="flex items-center">
-            <a href="#" class="flex items-center ml-7">
+            <a href="{% url 'web:register' %}" class="flex items-center ml-7">
                 <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'images/sign.avif' %}" alt="images">
                 <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f]  ml-2 text-[#000]">Sign Up</h2>
             </a>
-            <a href="#" class="flex items-center ml-7">
+            <a href="{% url 'web:login' %}" class="flex items-center ml-7">
                 <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'images/login2.jpg' %}" alt="images">
                 <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f]  ml-2 text-[#000]">Login</h2>
             </a>
-            <a href="#" class="flex items-center ml-7">
+            <a href="{% url 'web:logout' %}" class="flex items-center ml-7">
                 <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'images/logout1.png' %}" alt="images">
                 <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f] mr-6 ml-2 text-[#000]">Logout</h2>
             </a>

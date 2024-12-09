@@ -6,7 +6,7 @@
 
 {% include 'includes/header.html' %}
 
-<section class="wrapper p-10"> 
+<section class="wrapper pt-44 p-10"> 
     <div class="flex justify-between">
       <div class="flex  items-center">
         {% for category in categories %}
@@ -15,7 +15,7 @@
             <h1 class="text-[30px] font-bold transition-transform duration-300 hover:scale-110 hover:text-[#000] text-[#434242] ml-2">{{category.name}}</h1>
           </a>
         {% endfor %}
-        </div>
+      </div>
         <h3 class="text-[30px] text-[#242424] font-medium">Book Flights, Trains & Buses</h3>
     </div>
     <div>
@@ -48,64 +48,83 @@
     </div>
 
     <div class="flex mt-10  items-center">
-      <div class="right mt-10  w-full md:w-[25%]">
-        <div class=" bg-white p-6 shadow-lg rounded-lg mb-6 md:mb-0">
-          <h1 class="text-[26px] md:text-[32px] lg:text-[40px] text-[#f22929] font-bold mb-6">Filter by</h1>
+      <div class="right mt-10  w-full md:w-[30%]">
+        <div class=" bg-white p-20 shadow-lg rounded-lg mb-6 md:mb-0">
+          <ul class="flex">
+          <img class=" w-[100px] h-[100px]  " src="{% static 'images/QR.png' %}" alt="logo">
+          <img class=" w-[100px] h-[100px] ml-10 " src="{% static 'images/EY.png' %}" alt="logo">
+          <img class=" w-[100px] h-[100px] ml-10 " src="{% static 'images/IX.png' %}" alt="logo">
+          </ul>
+          <h1 class="text-[26px] md:text-[32px] lg:text-[40px] text-[#f22929] mt-3 font-bold mb-6">Filter by</h1>
           <hr class="border-2 mb-4 border-gray-900">
 
           <form action="#" method="get">
               <div class="mb-6">
-                  <h3 class="text-[18px] md:text-[20px] font-semibold mb-3">Filters</h3>
+                  <h3 class="text-[16px] md:text-[20px] font-semibold mb-3">Filters</h3>
                   <select name="category" class="border border-gray-300 rounded-lg p-2 w-full">
-                      <option value="all" id="all">All Categories</option>
-                          <option value="" id="">air</option>
+                    <option value="all" id="all">All Airlines</option>
+                    {% for airlines in airlineses %}
+                        <option value="{{ airlines.name }}" id="{{ airlines.name }}">{{ airlines.name }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+
+              <div class="mb-6">
+                  <h3 class="text-[16px] md:text-[20px] font-semibold mb-3">Time</h3>
+                  <select name="Airlines" id="Airlines" class="border border-gray-300 px-3 py-2 rounded-lg w-full">
+                      <option value="">All</option> 
+                          <option value="" id="">Airlines</option>
                   </select>
               </div>
 
               <div class="mb-6">
-                  <h3 class="text-[18px] md:text-[20px] font-semibold mb-3">fg</h3>
-                  <select name="size" id="size" class="border border-gray-300 px-3 py-2 rounded-lg w-full">
-                      <option value="">h</option> 
-                          <option value="" id="">g</option>
-                  </select>
-              </div>
-
-              <div class="mb-6">
-                  <h3 class="text-[18px] md:text-[20px] font-semibold mb-3">Price</h3>
+                  <h3 class="text-[16px] md:text-[20px] font-semibold mb-3">Price</h3>
                   <select name="price" id="price" class="border border-gray-300 px-3 py-2 rounded-lg w-full">
-                      <option value=""></option> 
-                      <option value="" id=""></option>
-                      <option value="" id=""></option>
-                      <option value="" id=""></option>
-                      <option value="" id=""></option>
-                  </select>
+                    <option value="">Select a price range</option>
+                    <option value="3000-200000" id="price2">3000-200000</option>
+                    <option value="3000-5000" id="price2">3000-5000</option>
+                    <option value="10000-25000" id="price3">10000-25000</option>
+                    <option value="25000-40000" id="price4">25000-40000</option>
+                    <option value="40000-60000" id="price5">40000-60000</option>
+                    <option value="60000-80000" id="price6">60000-80000</option>
+                    <option value="80000-100000" id="price7">80000-100000</option>
+                    <option value="100000-200000" id="price8">100000-200000</option>
+                </select>
               </div>
 
               <div class="mt-6">
-                  <button type="submit" class="text-[16px] md:text-[18px] font-medium bg-blue-600 text-white px-5 py-2 rounded-xl w-full hover:bg-blue-700 transition duration-300">Apply Filter</button>
+                  <button type="submit" class="text-[16px] md:text-[16px] font-medium bg-blue-600 text-white px-5 py-2 rounded-xl w-full hover:bg-blue-700 transition duration-300">Apply Filter</button>
               </div>
           </form>
+          <ul class="flex mt-7">
+            <img class=" w-[100px] h-[100px]  " src="{% static 'images/6E.png' %}" alt="logo">
+            <img class=" w-[100px] h-[100px] ml-10 " src="{% static 'images/FZ.png' %}" alt="logo">
+            <img class=" w-[100px] h-[100px] ml-10 " src="{% static 'images/EK.png' %}" alt="logo">
+            </ul>
       </div>
       </div>
       <div class="left w-[60%] ml-10">
         <h1 class="text-[25px] font-semibold text-[#000] text-start mt-3">Short By</h1>
-      <div class="flex justify-between items-center border bg-white  rounded-2xl mt-5 px-20 py-5">
-        <a href="#">
-          <h1 class="text-[25px] font-medium text-gray-400 hover:text-red-500 transition-transform duration-300 hover:scale-110 ml-3">Defult</h1>
-        </a>
-        <div class=" border-r-4 h-20"></div>
-        <a href="#">
-        <h1 class="text-[25px] font-medium text-gray-400 hover:text-red-500 transition-transform duration-300 hover:scale-110 ml-3">Low to High</h1>
-        </a>
-        <div class=" border-r-4 h-20"></div>
-        <a href="#">
-        <h1 class="text-[25px] font-medium text-gray-400 hover:text-red-500 transition-transform duration-300 hover:scale-110 ml-3">High to Low</h1>
-        </a>
-        <div class=" border-r-4 h-20"></div>
-        <a href="#">
-        <h1 class="text-[25px] font-medium text-gray-400 hover:text-red-500 transition-transform duration-300 hover:scale-110 ml-3">Shortest First</h1>
-        </a>
-      </div>
+        <form action="" method="get">
+          <div class="flex justify-between items-center border bg-white  rounded-2xl mt-5 px-20 py-5">
+                  <a href="?sort=default">
+                      <button type="button" class="text-[25px] font-medium text-gray-400 hover:text-red-500 transition-transform duration-300 hover:scale-110 ml-3">Default</button>
+                  </a>
+            <div class=" border-r-4 h-20"></div>
+                  <a href="?sort=Shortest First">
+                      <button type="button" class="text-[25px] font-medium text-gray-400 hover:text-red-500 transition-transform duration-300 hover:scale-110 ml-3">Shortest First</button>
+                  </a>
+            <div class=" border-r-4 h-20"></div>
+                  <a href="?sort=high-low">
+                      <button type="button" class="text-[25px] font-medium text-gray-400 hover:text-red-500 transition-transform duration-300 hover:scale-110 ml-3">High-Low</button>
+                  </a>
+            <div class=" border-r-4 h-20"></div>
+                  <a href="?sort=low-high">
+                      <button type="button" class="text-[25px] font-medium text-gray-400 hover:text-red-500 transition-transform duration-300 hover:scale-110 ml-3">Low-High</button>
+                  </a>
+          </div>   
+      </form>
+      
       <style>
         .price{
           display: inline-block;
@@ -127,49 +146,47 @@
             transform: scale(1.02); 
         }
       </style>
-        <a href="#" class="block">
-          <div class="border price bg-white px-20 py-10 mt-10 rounded-2xl">
+      {% for flight in flights %}
+      <a href="#" class="block">
+        <div class="border price bg-white px-20 py-10 mt-10 rounded-2xl">
+          <div class="flex justify-between items-center">
             <div class="flex justify-between items-center">
-              <div class="flex justify-between items-center">
-                <img class="w-[100px] h-[100px]" src="{% static 'images/QR.png' %}" alt="images">
-                <ul class="ml-14">
-                  <h1 class="text-[#000] text-[22px] font-semibold">
-                    Qatar Airways
-                  </h1>
-                  <h2 class="text-[18px] font-medium text-gray-400">
-                    QR537, QR1006
-                  </h2>
-                </ul>
-                <ul class="ml-14">
-                  <h3 class="text-[22px] font-semibold text-black">03:35</h3>
-                  <h5 class="text-[18px] font-medium text-gray-400">CCJ</h5>
-                </ul>
-                <ul class="ml-14">
-                  <span class="text-[18px] font-medium text-gray-400">8h 15m</span>
-                  <div class="border-b-2 border-gray-500 w-20"></div>
-                  <h3 class="text-[18px] font-medium text-gray-400">Non-Stop</h3>
-                </ul>
-                <ul class="ml-14">
-                  <span class="text-[22px] font-semibold text-black">10:20</span>
-                  <p class="text-[18px] font-medium text-[#ff2a2a]">DXB</p>
-                </ul>
-                <ul class="ml-14">
-                  <h1 class="text-[#000] text-[22px] font-semibold">
-                    ₹72,070
-                  </h1>
-                  <h2 class="text-[18px] font-medium text-orange-400">
-                    Extra ₹955 Off
-                  </h2>
-                </ul>
-                <ul class="ml-14">
-                  <button class="transition-transform bg-orange-400 duration-300 hover:scale-110 hover:bg-orange-500 border px-6 py-4 rounded-2xl">
-                    <span class="text-[30px] font-semibold text-white">Book</span>
-                  </button>
-                </ul>
-              </div>
+              <img class="w-[100px] h-[100px]" src="{{ flight.image.url }}" alt="Logo">
+              <ul class="ml-14">
+                <h1 class="text-[#000] text-[20px] font-semibold">{{ flight.airline }}</h1>
+                <h2 class="text-[16px] font-medium text-gray-400">{{ flight.flight_numbers }}</h2>
+              </ul>
+              <ul class="ml-14">
+                <h3 class="text-[20px] font-semibold text-black">{{ flight.departure_time|date:"H:i" }}</h3>
+                <h5 class="text-[16px] font-medium text-gray-400">{{ flight.departure_code }}</h5>
+              </ul>
+              <ul class="ml-14">
+                <span class="text-[16px] font-medium text-gray-400">
+                  {{ flight.duration }}
+              </span>
+                <div class="border-b-2 border-gray-500 w-20"></div>
+                <h3 class="text-[16px] font-medium text-gray-400">{{ flight.stops }}</h3>
+              </ul>
+              <ul class="ml-14">
+                <span class="text-[20px] font-semibold text-black">{{ flight.arrival_time|date:"H:i" }}</span>
+                <p class="text-[16px] font-medium text-[#ff2a2a]">{{ flight.arrival_code }}</p>
+              </ul>
+              <ul class="ml-14">
+                <h1 class="text-[#000] text-[20px] font-semibold">₹{{ flight.discounted_price|floatformat:2 }}</h1>
+                {% if flight.discount %}
+                <h2 class="text-[16px] font-medium text-orange-400">Extra ₹{{ flight.discount|floatformat:2 }} Off</h2>
+                {% endif %}
+              </ul>
+              <ul class="ml-14">
+                <button class="transition-transform bg-orange-400 duration-300 hover:scale-110 hover:bg-orange-500 border px-6 py-4 rounded-2xl">
+                  <span class="text-[30px] font-semibold text-white">Book</span>
+                </button>
+              </ul>
             </div>
           </div>
-        </a>      
+        </div>
+      </a>
+      {% endfor %}
       </div>
     </div>
 </section>

@@ -59,7 +59,7 @@ WSGI_APPLICATION = 'transportion.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE" : "django.db.backends.postgresql_psycopg2",
-        "NAME" : "transporatation",
+        "NAME" : "transporatation2",
         "HOST" : "localhost",
         "USER" : "migdad1",
         "PASSWORD" : "1234",
@@ -104,3 +104,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.User'
+AUTH_PROFILE_MODULE = 'users.User'
