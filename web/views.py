@@ -16,21 +16,19 @@ def index(request):
     flights = Flight.objects.all()
     airlineses = Airlines.objects.all()
     price = request.GET.get('price')
-    airlines = request.GET.get('airlines')
-    
+    selected_airline = request.GET.get('category', 'all')
+    selected_stop = request.GET.get('Stop', '')
 
-    flight_duration = timedelta(days=1, hours=5, minutes=30)
+    if selected_stop:
+        if selected_stop == 'Non Stop':
+            flights = flights.filter(stops='Non-stop')  
+        elif selected_stop == 'one Stop':
+            flights = flights.filter(stops='1 stop')
+            
 
-    days = flight_duration.days
-    total_seconds = flight_duration.total_seconds()
-    hours = total_seconds // 3600
-    minutes = (total_seconds % 3600) // 60
-    
-    if airlines and airlines != 'all':
-        airlines = airlines.filter(airlines__name=airlines)
-
-
-    
+    if selected_airline and selected_airline != 'all':
+        flights = flights.filter(airline__name=selected_airline)
+        
     if price:
         if price == '3000-200000':
             flights = flights.filter(price__range=(3000, 200000))
@@ -58,7 +56,14 @@ def index(request):
         flights = flights.order_by('-price') 
     elif sort_option == 'low-high':
         flights = flights.order_by('price')  
-
+    elif sort_option == 'Faster':
+        flights = flights.order_by('duration')  
+        
+    flight_duration = timedelta(days=1, hours=5, minutes=30)
+    days = flight_duration.days
+    total_seconds = flight_duration.total_seconds()
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
     context = {
         'categories': categories,
         'sliders': sliders,
@@ -139,9 +144,107 @@ def logout(request):
     return HttpResponseRedirect(reverse('web:login'))
 @login_required(login_url='/login/')
 def train(request):
-  
-    return render(request, 'web/train.html')
+    categories = Category.objects.all()
+    sliders = Slider.objects.all()
+    price = request.GET.get('price')
+    selected_airline = request.GET.get('category', 'all')
+    selected_stop = request.GET.get('Stop', '')
+
+    if selected_stop:
+        if selected_stop == 'Non Stop':
+            flights = flights.filter(stops='Non-stop')  
+        elif selected_stop == 'one Stop':
+            flights = flights.filter(stops='1 stop')
+            
+
+    if selected_airline and selected_airline != 'all':
+        flights = flights.filter(airline__name=selected_airline)
+        
+    if price:
+        if price == '3000-200000':
+            flights = flights.filter(price__range=(3000, 200000))
+        elif price == '3000-5000':
+            flights = flights.filter(price__range=(3000, 5000))
+        elif price == '10000-25000':
+            flights = flights.filter(price__range=(10000,25000))
+        elif price == '25000-40000':
+            flights = flights.filter(price__range=(25000, 40000))
+        elif price == '40000-60000':
+            flights = flights.filter(price__range=(40000, 60000))
+        elif price == '60000-80000':
+            flights = flights.filter(price__range=(60000, 800000))
+        elif price == '80000-100000':
+            flights = flights.filter(price__range=(80000, 100000))
+        elif price == '100000-200000':
+            flights = flights.filter(price__range=(100000, 200000))
+    
+    
+    sort_option = request.GET.get('sort', 'default')  
+
+    if sort_option == 'latest':
+        flights = flights.order_by('-created_on')
+    elif sort_option == 'high-low':
+        flights = flights.order_by('-price') 
+    elif sort_option == 'low-high':
+        flights = flights.order_by('price')  
+    elif sort_option == 'Faster':
+        flights = flights.order_by('duration')  
+    
+    context = {
+        'categories': categories,
+        'sliders': sliders
+    }
+    return render(request, 'web/train.html', context=context)
 @login_required(login_url='/login/')
 def bus(request):
-  
-    return render(request, 'web/bus.html')
+    categories = Category.objects.all()
+    sliders = Slider.objects.all()
+    price = request.GET.get('price')
+    selected_airline = request.GET.get('category', 'all')
+    selected_stop = request.GET.get('Stop', '')
+
+    if selected_stop:
+        if selected_stop == 'Non Stop':
+            flights = flights.filter(stops='Non-stop')  
+        elif selected_stop == 'one Stop':
+            flights = flights.filter(stops='1 stop')
+            
+
+    if selected_airline and selected_airline != 'all':
+        flights = flights.filter(airline__name=selected_airline)
+        
+    if price:
+        if price == '3000-200000':
+            flights = flights.filter(price__range=(3000, 200000))
+        elif price == '3000-5000':
+            flights = flights.filter(price__range=(3000, 5000))
+        elif price == '10000-25000':
+            flights = flights.filter(price__range=(10000,25000))
+        elif price == '25000-40000':
+            flights = flights.filter(price__range=(25000, 40000))
+        elif price == '40000-60000':
+            flights = flights.filter(price__range=(40000, 60000))
+        elif price == '60000-80000':
+            flights = flights.filter(price__range=(60000, 800000))
+        elif price == '80000-100000':
+            flights = flights.filter(price__range=(80000, 100000))
+        elif price == '100000-200000':
+            flights = flights.filter(price__range=(100000, 200000))
+    
+    
+    sort_option = request.GET.get('sort', 'default')  
+
+    if sort_option == 'latest':
+        flights = flights.order_by('-created_on')
+    elif sort_option == 'high-low':
+        flights = flights.order_by('-price') 
+    elif sort_option == 'low-high':
+        flights = flights.order_by('price')  
+    elif sort_option == 'Faster':
+        flights = flights.order_by('duration')  
+    
+    context = {
+        'categories': categories,
+        'sliders': sliders
+    }
+    return render(request, 'web/bus.html', context=context)

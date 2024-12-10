@@ -59,7 +59,7 @@ WSGI_APPLICATION = 'transportion.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE" : "django.db.backends.postgresql_psycopg2",
-        "NAME" : "transporatation2",
+        "NAME" : "transporatation3",
         "HOST" : "localhost",
         "USER" : "migdad1",
         "PASSWORD" : "1234",

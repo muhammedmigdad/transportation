@@ -5,5 +5,331 @@
 {% block container %}
 
 
+{% include 'includes/header.html' %}
+
+        <section class="wrapper pt-44 p-10"> 
+            <div class="flex flex-col lg:flex-row justify-between items-center">
+            <div class="flex flex-wrap justify-center lg:justify-start items-center gap-4 lg:gap-10">
+                {% for category in categories %}
+                <a href="#" class="flex flex-col items-center transition-transform duration-300 hover:scale-110">
+                    <img
+                    class="w-[75px] h-[75px] sm:w-[120px] sm:h-[90px] md:w-[130px] md:h-[95px] lg:w-[150px] lg:h-[100px] rounded-xl"
+                    src="{{ category.image.url }}"
+                    alt="images"
+                    />
+                    <h1
+                    class="text-[18px] sm:text-[22px] md:text-[26px] lg:text-[30px] font-bold text-[#434242] transition-transform duration-300 hover:scale-110 hover:text-[#000] mt-2"
+                    >
+                    {{ category.name }}
+                    </h1>
+                </a>
+                {% endfor %}
+            </div>
+            <h3
+                class="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] text-[#e93a3a] font-medium mt-6 lg:mt-0 text-center lg:text-right"
+            >
+                Book Flights, Trains & Buses
+            </h3>
+            </div>
+            
+            <h1 class="text-[30px] mt-6 font-bold text-black">Why Book With Yatra?</h1>
+            <section class=" py-10 wrapper">
+                <section class=" swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        {% for slider in sliders %}
+                        <div class="swiper-slide">
+                            <a href="#">
+                                <img src="{{slider.image.url}}" alt="image" class=" w-full rounded-2xl">
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            <div>
+                <div class="border bg-white p-5 sm:p-8 lg:p-10 mt-5 rounded-xl">
+                <form action="">
+                    <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
+                    <input 
+                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+                        type="text" 
+                        name="name" 
+                        placeholder="From" 
+                    />
+                    <input 
+                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+                        type="text" 
+                        name="name" 
+                        placeholder="To" 
+                    />
+                    <input 
+                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto" 
+                        type="date" 
+                        name="Date" 
+                        required
+                    />
+                    <div class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto text-center" id="profile-menu-button">
+                        Traveller & Class
+                    </div>
+        
+                    <button 
+                        type="submit" 
+                        class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-100 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
+                    >
+                        Search
+                    </button>
+                    </ul>
+                    <div class="p-6 shadow-md rounded-lg w-96 hidden absolute bg-white left-[62%]" id="profile-menu">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                        <h2 class="text-lg font-semibold">Adults</h2>
+                        <p class="text-sm text-gray-500">(12+ Years)</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">-</button>
+                        <span class="text-lg font-medium">3</span>
+                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                        <h2 class="text-lg font-semibold">Children</h2>
+                        <p class="text-sm text-gray-500">(2-12 Years)</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">-</button>
+                        <span class="text-lg font-medium">5</span>
+                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                        <h2 class="text-lg font-semibold">Infant</h2>
+                        <p class="text-sm text-gray-500">(0-2 Years)</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">-</button>
+                        <span class="text-lg font-medium">0</span>
+                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 mb-4">
+                        <input id="more-travellers" type="checkbox" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <label for="more-travellers" class="text-sm text-gray-700">More than 9 Travellers</label>
+                        <span class="text-blue-500"><i class="fas fa-users"></i></span>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="text-lg font-semibold mb-2">Travel Class</h2>
+                        <div class="space-y-2">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="class" value="economy" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
+                            <span class="text-gray-700">Economy</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="class" value="premium-economy" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
+                            <span class="text-gray-700">Premium Economy</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="class" value="business" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
+                            <span class="text-gray-700">Business</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="class" value="first-class" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
+                            <span class="text-gray-700">First Class</span>
+                        </label>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full py-3 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition duration-300">Done</button>
+                    </div>
+                    
+                </form>
+                </div>
+                
+            <div>
+            </section>
+            </div>
+        
+            <div class="flex flex-wrap md:flex-nowrap mt-10 items-start">
+                <div class="w-full md:w-1/3 mb-10 md:mb-0">
+                <div class="bg-white p-10 md:p-20 shadow-lg rounded-lg">
+                    <ul class="flex justify-center mb-6">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24" src="{% static 'images/QR.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'images/EY.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'images/IX.png' %}" alt="logo">
+                    </ul>
+                    <h1 class="text-lg md:text-2xl lg:text-3xl text-red-500 font-bold mb-6">Filter by</h1>
+                    <hr class="border-2 mb-4 border-gray-900">
+                    <form action="#" method="get">
+                    <div class="mb-6">
+                        <h3 class="text-sm md:text-lg font-semibold mb-3">Trains</h3>
+                        <select name="category" class="border border-gray-300 rounded-lg p-2 w-full">
+                        <option value="all" {% if selected_airline == 'all' %}selected{% endif %}>All Airlines</option>
+                        {% for airline in airlineses %}
+                        <option value="{{ airline.name }}" {% if selected_airline == airline.name %}selected{% endif %}>
+                            {{ airline.name }}
+                        </option>
+                        {% endfor %}
+                        </select>
+                        
+                    </div>
+            
+                    <div class="mb-6">
+                        <h3 class="text-sm md:text-lg font-semibold mb-3">Stops</h3>
+                        <select name="Stop" id="Stop" class="border border-gray-300 rounded-lg p-2 w-full">
+                        <option value="">All Stops</option>
+                        <option value="Non Stop" id="stope1">Non Stop</option>
+                        <option value="one Stop" id="stope2">one Stop</option>
+                        </select>
+                    </div>
+            
+                    <div class="mb-6">
+                        <h3 class="text-sm md:text-lg font-semibold mb-3">Price</h3>
+                        <select name="price" id="price" class="border border-gray-300 px-3 py-2 rounded-lg w-full">
+                        <option value="">Select a price range</option>
+                        <option value="3000-200000" id="price2">3000-200000</option>
+                        <option value="3000-5000" id="price2">3000-5000</option>
+                        <option value="10000-25000" id="price3">10000-25000</option>
+                        <option value="25000-40000" id="price4">25000-40000</option>
+                        <option value="40000-60000" id="price5">40000-60000</option>
+                        <option value="60000-80000" id="price6">60000-80000</option>
+                        <option value="80000-100000" id="price7">80000-100000</option>
+                        <option value="100000-200000" id="price8">100000-200000</option>
+                    </select>
+                    </div>
+            
+                    <div class="mt-6">
+                        <button type="submit" class="text-sm md:text-base font-medium bg-blue-600 text-white px-5 py-2 rounded-xl w-full hover:bg-blue-700 transition duration-300">Apply Filter</button>
+                    </div>
+                    </form>
+                    <ul class="flex justify-center mt-7">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24" src="{% static 'images/6E.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'images/FZ.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'images/EK.png' %}" alt="logo">
+                    </ul>
+                </div>
+                </div>
+            
+                <div class="w-full md:w-2/3 md:ml-10">
+                <h1 class="text-lg md:text-xl font-semibold text-black mb-5">Short By</h1>
+                <form action="" method="get">
+                    <div class="flex  justify-between overflow-x-auto whitespace-nowrap space-x-4 items-center bg-white rounded-2xl p-5">
+                    <a href="?sort=default" class="text-center w-1/4">
+                        <button type="button" class="text-base font-medium text-gray-400 hover:text-red-500 hover:scale-110 transition-transform duration-300">Default</button>
+                    </a>
+                    <a href="?sort=Faster" class="text-center w-1/4">
+                        <button type="button" class="text-base font-medium text-gray-400 hover:text-red-500 hover:scale-110 transition-transform duration-300">Faster</button>
+                    </a>
+                    <a href="?sort=high-low" class="text-center w-1/4">
+                        <button type="button" class="text-base font-medium text-gray-400 hover:text-red-500 hover:scale-110 transition-transform duration-300">High-Low</button>
+                    </a>
+                    <a href="?sort=low-high" class="text-center w-1/4">
+                        <button type="button" class="text-base font-medium text-gray-400 hover:text-red-500 hover:scale-110 transition-transform duration-300">Low-High</button>
+                    </a>
+                    </div>
+                </form>
+            
+                {% for flight in flights %}
+                <a href="#" class="block">
+                    <div class="border bg-white px-5 md:px-20 py-5 md:py-10 mt-5 rounded-2xl">
+                    <div class="flex flex-wrap justify-between items-center">
+                        <img class="w-[100px] h-[100px]" src="{{ flight.image.url }}" alt="Logo">
+                        <ul class="ml-14">
+                        <h1 class="text-[#000] text-[20px] font-semibold">{{ flight.airline }}</h1>
+                        <h2 class="text-[16px] font-medium text-gray-400">{{ flight.flight_numbers }}</h2>
+                        </ul>
+                        <ul class="ml-14">
+                        <h3 class="text-[20px] font-semibold text-black">{{ flight.departure_time|date:"H:i" }}</h3>
+                        <h5 class="text-[16px] font-medium text-gray-400">{{ flight.departure_code }}</h5>
+                        </ul>
+                        <ul class="ml-14">
+                        <span class="text-[16px] font-medium text-gray-400">
+                            {{ flight.duration }}
+                        </span>
+                        <div class="border-b-2 border-gray-500 w-14"></div>
+                        <h3 class="text-[16px] font-medium text-gray-400">{{ flight.stops }}</h3>
+                        </ul>
+                        <ul class="ml-14">
+                        <span class="text-[20px] font-semibold text-black">{{ flight.arrival_time|date:"H:i" }}</span>
+                        <p class="text-[16px] font-medium text-[#ff2a2a]">{{ flight.arrival_code }}</p>
+                        </ul>
+                        <ul class="ml-14">
+                        <h1 class="text-[#000] text-[20px] font-semibold">₹{{ flight.discounted_price|floatformat:2 }}</h1>
+                        {% if flight.discount %}
+                        <h2 class="text-[16px] font-medium text-orange-400">Extra ₹{{ flight.discount|floatformat:2 }} Off</h2>
+                        {% endif %}
+                        </ul>
+                        <ul class="ml-14">
+                        <button class="transition-transform bg-orange-400 duration-300 hover:scale-110 hover:bg-orange-500 border px-6 py-4 rounded-2xl">
+                            <span class="text-[30px] font-semibold text-white">Book</span>
+                        </button>
+                        </ul>
+                    </div>
+                    </div>
+                </a>
+                {% endfor %}
+                </div>
+            </div>
+            
+        </section>
+        
+        
+                <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+                <script src="./js/jquery-3.7.1.min.js"></script>
+                <script src="./js/index.js"></script>
+        
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        
+            <script>
+                var swiper = new Swiper(".mySwiper", {
+                spaceBetween: 30,
+                centeredSlides: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                breakpoints: {
+                    499: {
+                        slidesPerView: 1,
+                        spaceBetweenSlides: 30
+                    },
+                    999: {
+                        slidesPerView: 3,
+                        spaceBetweenSlides: 40
+                    }
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                });
+            </script>
+            <script>
+                const searchBar = document.getElementById('search-bar');
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+            
+                const profileMenuButton = document.getElementById('profile-menu-button');
+                const profileMenu = document.getElementById('profile-menu');
+            
+            
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+                profileMenuButton.addEventListener('click', () => {
+                    profileMenu.classList.toggle('hidden');
+                });
+            
+            
+        
+            </script>
+
 
 {% endblock %}
