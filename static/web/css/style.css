@@ -1,0 +1,40 @@
+.wrapper {
+    width: 90%;
+    margin: 0 auto;
+}
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+
+.smooth-scroll::-webkit-scrollbar {
+width: 3px; 
+height: 10px;
+}
+.smooth-scroll::-webkit-scrollbar-thumb {
+  background-color: rgb(255, 111, 0); 
+  border-radius: 4px;
+}
+.smooth-scroll::-webkit-scrollbar-track {
+  background-color: #1f1f1f;
+  border-radius:4px;
+}
+

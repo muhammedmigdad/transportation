@@ -11,5 +11,11 @@ urlpatterns = [
    path("validate_email/", views.validate_email, name="validate_email"),
    path("train/", views.train, name="train"),
    path("bus/", views.bus, name="bus"),
+   path("flight-books/<int:id>/", views.flight_books, name="flight-books"),
+   path("offer/", views.offer, name="offer"),
+   path("train-books/<int:id>/", views.train_books, name="train-books"),
+   path("bus-books/<int:id>/", views.bus_books, name="bus-books"),
+   
+   
    
 ]

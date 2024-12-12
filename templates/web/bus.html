@@ -66,9 +66,7 @@
                         name="Date" 
                         required
                     />
-                    <div class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto text-center" id="profile-menu-button">
-                        Traveller & Class
-                    </div>
+
         
                     <button 
                         type="submit" 
@@ -77,68 +75,6 @@
                         Search
                     </button>
                     </ul>
-                    <div class="p-6 shadow-md rounded-lg w-96 hidden absolute bg-white left-[62%]" id="profile-menu">
-                    <div class="flex items-center justify-between mb-4">
-                        <div>
-                        <h2 class="text-lg font-semibold">Adults</h2>
-                        <p class="text-sm text-gray-500">(12+ Years)</p>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">-</button>
-                        <span class="text-lg font-medium">3</span>
-                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">+</button>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between mb-4">
-                        <div>
-                        <h2 class="text-lg font-semibold">Children</h2>
-                        <p class="text-sm text-gray-500">(2-12 Years)</p>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">-</button>
-                        <span class="text-lg font-medium">5</span>
-                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">+</button>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center justify-between mb-4">
-                        <div>
-                        <h2 class="text-lg font-semibold">Infant</h2>
-                        <p class="text-sm text-gray-500">(0-2 Years)</p>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">-</button>
-                        <span class="text-lg font-medium">0</span>
-                        <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">+</button>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <input id="more-travellers" type="checkbox" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                        <label for="more-travellers" class="text-sm text-gray-700">More than 9 Travellers</label>
-                        <span class="text-blue-500"><i class="fas fa-users"></i></span>
-                    </div>
-                    <div class="mb-4">
-                        <h2 class="text-lg font-semibold mb-2">Travel Class</h2>
-                        <div class="space-y-2">
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="class" value="economy" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
-                            <span class="text-gray-700">Economy</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="class" value="premium-economy" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
-                            <span class="text-gray-700">Premium Economy</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="class" value="business" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
-                            <span class="text-gray-700">Business</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="class" value="first-class" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
-                            <span class="text-gray-700">First Class</span>
-                        </label>
-                        </div>
-                    </div>
-                    <button class="w-full py-3 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition duration-300">Done</button>
                     </div>
                     
                 </form>
@@ -152,9 +88,9 @@
                 <div class="w-full md:w-1/3 mb-10 md:mb-0">
                 <div class="bg-white p-10 md:p-20 shadow-lg rounded-lg">
                     <ul class="flex justify-center mb-6">
-                    <img class=" w-18 h-18 sm:w-24 sm:h-24" src="{% static 'images/QR.png' %}" alt="logo">
-                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'images/EY.png' %}" alt="logo">
-                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'images/IX.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24" src="{% static 'web/images/bus5.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'web/images/bus4.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'web/images/bus1.png' %}" alt="logo">
                     </ul>
                     <h1 class="text-lg md:text-2xl lg:text-3xl text-red-500 font-bold mb-6">Filter by</h1>
                     <hr class="border-2 mb-4 border-gray-900">
@@ -162,10 +98,10 @@
                     <div class="mb-6">
                         <h3 class="text-sm md:text-lg font-semibold mb-3">Buses</h3>
                         <select name="category" class="border border-gray-300 rounded-lg p-2 w-full">
-                        <option value="all" {% if selected_airline == 'all' %}selected{% endif %}>All Airlines</option>
-                        {% for airline in airlineses %}
-                        <option value="{{ airline.name }}" {% if selected_airline == airline.name %}selected{% endif %}>
-                            {{ airline.name }}
+                        <option value="all" {% if selected_bus == 'all' %}selected{% endif %}>All buss</option>
+                        {% for bus in buses %}
+                        <option value="{{ bus.name }}" {% if selected_bus == bus.name %}selected{% endif %}>
+                            {{ bus.name }}
                         </option>
                         {% endfor %}
                         </select>
@@ -178,6 +114,7 @@
                         <option value="">All Stops</option>
                         <option value="Non Stop" id="stope1">Non Stop</option>
                         <option value="one Stop" id="stope2">one Stop</option>
+                        <option value="Limited Stop" id="stope3">Limited Stop</option>
                         </select>
                     </div>
             
@@ -185,14 +122,14 @@
                         <h3 class="text-sm md:text-lg font-semibold mb-3">Price</h3>
                         <select name="price" id="price" class="border border-gray-300 px-3 py-2 rounded-lg w-full">
                         <option value="">Select a price range</option>
-                        <option value="3000-200000" id="price2">3000-200000</option>
-                        <option value="3000-5000" id="price2">3000-5000</option>
-                        <option value="10000-25000" id="price3">10000-25000</option>
-                        <option value="25000-40000" id="price4">25000-40000</option>
-                        <option value="40000-60000" id="price5">40000-60000</option>
-                        <option value="60000-80000" id="price6">60000-80000</option>
-                        <option value="80000-100000" id="price7">80000-100000</option>
-                        <option value="100000-200000" id="price8">100000-200000</option>
+                        <option value="500-20000" id="price2">500-20000</option>
+                        <option value="500-1000" id="price2">500-1000</option>
+                        <option value="1000-2000" id="price3">1000-2000</option>
+                        <option value="2000-4000" id="price4">2000-4000</option>
+                        <option value="4000-6000" id="price5">4000-6000</option>
+                        <option value="6000-8000" id="price6">6000-8000</option>
+                        <option value="8000-10000" id="price7">8000-10000</option>
+                        <option value="10000-20000" id="price8">10000-20000</option>
                     </select>
                     </div>
             
@@ -201,9 +138,9 @@
                     </div>
                     </form>
                     <ul class="flex justify-center mt-7">
-                    <img class=" w-18 h-18 sm:w-24 sm:h-24" src="{% static 'images/6E.png' %}" alt="logo">
-                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'images/FZ.png' %}" alt="logo">
-                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'images/EK.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24" src="{% static 'web/images/bus5.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'web/images/bus2.png' %}" alt="logo">
+                    <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'web/images/bus3.png' %}" alt="logo">
                     </ul>
                 </div>
                 </div>
@@ -227,47 +164,53 @@
                     </div>
                 </form>
             
-                {% for flight in flights %}
-                <a href="#" class="block">
+                {% for bus in bus %}
                     <div class="border bg-white px-5 md:px-20 py-5 md:py-10 mt-5 rounded-2xl">
                     <div class="flex flex-wrap justify-between items-center">
-                        <img class="w-[100px] h-[100px]" src="{{ flight.image.url }}" alt="Logo">
+                        <img class="w-[100px] h-[100px]" src="{{ bus.image.url }}" alt="Logo">
                         <ul class="ml-14">
-                        <h1 class="text-[#000] text-[20px] font-semibold">{{ flight.airline }}</h1>
-                        <h2 class="text-[16px] font-medium text-gray-400">{{ flight.flight_numbers }}</h2>
+                        <h1 class="text-[#000] text-[20px] font-semibold">{{ bus.Buses }}</h1>
+                        <h2 class="text-[16px] font-medium text-gray-400">{{ bus.bus_numbers }}</h2>
                         </ul>
                         <ul class="ml-14">
-                        <h3 class="text-[20px] font-semibold text-black">{{ flight.departure_time|date:"H:i" }}</h3>
-                        <h5 class="text-[16px] font-medium text-gray-400">{{ flight.departure_code }}</h5>
+                        <h3 class="text-[20px] font-semibold text-black">{{ bus.departure_time|date:"H:i" }}</h3>
+                        <h5 class="text-[16px] font-medium text-gray-400">{{ bus.departure_code }}</h5>
                         </ul>
                         <ul class="ml-14">
                         <span class="text-[16px] font-medium text-gray-400">
-                            {{ flight.duration }}
+                            {{ bus.duration }}
                         </span>
                         <div class="border-b-2 border-gray-500 w-14"></div>
-                        <h3 class="text-[16px] font-medium text-gray-400">{{ flight.stops }}</h3>
+                        <h3 class="text-[16px] font-medium text-gray-400">{{ bus.stops }}</h3>
                         </ul>
                         <ul class="ml-14">
-                        <span class="text-[20px] font-semibold text-black">{{ flight.arrival_time|date:"H:i" }}</span>
-                        <p class="text-[16px] font-medium text-[#ff2a2a]">{{ flight.arrival_code }}</p>
+                        <span class="text-[20px] font-semibold text-black">{{ bus.arrival_time|date:"H:i" }}</span>
+                        <p class="text-[16px] font-medium text-[#ff2a2a]">{{ bus.arrival_code }}</p>
                         </ul>
                         <ul class="ml-14">
-                        <h1 class="text-[#000] text-[20px] font-semibold">₹{{ flight.discounted_price|floatformat:2 }}</h1>
-                        {% if flight.discount %}
-                        <h2 class="text-[16px] font-medium text-orange-400">Extra ₹{{ flight.discount|floatformat:2 }} Off</h2>
+                        <h1 class="text-[#000] text-[20px] font-semibold">₹{{ bus.price }}</h1>
+                        {% if bus.discount %}
+                        <h2 class="text-[16px] font-medium text-orange-400">Extra ₹{{ bus.discount}} Off</h2>
                         {% endif %}
                         </ul>
-                        <ul class="ml-14">
-                        <button class="transition-transform bg-orange-400 duration-300 hover:scale-110 hover:bg-orange-500 border px-6 py-4 rounded-2xl">
-                            <span class="text-[30px] font-semibold text-white">Book</span>
-                        </button>
-                        </ul>
+                        <div class="transition-transform bg-orange-400 duration-300 ml-14 hover:scale-110 hover:bg-orange-500 border px-6 py-4 rounded-2xl">
+                            <a href="{% url 'web:bus-books' id=bus.id %}" class=" block text-[30px] font-semibold text-white">Book</a>
+                        </div>
                     </div>
                     </div>
-                </a>
                 {% endfor %}
                 </div>
             </div>
+
+            <div class=" mt-6 flex overflow-hidden  overflow-x-scroll scroll-smooth  smooth-scroll ">
+                <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer1.png' %}" alt="images">
+                <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer2.png' %}" alt="images">
+                <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer4.png' %}" alt="images">
+                <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer3.png' %}" alt="images">
+                <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offers.png' %}" alt="images">
+                <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer5.png' %}" alt="images">
+          
+              </div>
             
         </section>
   

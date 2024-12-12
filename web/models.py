@@ -17,8 +17,6 @@ class Flight(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
-    def discounted_price(self):
-        return self.price - self.discount if self.discount else self.price
     
     class Meta:
         db_table = "flight"
@@ -28,7 +26,7 @@ class Flight(models.Model):
 
 
     def __str__(self):
-        return self.flight_numbers
+        return self.airline.name
     
 
 
@@ -91,19 +89,18 @@ class Airlines(models.Model):
 
 class Train(models.Model):
     image = models.ImageField(upload_to='train_images/')
-    airline = models.ForeignKey('web.Airlines', on_delete=models.CASCADE)
+    trains = models.ForeignKey('web.Trains', on_delete=models.CASCADE)
     train_numbers = models.CharField(max_length=100)
     departure_time = models.TimeField()
     departure_code = models.CharField(max_length=10)
-    duration = models.DurationField(default=timedelta(hours=2)) 
+    duration = models.DurationField(default=timedelta(hours=1)) 
     stops = models.CharField(max_length=50) 
     arrival_time = models.TimeField()
     arrival_code = models.CharField(max_length=10)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
-    def discounted_price(self):
-        return self.price - self.discount if self.discount else self.price
+
     
     class Meta:
         db_table = "train"
@@ -113,23 +110,21 @@ class Train(models.Model):
 
 
     def __str__(self):
-        return self.train_numbers
+        return self.trains.name
     
 class Bus(models.Model):
     image = models.ImageField(upload_to='bus_images/')
-    airline = models.ForeignKey('web.Airlines', on_delete=models.CASCADE)
+    buses = models.ForeignKey('web.Buses', on_delete=models.CASCADE)
     bus_numbers = models.CharField(max_length=100)
     departure_time = models.TimeField()
     departure_code = models.CharField(max_length=10)
-    duration = models.DurationField(default=timedelta(hours=2)) 
+    duration = models.DurationField(default=timedelta(hours=1)) 
     stops = models.CharField(max_length=50) 
     arrival_time = models.TimeField()
     arrival_code = models.CharField(max_length=10)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
-    def discounted_price(self):
-        return self.price - self.discount if self.discount else self.price
     
     class Meta:
         db_table = "bus"
@@ -139,12 +134,11 @@ class Bus(models.Model):
 
 
     def __str__(self):
-        return self.bus_numbers
+        return self.Buses.name
     
     
 class Buses(models.Model):
-    name = models.CharField(max_length=255)
-    
+    name = models.CharField(max_length=255) 
     
     class meta:
         db_table = "bus"
@@ -159,14 +153,107 @@ class Buses(models.Model):
     
 class Trains(models.Model):
     name = models.CharField(max_length=255)
-    
-    
     class meta:
         db_table = "trains"
         verbose_name = "trains"
         verbose_name_plural = "trainses"
-        ordering = ['-id']
-    
+        ordering = ['-id'] 
     
     def __str__(self):
         return self.name
+    
+    
+    
+class Offer(models.Model):
+    code = models.CharField(max_length=255)
+    discount = models.FloatField()
+    short_description = models.CharField(max_length=255)
+    is_percentage = models.BooleanField()
+    
+    
+    class Meta:
+        db_table = "offer"
+        verbose_name = "offer"
+        verbose_name_plural = "offers"
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.code
+    
+    
+    
+class FlightBill(models.Model):
+    fligths = models.ForeignKey(Flight, on_delete=models.CASCADE)
+    airline_name = models.CharField(max_length=255)
+    flight_code = models.CharField(max_length=50)
+    departure_time = models.TimeField()
+    arrival_time = models.TimeField()
+    duration = models.CharField(max_length=50)
+    departure_airport = models.CharField(max_length=255)
+    arrival_airport = models.CharField(max_length=255)
+    baggage_allowance = models.CharField(max_length=50)
+    cabin_baggage = models.CharField(max_length=50)
+    check_in_baggage = models.CharField(max_length=50)
+    terminal = models.CharField(max_length=50, blank=True, null=True)
+    status = models.CharField(max_length=100) 
+
+    def __str__(self):
+        return f"{self.flight_code} - {self.airline_name}"
+    
+    
+class  CartBill(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    item_total = models.FloatField()
+    offer_amount = models.FloatField()
+    totel_amount = models.FloatField()
+    tax_charge = models.FloatField()
+    
+    
+    class Meta:
+        db_table = "customer_cartbill"
+        verbose_name = "cartbill"
+        verbose_name_plural = "cartbills"
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.customer.user.email
+    
+    
+class BusDetail(models.Model):
+    buses = models.ForeignKey(Bus, on_delete=models.CASCADE)
+    bus_name = models.CharField(max_length=255)
+    bus_code = models.CharField(max_length=50)
+    departure_time = models.TimeField()
+    arrival_time = models.TimeField()
+    duration = models.CharField(max_length=50)
+    departure_stop = models.CharField(max_length=255)
+    arrival_stop = models.CharField(max_length=255)
+    baggage_allowance = models.CharField(max_length=50)
+    cabin_baggage = models.CharField(max_length=50)
+    check_in_baggage = models.CharField(max_length=50)
+    terminal = models.CharField(max_length=50, blank=True, null=True)
+    status = models.CharField(max_length=100) 
+
+    def __str__(self):
+        return f"{self.bus_code} - {self.bus_name}"
+    
+    
+class TrainDetail(models.Model):
+    trains = models.ForeignKey(Train, on_delete=models.CASCADE)
+    train_name = models.CharField(max_length=255)
+    train_code = models.CharField(max_length=50)
+    departure_time = models.TimeField()
+    arrival_time = models.TimeField()
+    duration = models.CharField(max_length=50)
+    departure_stop = models.CharField(max_length=255)
+    arrival_stop = models.CharField(max_length=255)
+    baggage_allowance = models.CharField(max_length=50)
+    cabin_baggage = models.CharField(max_length=50)
+    check_in_baggage = models.CharField(max_length=50)
+    terminal = models.CharField(max_length=50, blank=True, null=True)
+    status = models.CharField(max_length=100) 
+
+    def __str__(self):
+        return f"{self.train_code} - {self.train_name}"
+    
+    
