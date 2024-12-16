@@ -1,0 +1,95 @@
+{% extends 'base/manager-base.html' %}
+{% load static %}
+
+{% block container %}
+    {% include 'includes/manager-nav.html' %}
+
+    <div class="content-body">
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Flight</h4>
+                            <div class="border-b border-gray-200 pb-4 mb-4">
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Flight Number</label>
+                                            {{ form.flight_numbers }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Flight Image</label>
+                                            {{ form.image }}
+                                            {% if form.instance.image %}
+                                                <img src="{{ form.instance.image.url }}" alt="flight image" style="width: 100px;">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Departure Code</label>
+                                            {{ form.departure_code }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Arrival Code</label>
+                                            {{ form.arrival_code }}
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Departure Time</label>
+                                            {{ form.departure_time }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Arrival Time</label>
+                                            {{ form.arrival_time }}
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Price</label>
+                                            {{ form.price }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Discount</label>
+                                            {{ form.discount }}
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Number of Stops</label>
+                                            {{ form.stops }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Duration</label>
+                                            {{ form.duration }}
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button type="submit"style="background-color: blue;"  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >Submit</button>
+                                    </div>
+                                    {% if error %}
+                                    <div class="text-red-500 text-sm mt-2">
+                                        <p>{{ message }}</p>
+                                    </div>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

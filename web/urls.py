@@ -15,6 +15,10 @@ urlpatterns = [
    path("offer/", views.offer, name="offer"),
    path("train-books/<int:id>/", views.train_books, name="train-books"),
    path("bus-books/<int:id>/", views.bus_books, name="bus-books"),
+   path("bus-seat/", views.bus_seat, name="bus-seat"),
+   path("train-seat/", views.train_seat, name="train-seat"),
+   path('search-flights/', views.search_flights, name='search_flights'),
+   
    
    
    

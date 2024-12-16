@@ -39,11 +39,13 @@ def login(request):
 
     return render(request, 'manager/login.html', {'form': form})
 
+
 def logout(request):
     return redirect('manager:login')
 
 
-
+@allow_manager
+@login_required(login_url='/login/')
 def slider(request):
     instances = Slider.objects.all()
     
@@ -136,7 +138,6 @@ def slider_edit(request,id):
 
 @allow_manager
 @login_required(login_url='/login/')
-
 def users(request):
     instances = User.objects.all()
     
@@ -311,3 +312,280 @@ def offers_edit(request, id):
         }
         
     return render(request,'manager/offers_add.html', context=context)
+
+
+@allow_manager
+@login_required(login_url='/login/')
+def flight(request):
+    instances = Flight.objects.all()
+    
+    context = {
+        'instances': instances,
+    }
+    
+    
+    return render(request,'manager/flight.html', context=context)
+@allow_manager
+@login_required(login_url='/login/')
+
+def flight_delete(request,id):
+    
+    instance = Flight.objects.get(id=id)
+    
+    instance.delete()
+    
+    return HttpResponseRedirect(reverse('manager:flight'))
+@allow_manager
+@login_required(login_url='/login/')
+def flight_add(request,):
+    if request.method == 'POST':   
+        form = FlightForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.save()
+            
+            return HttpResponseRedirect(reverse('manager:flight'))
+            
+        else:
+            message = generate_form_errors(form)
+            form = FlightForm()
+
+            context = {
+            "error": True,
+            "message": message,
+            "form": form,
+            }
+    
+        return render(request,'manager/flight_add.html', context=context)
+
+
+
+    else:
+        form = FlightForm()
+        
+        context = {
+            "form": form,
+        }
+        
+    return render(request,'manager/flight_add.html', context=context)
+@allow_manager
+@login_required(login_url='/login/')
+def flight_edit(request,id):
+    instance = Flight.objects.get(id=id)
+    if request.method == 'POST':   
+        form = FlightForm(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.save()
+            
+            return HttpResponseRedirect(reverse('manager:flight'))
+            
+        else:
+            message = generate_form_errors(form)
+            form = FlightForm()
+
+            context = {
+            "error": True,
+            "message": message,
+            "form": form,
+            "instance": instance
+            }
+    
+        return render(request,'manager/flight_add.html', context=context)
+
+
+
+    else:
+        form = FlightForm(instance=instance)
+        
+        context = {
+            "form": form,
+            "instance": instance
+        }
+        
+    return render(request,'manager/flight_add.html', context=context)
+
+
+
+@allow_manager
+@login_required(login_url='/login/')
+def bus(request):
+    instances = Bus.objects.all()
+    
+    context = {
+        'instances': instances,
+    }
+    
+    
+    return render(request,'manager/bus.html', context=context)
+@allow_manager
+@login_required(login_url='/login/')
+
+def bus_delete(request,id):
+    
+    instance = Bus.objects.get(id=id)
+    
+    instance.delete()
+    
+    return HttpResponseRedirect(reverse('manager:bus'))
+@allow_manager
+@login_required(login_url='/login/')
+def bus_add(request,):
+    if request.method == 'POST':   
+        form = BusForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.save()
+            
+            return HttpResponseRedirect(reverse('manager:bus'))
+            
+        else:
+            message = generate_form_errors(form)
+            form = BusForm()
+
+            context = {
+            "error": True,
+            "message": message,
+            "form": form,
+            }
+    
+        return render(request,'manager/bus_add.html', context=context)
+
+
+
+    else:
+        form = BusForm()
+        
+        context = {
+            "form": form,
+        }
+        
+    return render(request,'manager/bus_add.html', context=context)
+@allow_manager
+@login_required(login_url='/login/')
+def bus_edit(request,id):
+    instance = Bus.objects.get(id=id)
+    if request.method == 'POST':   
+        form = BusForm(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.save()
+            
+            return HttpResponseRedirect(reverse('manager:bus'))
+            
+        else:
+            message = generate_form_errors(form)
+            form = BusForm()
+
+            context = {
+            "error": True,
+            "message": message,
+            "form": form,
+            "instance": instance
+            }
+    
+        return render(request,'manager/bus_add.html', context=context)
+
+
+
+    else:
+        form = BusForm(instance=instance)
+        
+        context = {
+            "form": form,
+            "instance": instance
+        }
+        
+    return render(request,'manager/bus_add.html', context=context)
+
+
+@allow_manager
+@login_required(login_url='/login/')
+def train(request):
+    instances = Train.objects.all()
+    
+    context = {
+        'instances': instances,
+    }
+    
+    
+    return render(request,'manager/train.html', context=context)
+@allow_manager
+@login_required(login_url='/login/')
+
+def train_delete(request,id):
+    
+    instance = Train.objects.get(id=id)
+    
+    instance.delete()
+    
+    return HttpResponseRedirect(reverse('manager:train'))
+@allow_manager
+@login_required(login_url='/login/')
+def train_add(request,):
+    if request.method == 'POST':   
+        form = TrainForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.save()
+            
+            return HttpResponseRedirect(reverse('manager:train'))
+            
+        else:
+            message = generate_form_errors(form)
+            form = TrainForm()
+
+            context = {
+            "error": True,
+            "message": message,
+            "form": form,
+            }
+    
+        return render(request,'manager/train_add.html', context=context)
+
+
+
+    else:
+        form = TrainForm()
+        
+        context = {
+            "form": form,
+        }
+        
+    return render(request,'manager/train_add.html', context=context)
+@allow_manager
+@login_required(login_url='/login/')
+def train_edit(request,id):
+    instance = Train.objects.get(id=id)
+    if request.method == 'POST':   
+        form = TrainForm(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.save()
+            
+            return HttpResponseRedirect(reverse('manager:train'))
+            
+        else:
+            message = generate_form_errors(form)
+            form = TrainForm()
+
+            context = {
+            "error": True,
+            "message": message,
+            "form": form,
+            "instance": instance
+            }
+    
+        return render(request,'manager/train_add.html', context=context)
+
+
+
+    else:
+        form = TrainForm(instance=instance)
+        
+        context = {
+            "form": form,
+            "instance": instance
+        }
+        
+    return render(request,'manager/train_add.html', context=context)

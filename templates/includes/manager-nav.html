@@ -194,15 +194,6 @@
         </div>
     </div>
 </div>
-<!--**********************************
-    Header end ti-comment-alt
-***********************************-->
-
-<!--**********************************
-    Sidebar start
-***********************************-->
-
-        ***********************************-->
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
@@ -243,6 +234,33 @@
                         <ul aria-expanded="false">
                             <li><a href="{% url 'manager:offers' %}">List</a></li>
                             <li><a href="{% url 'manager:offers_add' %}">Add Now</a></li>
+                        </ul>
+                    </li>
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Flight</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'manager:flight' %}">List</a></li>
+                            <li><a href="{% url 'manager:flight_add' %}">Add Now</a></li>
+                        </ul>
+                    </li>
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Bus</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'manager:bus' %}">List</a></li>
+                            <li><a href="{% url 'manager:bus_add' %}">Add Now</a></li>
+                        </ul>
+                    </li>
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Train</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'manager:train' %}">List</a></li>
+                            <li><a href="{% url 'manager:train_add' %}">Add Now</a></li>
                         </ul>
                     </li>
                 </ul>

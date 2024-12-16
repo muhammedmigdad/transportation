@@ -7,6 +7,8 @@ from users.models import User
 from django.db.models import Sum
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 
@@ -94,6 +96,11 @@ def index(request):
     }
 
     return render(request, 'web/index.html', context=context)
+
+
+
+def search_flights(request):
+    return render(request, 'web/index.html')
 
 def login(request):
     if request.method == 'POST':
@@ -563,4 +570,29 @@ def bus_books(request, id):
 
 
     return render(request, 'web/bus-books.html',context=context)
+
+
+def bus_seat(request):
+    
+    bus = Bus.objects.all()
+    
+    
+    context = {
+        "bus": bus,
+    }
+    
+    return render(request, 'web/bus-seat.html', context=context)
+def train_seat(request):
+    
+    trains = Train.objects.all()
+    
+    
+    context = {
+        "trains": trains,
+    }
+    
+    return render(request, 'web/train-seat.html', context=context)
+    
+
+ 
  

@@ -1,99 +1,86 @@
 {% load static %}
 
+<header class="w-full fixed z-50 bg-white shadow-md">
+  <div class="flex justify-between items-center px-4 sm:px-8 py-3">
+    <!-- Logo Section -->
+    <div class="flex items-center">
+      <img class="w-[70px] h-[70px] sm:w-[90px] sm:h-[90px]" src="{% static 'web/images/logo.jpg' %}" alt="logo">
+      <h1 class="ml-4 text-2xl sm:text-3xl font-bold italic text-[#eb996d] hover:text-[#ed864e] transition-transform duration-300 hover:scale-110">
+        Yatra
+      </h1>
+    </div>
 
-<header class=" w-full fixed z-50 bg-white rounded-xl">
-    <div class="flex justify-between items-center">
-        <ul class="flex items-center">
-        <img class=" w-[90px] h-[90px] sm:w-[130px] sm:h-[130px] " src="{% static 'web/images/logo.jpg' %}" alt="logo">
-        <h1 class="ml-4 text-[25px] sm:text-[40px] transition-transform duration-300 hover:scale-110 hover:text-[#ed864e] italic font-bold text-[#eb996d]">Yatra</h1>
-        </ul>
-        <div class=" hidden lg:flex  items-center">
-            {% for category in categories %}
-              <a href="{% url 'web:bus' %}" class="flex ml-10 items-center">
-                <img class=" w-[150px] h-[100px] transition-transform duration-300 hover:scale-110 rounded-xl" src="{{category.image.url}}" alt="images">
-                <h1 class="text-[30px] font-bold transition-transform duration-300 hover:scale-110 hover:text-[#000] text-[#434242] ml-2">{{category.name}}</h1>
-              </a>
-            {% endfor %}
-          </div>
-          <div class="sm:hidden flex items-center mr-9" id="mobile-menu-button">
-            <i class='bx bx-menu' id="mobile-menu"></i>
-          </div>
-        <div class=" hidden sm:flex items-center">
-            <a href="{% url 'web:offer' %}" class="flex items-center ml-7">
-                <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/offer.png' %}" alt="images">
-                <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f] mr-6 ml-2 text-[#000]">Offer</h2>
-            </a>
-            {% if user.is_authenticated %}
-            <a href="{% url 'web:logout' %}" class="flex items-center ml-7">
-                <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/logout1.png' %}" alt="images">
-                <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f] mr-6 ml-2 text-[#000]">Logout</h2>
-            </a>
-            {% else %}
-            <a href="{% url 'web:register' %}" class="flex items-center ml-7">
-                <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/sign.avif' %}" alt="images">
-                <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f]  ml-2 text-[#000]">Sign Up</h2>
-            </a>
-            <a href="{% url 'web:login' %}" class="flex items-center ml-7">
-                <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/login2.jpg' %}" alt="images">
-                <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f]  ml-2 text-[#000]">Login</h2>
-            </a>
-            {% endif %}
-        </div>
+    <!-- Desktop Navigation -->
+    <nav class="hidden lg:flex items-center space-x-8">
+      <a href="{% url 'web:index' %}" class="flex items-center hover:text-black">
+        <img class="w-[100px] h-[70px] rounded-lg transition-transform duration-300 hover:scale-110" src="{% static 'web/images/flight.jpg' %}" alt="Flights">
+        <h2 class="ml-2 text-xl font-semibold text-gray-700">Flights</h2>
+      </a>
+      <a href="{% url 'web:train' %}" class="flex items-center hover:text-black">
+        <img class="w-[100px] h-[70px] rounded-lg transition-transform duration-300 hover:scale-110" src="{% static 'web/images/train.jpg' %}" alt="Trains">
+        <h2 class="ml-2 text-xl font-semibold text-gray-700">Trains</h2>
+      </a>
+      <a href="{% url 'web:bus' %}" class="flex items-center hover:text-black">
+        <img class="w-[100px] h-[70px] rounded-lg transition-transform duration-300 hover:scale-110" src="{% static 'web/images/bus.jpg' %}" alt="Bus">
+        <h2 class="ml-2 text-xl font-semibold text-gray-700">Bus</h2>
+      </a>
+    </nav>
+
+    <!-- Offer and Auth Section -->
+    <div class="hidden sm:flex items-center space-x-6">
+      <a href="{% url 'web:offer' %}" class="flex items-center hover:text-red-500">
+        <img class="w-[40px] h-[40px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/offer.png' %}" alt="Offer">
+        <span class="ml-2 text-lg font-medium text-black">Offer</span>
+      </a>
+      {% if user.is_authenticated %}
+      <a href="{% url 'web:logout' %}" class="flex items-center hover:text-red-500">
+        <img class="w-[40px] h-[40px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/logout1.png' %}" alt="Logout">
+        <span class="ml-2 text-lg font-medium text-black">Logout</span>
+      </a>
+      {% else %}
+      <a href="{% url 'web:register' %}" class="flex items-center hover:text-red-500">
+        <img class="w-[40px] h-[40px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/sign.avif' %}" alt="Sign Up">
+        <span class="ml-2 text-lg font-medium text-black">Sign Up</span>
+      </a>
+      <a href="{% url 'web:login' %}" class="flex items-center hover:text-red-500">
+        <img class="w-[40px] h-[40px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/login2.jpg' %}" alt="Login">
+        <span class="ml-2 text-lg font-medium text-black">Login</span>
+      </a>
+      {% endif %}
     </div>
-    <div class=" flex sm:hidden border px-6 py-4 rounded-xl bg-black bg-opacity-80 max-w-xs mx-auto items-center" id="mobile-drop">
-        <div>
-            {% for category in categories %}
-            <a href="#" class="flex ml-10 mt-5 items-center">
-              <img class=" w-[70px] h-[70px] transition-transform duration-300 hover:scale-110 rounded-xl" src="{{category.image.url}}" alt="images">
-              <h1 class="text-[30px] font-bold transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f]  text-[#e34141] ml-2">{{category.name}}</h1>
-            </a>
-          {% endfor %}
-          <a href="{% url 'web:offer' %}" class="flex items-center ml-7">
-            <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/offer.png' %}" alt="images">
-            <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f] mr-6 ml-2 text-[#000]">Offer</h2>
-        </a>
-          {% if user.is_authenticated %}
-          <a href="{% url 'web:logout' %}" class=" flex items-center mt-3">
-              <img class=" w-[50px] h-[50px] transition-transform ml-10 duration-300 hover:scale-110" src="{% static 'web/images/logout1.png' %}" alt="images">
-              <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f] ml-10 text-[#e34141]">Logout</h2>
-          </a>
-          {% else %}
-          <a href="{% url 'web:register' %}" class=" flex items-center mt-3">
-              <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/sign.avif' %}" alt="images">
-              <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f] ml-10  text-[#e34141]">Sign Up</h2>
-          </a>
-          <a href="{% url 'web:login' %}" class=" flex items-center mt-3">
-              <img class=" w-[50px] h-[50px] transition-transform duration-300 hover:scale-110" src="{% static 'web/images/login2.jpg' %}" alt="images">
-              <h2 class="text-[20px] font-medium transition-transform duration-300 hover:scale-110 hover:text-[#ff2f2f] ml-10  text-[#e34141]">Login</h2>
-          </a>
-          {% endif %}
-        </div>
-       
+
+    <!-- Mobile Menu Icon -->
+    <div class="lg:hidden flex items-center">
+      <button id="menu-button" class="text-3xl text-gray-700">
+        <i class='bx bx-menu'></i>
+      </button>
     </div>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  <div id="mobile-menu" class="hidden bg-white shadow-lg py-5 px-6">
+    <nav class="space-y-4">
+      <a href="{% url 'web:index' %}" class="block text-lg font-medium text-gray-700 hover:text-black">Flights</a>
+      <a href="{% url 'web:train' %}" class="block text-lg font-medium text-gray-700 hover:text-black">Trains</a>
+      <a href="{% url 'web:bus' %}" class="block text-lg font-medium text-gray-700 hover:text-black">Bus</a>
+      <a href="{% url 'web:offer' %}" class="block text-lg font-medium text-gray-700 hover:text-red-500">Offer</a>
+      {% if user.is_authenticated %}
+      <a href="{% url 'web:logout' %}" class="block text-lg font-medium text-red-500">Logout</a>
+      {% else %}
+      <a href="{% url 'web:register' %}" class="block text-lg font-medium text-gray-700 hover:text-red-500">Sign Up</a>
+      <a href="{% url 'web:login' %}" class="block text-lg font-medium text-gray-700 hover:text-red-500">Login</a>
+      {% endif %}
+    </nav>
+  </div>
 </header>
 
-
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Dropdown functionality (similar to your existing code)
-        // ...
-    
-        // Menu icon functionality
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileDrop = document.getElementById('mobile-drop');
-        let isMenuOpen = false;
-    
-        mobileMenu.addEventListener('click', function () {
-        isMenuOpen = !isMenuOpen;
-    
-        if (isMenuOpen) {
-            mobileDrop.classList.remove('hidden');
-        } else {
-            console.log('Closing menu');
-            mobileDrop.classList.add('hidden');
-        }
-        });
-    
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuButton = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
 
+    menuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
     });
+  });
 </script>

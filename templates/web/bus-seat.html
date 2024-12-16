@@ -1,0 +1,171 @@
+{% extends 'base/web-base.html' %}
+
+{% load static %}
+
+{% block container %}
+
+
+{% include 'includes/header.html' %}
+
+
+
+<section class="wrapper p-40">
+    <div class="flex  items-center border rounded-2xl px-6 py-3 bg-white">
+        <div class="">
+            <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+                <!-- Upper Row -->
+                <div>
+                <p class="text-gray-700 font-semibold mb-4">Upper</p>
+                <div class="grid grid-cols-8 gap-4" id="upper-row">
+                    <div class="bg-gray-300 seat w-12 h-8 flex items-center justify-center rounded">UD1</div>
+                </div>
+                
+                </div>
+            
+                <!-- Lower Row -->
+                <div class="mt-6">
+                <p class="text-gray-700 font-semibold mb-4">Lower</p>
+                <div class="grid grid-cols-8 gap-4 " id="lower-row">
+                    <div class="col-span-1 flex items-center justify-center">
+                        <img class=" w-[50px] h-[50px]" src="{% static 'web/images/srg.png' %}" alt="images">
+                    </div>
+                    <div class="bg-gray-300 seat w-12 h-8 flex items-center justify-center rounded">LD1</div>
+                </div>
+                </div>
+            </div>
+        </div>
+            
+
+        <div class="ml-20">
+            <div class="bg-white shadow p-4 rounded-lg max-w-md mx-auto" id="boarding-points">
+                <!-- Search Bar -->
+                <div class="relative mb-4">
+                    <input type="text" placeholder="Search Boarding Point" 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" 
+                        class="w-5 h-5 absolute right-3 top-2.5 text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.5 10.5a6 6 0 11-12 0 6 6 0 0112 0z" />
+                    </svg>
+                </div>
+        
+                <!-- Boarding Points List -->
+                <div class="divide-y divide-gray-200">
+                    <!-- Item 1 -->
+                    <div class="flex items-center justify-between py-4">
+                        <div>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="form-checkbox text-orange-500 rounded focus:ring-orange-500">
+                                <span class="font-medium text-gray-800">palakkad Bus Stand</span>
+                            </label>
+                            <div class="text-sm text-gray-500">palakkad  Bus Stand, 8287009889</div>
+                        </div>
+                        <div class="text-gray-700 font-medium">4:00</div>
+                    </div>
+        
+                    <!-- Item 2 -->
+                    <div class="flex items-center justify-between py-4">
+                        <div>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="form-checkbox text-orange-500 rounded focus:ring-orange-500">
+                                <span class="font-medium text-gray-800">malappuram Bus stand</span>
+                            </label>
+                            <div class="text-sm text-gray-500">malappuram Bus stand, 8287009889</div>
+                        </div>
+                        <div class="text-gray-700 font-medium">1:50</div>
+                    </div>
+                    <div class="flex items-center justify-between py-4">
+                        <div>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="form-checkbox text-orange-500 rounded focus:ring-orange-500">
+                                <span class="font-medium text-gray-800">kochi Bus stand</span>
+                            </label>
+                            <div class="text-sm text-gray-500">kochi Bus stand, 8287009889</div>
+                        </div>
+                        <div class="text-gray-700 font-medium">9:50</div>
+                    </div>
+                    <div class="flex items-center justify-between py-4">
+                        <div>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="form-checkbox text-orange-500 rounded focus:ring-orange-500">
+                                <span class="font-medium text-gray-800">kozhikod Bus stand</span>
+                            </label>
+                            <div class="text-sm text-gray-500">kozhikod Bus stand, 8287009889</div>
+                        </div>
+                        <div class="text-gray-700 font-medium">4:50</div>
+                    </div>
+                </div>
+        
+                <!-- Footer Section -->
+                <div class="mt-6 flex justify-between items-center">
+                    <div class="text-gray-700">
+                        <span class="font-medium">Seat Selected:</span> <span>0</span>
+                    </div>
+                    <div class="text-gray-700">
+                        <span class="font-medium">Base Fare:</span> <span>&#8377; 0</span>
+                    </div>
+                </div>
+                
+                <button disabled class="mt-4 w-full bg-gray-300 seat text-gray-500 py-2 rounded-lg font-medium cursor-not-allowed">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        {% for bus in bus %}
+        <div class="border bg-white px-5 md:px-20 py-5 md:py-10 mt-5 rounded-2xl">
+        <div class="flex flex-wrap justify-between items-center">
+            <img class="w-[100px] h-[100px]" src="{{ bus.image.url }}" alt="Logo">
+            <ul class="ml-14">
+            <h1 class="text-[#000] text-[20px] font-semibold">{{ bus.Buses }}</h1>
+            <h2 class="text-[16px] font-medium text-gray-400">{{ bus.bus_numbers }}</h2>
+            </ul>
+            <ul class="ml-14">
+            <h3 class="text-[20px] font-semibold text-black">{{ bus.departure_time|date:"H:i" }}</h3>
+            <h5 class="text-[16px] font-medium text-gray-400">{{ bus.departure_code }}</h5>
+            </ul>
+            <ul class="ml-14">
+            <span class="text-[16px] font-medium text-gray-400">
+                {{ bus.duration }}
+            </span>
+            <div class="border-b-2 border-gray-500 w-14"></div>
+            <h3 class="text-[16px] font-medium text-gray-400">{{ bus.stops }}</h3>
+            </ul>
+            <ul class="ml-14">
+            <span class="text-[20px] font-semibold text-black">{{ bus.arrival_time|date:"H:i" }}</span>
+            <p class="text-[16px] font-medium text-[#ff2a2a]">{{ bus.arrival_code }}</p>
+            </ul>
+            <ul class="ml-14">
+            <h1 class="text-[#000] text-[20px] font-semibold">₹{{ bus.price }}</h1>
+            {% if bus.discount %}
+            <h2 class="text-[16px] font-medium text-orange-400">Extra ₹{{ bus.discount}} Off</h2>
+            {% endif %}
+            </ul>
+            <div class="transition-transform bg-orange-400 duration-300 ml-14 hover:scale-110 hover:bg-orange-500 border px-3 py-2 rounded-2xl">
+                <a href="{% url 'web:bus-seat' %}" class=" block text-[30px] font-semibold text-white">Seats</a>
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+</section>
+<script>
+
+const upperRowContainer = document.getElementById('upper-row');
+
+const totalSeats = 18;
+
+for (let i = 1; i <= totalSeats; i++) {
+    const seatDiv = document.createElement('div');
+
+    seatDiv.className = 'bg-gray-300 seat w-12 h-8 flex items-center justify-center rounded';
+
+    seatDiv.textContent = `UD${i}`;
+
+    upperRowContainer.appendChild(seatDiv);
+}
+
+</script>
+
+
+
+{% endblock %}upper-row

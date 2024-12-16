@@ -45,3 +45,55 @@ class OfferForm(forms.ModelForm):
             'short_description': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Short Description'}),
             'is_percentage': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
+class FlightForm(forms.ModelForm):
+    class Meta:
+        model = Flight
+        fields = ['image', 'airline', 'flight_numbers', 'departure_time',  'departure_code','duration', 'stops', 'arrival_time', 'arrival_code','price','discount']
+        widgets = {
+            'flight_numbers': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter flight number' }),
+            'departure_time': forms.TimeInput(attrs={'class': 'form-control','type': 'time'}),
+            'arrival_time': forms.TimeInput(attrs={'class': 'form-control','type': 'time' }),
+            'departure_code': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter departure code'}),
+            'arrival_code': forms.TextInput(attrs={ 'class': 'form-control','placeholder': 'Enter arrival code' }),
+            'price': forms.NumberInput(attrs={'class': 'form-control','placeholder': 'Enter price' }),
+            'discount': forms.NumberInput(attrs={ 'class': 'form-control','placeholder': 'Enter discount (optional)'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'stops': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter number of stops' }),
+            'duration': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter duration (e.g., 2:30:00)' }),
+        }
+        
+class BusForm(forms.ModelForm):
+    class Meta:
+        model = Bus
+        fields = ['image', 'buses', 'bus_numbers', 'departure_time',  'departure_code','duration', 'stops', 'arrival_time', 'arrival_code','price','discount']
+        widgets = {
+            'bus_numbers': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter bus number' }),
+            'departure_time': forms.TimeInput(attrs={'class': 'form-control','type': 'time'}),
+            'arrival_time': forms.TimeInput(attrs={'class': 'form-control','type': 'time' }),
+            'departure_code': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter departure code'}),
+            'arrival_code': forms.TextInput(attrs={ 'class': 'form-control','placeholder': 'Enter arrival code' }),
+            'price': forms.NumberInput(attrs={'class': 'form-control','placeholder': 'Enter price' }),
+            'discount': forms.NumberInput(attrs={ 'class': 'form-control','placeholder': 'Enter discount (optional)'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'stops': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter number of stops' }),
+            'duration': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter duration (e.g., 2:30:00)' }),
+        }
+        
+        
+class TrainForm(forms.ModelForm):
+    class Meta:
+        model = Train
+        fields = ['image', 'trains', 'train_numbers', 'departure_time',  'departure_code','duration', 'stops', 'arrival_time', 'arrival_code','price','discount']
+        widgets = {
+            'train_numbers': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter train number' }),
+            'departure_time': forms.TimeInput(attrs={'class': 'form-control','type': 'time'}),
+            'arrival_time': forms.TimeInput(attrs={'class': 'form-control','type': 'time' }),
+            'departure_code': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter departure code'}),
+            'arrival_code': forms.TextInput(attrs={ 'class': 'form-control','placeholder': 'Enter arrival code' }),
+            'price': forms.NumberInput(attrs={'class': 'form-control','placeholder': 'Enter price' }),
+            'discount': forms.NumberInput(attrs={ 'class': 'form-control','placeholder': 'Enter discount (optional)'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'stops': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter number of stops' }),
+            'duration': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter duration (e.g., 2:30:00)' }),
+        }

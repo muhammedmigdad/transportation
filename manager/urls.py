@@ -20,4 +20,17 @@ urlpatterns = [
    path("offers_add", views.offers_add, name="offers_add"),
    path("offers_edit/<int:id>/", views.offers_edit, name="offers_edit"),
    path("offers_delete/<int:id>/", views.offers_delete, name="offers_delete"),
+   path("flight/", views.flight, name="flight"),
+   path("flight_add", views.flight_add, name="flight_add"),
+   path("flight_edit/<int:id>/", views.flight_edit, name="flight_edit"),
+   path("flight_delete/<int:id>/", views.flight_delete, name="flight_delete"),
+   path("bus/", views.bus, name="bus"),
+   path("bus_add", views.bus_add, name="bus_add"),
+   path("bus_edit/<int:id>/", views.bus_edit, name="bus_edit"),
+   path("bus_delete/<int:id>/", views.bus_delete, name="bus_delete"),
+   path("train/", views.train, name="train"),
+   path("train_add", views.train_add, name="train_add"),
+   path("train_edit/<int:id>/", views.train_edit, name="train_edit"),
+   path("train_delete/<int:id>/", views.train_delete, name="train_delete"),
 ]
+
