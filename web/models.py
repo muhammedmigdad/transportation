@@ -134,8 +134,24 @@ class Bus(models.Model):
 
 
     def __str__(self):
-        return self.Buses.name
-    
+        return self.buses.name
+class BusSeat(models.Model):
+    SEAT_TYPES = [
+        ('upper', 'Upper'),
+        ('lower', 'Lower'),
+    ]
+    STATUS = [
+        ('available', 'Available'),
+        ('booked', 'Booked'),
+    ]
+
+    buses = models.ForeignKey(Bus, on_delete=models.CASCADE, related_name='seats')
+    seat_number = models.CharField(max_length=10)
+    seat_type = models.CharField(max_length=10, choices=SEAT_TYPES)
+    status = models.CharField(max_length=10, choices=STATUS, default='available')
+
+    def __str__(self):
+        return f"{self.buses.bus_numbers} - {self.seat_number} ({self.seat_type})"
     
 class Buses(models.Model):
     name = models.CharField(max_length=255) 

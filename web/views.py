@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
@@ -7,9 +7,30 @@ from users.models import User
 from django.db.models import Sum
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from .forms import SeatBookingForm
 from django.views.decorators.csrf import csrf_exempt
 
+@login_required(login_url='/login/')
+def seat_selection(request, id):
+    buses = get_object_or_404(Bus, id=id)
+    seats = Bus.objects.all()
 
+    if request.method == 'POST':
+        form = SeatBookingForm(request.POST)
+        if form.is_valid():
+            seat_ids = form.cleaned_data['seat_ids'].split(',')
+            for seat_id in seat_ids:
+                seat = BusSeat.objects.get(id=seat_id)
+                if seat.status == 'available':
+                    seat.status = 'booked'
+                    seat.save()
+            return redirect('booking_confirmation')  
+    form = SeatBookingForm()
+    return render(request, 'bus-seat.html', {'buses': buses, 'seats': seats, 'form': form})
+
+def get_seat_status(request,id):
+    seats = BusSeat.objects.filter(train_id=id).values('id', 'seat_number', 'status')
+    return JsonResponse(list(seats), safe=False)
 
 
 @login_required(login_url='/login/')
@@ -98,9 +119,6 @@ def index(request):
     return render(request, 'web/index.html', context=context)
 
 
-
-def search_flights(request):
-    return render(request, 'web/index.html')
 
 def login(request):
     if request.method == 'POST':

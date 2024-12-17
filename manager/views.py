@@ -247,7 +247,6 @@ def offers_delete(request, id):
     return HttpResponseRedirect(reverse('manager:offers'))
 @allow_manager
 @login_required(login_url='/login/')
-
 def offers_add(request):
     if request.method == 'POST':   
         form = OfferForm(request.POST, request.FILES)
@@ -452,7 +451,6 @@ def bus_add(request,):
         return render(request,'manager/bus_add.html', context=context)
 
 
-
     else:
         form = BusForm()
         
@@ -507,14 +505,10 @@ def train(request):
     context = {
         'instances': instances,
     }
-    
-    
     return render(request,'manager/train.html', context=context)
 @allow_manager
 @login_required(login_url='/login/')
-
 def train_delete(request,id):
-    
     instance = Train.objects.get(id=id)
     
     instance.delete()
@@ -522,29 +516,24 @@ def train_delete(request,id):
     return HttpResponseRedirect(reverse('manager:train'))
 @allow_manager
 @login_required(login_url='/login/')
-def train_add(request,):
+def train_add(request):
     if request.method == 'POST':   
         form = TrainForm(request.POST, request.FILES)
         if form.is_valid():
-            instance=form.save(commit=False)
+            instance = form.save(commit=False)
             instance.save()
-            
             return HttpResponseRedirect(reverse('manager:train'))
-            
+
         else:
             message = generate_form_errors(form)
             form = TrainForm()
 
             context = {
-            "error": True,
-            "message": message,
-            "form": form,
+                "error": True,
+                "message": message,
+                "form": form,
             }
-    
-        return render(request,'manager/train_add.html', context=context)
-
-
-
+        return render(request, 'manager/train_add.html', context=context)
     else:
         form = TrainForm()
         
@@ -552,7 +541,7 @@ def train_add(request,):
             "form": form,
         }
         
-    return render(request,'manager/train_add.html', context=context)
+    return render(request, 'manager/train_add.html', context=context)
 @allow_manager
 @login_required(login_url='/login/')
 def train_edit(request,id):

@@ -36,99 +36,104 @@
       
 
     <div class="px-6 py-6 rounded-xl bg-blue-400 mt-7">
-      <div class="border bg-white p-3 sm:p-8 lg:p-10 mt-5 rounded-xl">
+      <div class="border bg-white p-3 sm:p-8 lg:p-10 mt-5 rounded-xl relative">
         <form action="">
           <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
+            <!-- Input for From -->
             <input 
               class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
               type="text" 
-              name="name" 
+              name="from" 
               placeholder="From" 
             />
+      
+            <!-- Input for To -->
             <input 
               class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
               type="text" 
-              name="name" 
+              name="to" 
               placeholder="To" 
             />
+            <div 
+            class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto text-center cursor-pointer"
+            id="profile-menu-button">
+            Traveller & Class
+          </div>
             <input 
               class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto" 
               type="date" 
-              name="Date" 
+              name="date" 
               required
             />
-            <div class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto text-center" id="profile-menu-button">
-              Traveller & Class
-            </div>
-
             <button 
               type="submit" 
-              class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-100 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
+              class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-105 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
             >
               Search
             </button>
           </ul>
-          <div class="p-6 shadow-md rounded-lg w-96 hidden absolute bg-white left-[62%]" id="profile-menu">
+      
+          <!-- Traveller & Class Dropdown -->
+          <div class="p-6 shadow-md rounded-lg w-96 hidden absolute bg-white left-[50%] -translate-x-1/2 top-[100%] mt-2 z-50" id="profile-menu">
+            <!-- Adults Section -->
             <div class="flex items-center justify-between mb-4">
               <div>
                 <h2 class="text-lg font-semibold">Adults</h2>
                 <p class="text-sm text-gray-500">(12+ Years)</p>
               </div>
               <div class="flex items-center space-x-2">
-                <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">-</button>
-                <span class="text-lg font-medium">3</span>
-                <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">+</button>
+                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'adults', -1)">-</button>
+                <span id="adults" class="text-lg font-medium">1</span>
+                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'adults', 1)">+</button>
               </div>
             </div>
+      
+            <!-- Children Section -->
             <div class="flex items-center justify-between mb-4">
               <div>
                 <h2 class="text-lg font-semibold">Children</h2>
                 <p class="text-sm text-gray-500">(2-12 Years)</p>
               </div>
               <div class="flex items-center space-x-2">
-                <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">-</button>
-                <span class="text-lg font-medium">5</span>
-                <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">+</button>
+                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'children', -1)">-</button>
+                <span id="children" class="text-lg font-medium">0</span>
+                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'children', 1)">+</button>
               </div>
             </div>
+      
+            <!-- Infant Section -->
             <div class="flex items-center justify-between mb-4">
               <div>
-                <h2 class="text-lg font-semibold">Infant</h2>
+                <h2 class="text-lg font-semibold">Infants</h2>
                 <p class="text-sm text-gray-500">(0-2 Years)</p>
               </div>
               <div class="flex items-center space-x-2">
-                <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">-</button>
-                <span class="text-lg font-medium">0</span>
-                <button class="w-8 h-8 flex justify-center items-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">+</button>
+                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'infants', -1)">-</button>
+                <span id="infants" class="text-lg font-medium">0</span>
+                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'infants', 1)">+</button>
               </div>
             </div>
-            <div class="flex items-center space-x-2 mb-4">
-              <input id="more-travellers" type="checkbox" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-              <label for="more-travellers" class="text-sm text-gray-700">More than 9 Travellers</label>
-              <span class="text-blue-500"><i class="fas fa-users"></i></span>
-            </div>
+      
+            <!-- Travel Class -->
             <div class="mb-4">
               <h2 class="text-lg font-semibold mb-2">Travel Class</h2>
-              <div class="space-y-2">
-                <label class="flex items-center space-x-2">
-                  <input type="radio" name="class" value="economy" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
-                  <span class="text-gray-700">Economy</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                  <input type="radio" name="class" value="premium-economy" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
-                  <span class="text-gray-700">Premium Economy</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                  <input type="radio" name="class" value="business" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
-                  <span class="text-gray-700">Business</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                  <input type="radio" name="class" value="first-class" class="w-5 h-5 text-blue-600 focus:ring-blue-500">
-                  <span class="text-gray-700">First Class</span>
-                </label>
-              </div>
+              <label class="flex items-center space-x-2">
+                <input type="radio" name="class" value="economy" checked> <span>Economy</span>
+              </label>
+              <label class="flex items-center space-x-2">
+                <input type="radio" name="class" value="business"> <span>Business</span>
+              </label>
+              <label class="flex items-center space-x-2">
+                <input type="radio" name="class" value="first-class"> <span>First Class</span>
+              </label>
             </div>
-            <button class="w-full py-3 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition duration-300">Done</button>
+      
+            <button 
+              type="button" 
+              class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300" 
+              id="done-button">
+              Done
+            </button>
           </div>
         </form>
       </div>
@@ -437,26 +442,27 @@
          },
          });
      </script>
+       <script>
+        const menuButton = document.getElementById("profile-menu-button");
+        const profileMenu = document.getElementById("profile-menu");
+        const doneButton = document.getElementById("done-button");
+        menuButton.addEventListener("click", () => {
+          profileMenu.classList.toggle("hidden");
+        });
+        doneButton.addEventListener("click", () => {
+          profileMenu.classList.add("hidden");
+        });
+        function changeCount(event, id, increment) {
+          event.preventDefault();
+          const countSpan = document.getElementById(id);
+          let count = parseInt(countSpan.textContent) + increment;
+          if (count < 0) count = 0; 
+          countSpan.textContent = count;
+        }
+      </script>
+      
 
-    
-     <script>
-      const searchBar = document.getElementById('search-bar');
-      const mobileMenuButton = document.getElementById('mobile-menu-button');
-      const mobileMenu = document.getElementById('mobile-menu');
-  
-      const profileMenuButton = document.getElementById('profile-menu-button');
-      const profileMenu = document.getElementById('profile-menu');
-  
-  
-      mobileMenuButton.addEventListener('click', () => {
-          mobileMenu.classList.toggle('hidden');
-      });
-      profileMenuButton.addEventListener('click', () => {
-          profileMenu.classList.toggle('hidden');
-      });
-  
-  
 
-  </script>
+  
   
 {% endblock %}

@@ -17,8 +17,8 @@ urlpatterns = [
    path("bus-books/<int:id>/", views.bus_books, name="bus-books"),
    path("bus-seat/", views.bus_seat, name="bus-seat"),
    path("train-seat/", views.train_seat, name="train-seat"),
-   path('search-flights/', views.search_flights, name='search_flights'),
-   
+   path('seat_selection/<int:id>/', views.seat_selection, name='seat_selection'),
+   path('buses/<int:id>/seats/status/', views.get_seat_status, name='get_seat_status'),
    
    
    
