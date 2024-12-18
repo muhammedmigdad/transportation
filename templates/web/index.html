@@ -6,7 +6,119 @@
 
 {% include 'includes/header.html' %}
 
+
+
+
+
 <section class="wrapper pt-44 p-10"> 
+
+  <div class="px-6 py-6 rounded-xl bg-blue-400 mt-7">
+    <div class="border bg-white p-3 sm:p-8 lg:p-10 mt-5 rounded-xl relative">
+      <form action="">
+        <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
+          <!-- Input for From -->
+          <input 
+            class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+            type="text" 
+            name="from" 
+            placeholder="From" 
+          />
+    
+          <!-- Input for To -->
+          <input 
+            class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+            type="text" 
+            name="to" 
+            placeholder="To" 
+          />
+          <div 
+          class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto text-center cursor-pointer"
+          id="profile-menu-button">
+          Traveller & Class
+        </div>
+          <input 
+            class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto" 
+            type="date" 
+            name="date" 
+            required
+          />
+          <button 
+            type="submit" 
+            class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-105 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
+          >
+            Search
+          </button>
+        </ul>
+    
+        <!-- Traveller & Class Dropdown -->
+        <div class="p-6 shadow-md rounded-lg w-96 hidden absolute bg-white left-[50%] -translate-x-1/2 top-[100%] mt-2 z-50" id="profile-menu">
+          <!-- Adults Section -->
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-lg font-semibold">Adults</h2>
+              <p class="text-sm text-gray-500">(12+ Years)</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'adults', -1)">-</button>
+              <span id="adults" class="text-lg font-medium">1</span>
+              <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'adults', 1)">+</button>
+            </div>
+          </div>
+    
+          <!-- Children Section -->
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-lg font-semibold">Children</h2>
+              <p class="text-sm text-gray-500">(2-12 Years)</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'children', -1)">-</button>
+              <span id="children" class="text-lg font-medium">0</span>
+              <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'children', 1)">+</button>
+            </div>
+          </div>
+    
+          <!-- Infant Section -->
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-lg font-semibold">Infants</h2>
+              <p class="text-sm text-gray-500">(0-2 Years)</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'infants', -1)">-</button>
+              <span id="infants" class="text-lg font-medium">0</span>
+              <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'infants', 1)">+</button>
+            </div>
+          </div>
+    
+          <!-- Travel Class -->
+          <div class="mb-4">
+            <h2 class="text-lg font-semibold mb-2">Travel Class</h2>
+            <label class="flex items-center space-x-2">
+              <input type="radio" name="class" value="economy" checked> <span>Economy</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="radio" name="class" value="business"> <span>Business</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="radio" name="class" value="first-class"> <span>First Class</span>
+            </label>
+          </div>
+    
+          <button 
+            type="button" 
+            class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300" 
+            id="done-button">
+            Done
+          </button>
+        </div>
+      </form>
+    </div>
+  <div>
+
+    </section>
+    </div>
+<section class="wrapper">
   <div class="flex flex-col lg:flex-row justify-between items-center">
     <div class="flex flex-wrap justify-center lg:justify-start items-center gap-4 lg:gap-10">
       {% for category in categories %}
@@ -32,114 +144,7 @@
   </div>
   
     <h1 class="text-[30px] mt-6 font-bold text-black">Why Book With Yatra?</h1>
-
-      
-
-    <div class="px-6 py-6 rounded-xl bg-blue-400 mt-7">
-      <div class="border bg-white p-3 sm:p-8 lg:p-10 mt-5 rounded-xl relative">
-        <form action="">
-          <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
-            <!-- Input for From -->
-            <input 
-              class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
-              type="text" 
-              name="from" 
-              placeholder="From" 
-            />
-      
-            <!-- Input for To -->
-            <input 
-              class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
-              type="text" 
-              name="to" 
-              placeholder="To" 
-            />
-            <div 
-            class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto text-center cursor-pointer"
-            id="profile-menu-button">
-            Traveller & Class
-          </div>
-            <input 
-              class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto" 
-              type="date" 
-              name="date" 
-              required
-            />
-            <button 
-              type="submit" 
-              class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-105 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
-            >
-              Search
-            </button>
-          </ul>
-      
-          <!-- Traveller & Class Dropdown -->
-          <div class="p-6 shadow-md rounded-lg w-96 hidden absolute bg-white left-[50%] -translate-x-1/2 top-[100%] mt-2 z-50" id="profile-menu">
-            <!-- Adults Section -->
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <h2 class="text-lg font-semibold">Adults</h2>
-                <p class="text-sm text-gray-500">(12+ Years)</p>
-              </div>
-              <div class="flex items-center space-x-2">
-                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'adults', -1)">-</button>
-                <span id="adults" class="text-lg font-medium">1</span>
-                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'adults', 1)">+</button>
-              </div>
-            </div>
-      
-            <!-- Children Section -->
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <h2 class="text-lg font-semibold">Children</h2>
-                <p class="text-sm text-gray-500">(2-12 Years)</p>
-              </div>
-              <div class="flex items-center space-x-2">
-                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'children', -1)">-</button>
-                <span id="children" class="text-lg font-medium">0</span>
-                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'children', 1)">+</button>
-              </div>
-            </div>
-      
-            <!-- Infant Section -->
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <h2 class="text-lg font-semibold">Infants</h2>
-                <p class="text-sm text-gray-500">(0-2 Years)</p>
-              </div>
-              <div class="flex items-center space-x-2">
-                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'infants', -1)">-</button>
-                <span id="infants" class="text-lg font-medium">0</span>
-                <button class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300" onclick="changeCount(event, 'infants', 1)">+</button>
-              </div>
-            </div>
-      
-            <!-- Travel Class -->
-            <div class="mb-4">
-              <h2 class="text-lg font-semibold mb-2">Travel Class</h2>
-              <label class="flex items-center space-x-2">
-                <input type="radio" name="class" value="economy" checked> <span>Economy</span>
-              </label>
-              <label class="flex items-center space-x-2">
-                <input type="radio" name="class" value="business"> <span>Business</span>
-              </label>
-              <label class="flex items-center space-x-2">
-                <input type="radio" name="class" value="first-class"> <span>First Class</span>
-              </label>
-            </div>
-      
-            <button 
-              type="button" 
-              class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300" 
-              id="done-button">
-              Done
-            </button>
-          </div>
-        </form>
-      </div>
-    <div>
-    </section>
-    </div>
+</section>
     <section class=" py-10 wrapper">
       <section class=" swiper mySwiper">
           <div class="swiper-wrapper">
@@ -161,6 +166,27 @@
             <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'web/images/IX.png' %}" alt="logo">
           </ul>
           <h1 class="text-lg md:text-2xl lg:text-3xl text-red-500 font-bold mb-6">Filter by</h1>
+          <div class="p-20 mb-10">
+            <p class="body-lg mb-30 xl:mb-20">Flight Price Range</p>
+            <form method="GET" id="price-range-form">
+              <input type="hidden" name="price_min" id="price-min" value="1000">
+              <input type="hidden" name="price_max" id="price-max" value="100000">
+          
+              <div class="relative w-full max-w-full">
+                <input min="1000" max="100000" class="thumb absolute h-0 left-0 outline-none z-[3] w-full" type="range" value="1000" id="left-slider">
+                
+                <input min="1000" max="100000" class="thumb absolute h-0 right-0 outline-none z-[4] w-full" type="range" value="100000" id="right-slider">
+                
+                <div class="relative w-full">
+                  <div class="absolute rounded-30 h-px z-[1] w-full border-b border-tertiary"></div>
+                  <div class="absolute right-0 rounded-30 h-[3px] z-[2] text-selection bg-current progress-bar" style="left: 0%; width: 100%;"></div>
+                  <div class="absolute left-0 text-secondary text-sm mt-20 min-price" id="min-price">1000</div>
+        
+                  <div class="absolute right-0 text-secondary text-sm mt-20 max-price" id="max-price">100000</div>
+                </div>
+              </div>
+            </form>
+          </div>     
           <hr class="border-2 mb-4 border-gray-900">
           <form action="#" method="get">
             <div class="mb-6">
@@ -189,14 +215,14 @@
               <h3 class="text-sm md:text-lg font-semibold mb-3">Price</h3>
               <select name="price" id="price" class="border border-gray-300 px-3 py-2 rounded-lg w-full">
                 <option value="">Select a price range</option>
-                <option value="3000-200000" id="price2">3000-200000</option>
+                <option value="3000-100000" id="price2">3000-100000</option>
                 <option value="3000-5000" id="price2">3000-5000</option>
                 <option value="10000-25000" id="price3">10000-25000</option>
                 <option value="25000-40000" id="price4">25000-40000</option>
                 <option value="40000-60000" id="price5">40000-60000</option>
                 <option value="60000-80000" id="price6">60000-80000</option>
                 <option value="80000-100000" id="price7">80000-100000</option>
-                <option value="100000-200000" id="price8">100000-200000</option>
+                <option value="100000-100000" id="price8">100000-100000</option>
             </select>
             </div>
     
@@ -462,7 +488,41 @@
       </script>
       
 
-
+      
   
-  
+      <script>
+        const leftSlider = document.getElementById('left-slider');
+        const rightSlider = document.getElementById('right-slider');
+        const progressBar = document.querySelector('.progress-bar');
+        const minPriceLabel = document.getElementById('min-price');
+        const maxPriceLabel = document.getElementById('max-price');
+        const priceMinInput = document.getElementById('price-min');
+        const priceMaxInput = document.getElementById('price-max');
+        const form = document.getElementById('price-range-form');
+      
+        leftSlider.addEventListener('input', updateRange);
+        rightSlider.addEventListener('input', updateRange);
+      
+        function updateRange() {
+          const minVal = parseInt(leftSlider.value);
+          const maxVal = parseInt(rightSlider.value);
+      
+          // Update the progress bar width and position
+          const percentage = (minVal - 1000) / (100000 - 1000) * 100;
+          progressBar.style.left = `${percentage}%`;
+          progressBar.style.width = `${(maxVal - minVal) / (100000 - 1000) * 100}%`;
+      
+          // Update min and max price labels
+          minPriceLabel.textContent = minVal;
+          maxPriceLabel.textContent = maxVal;
+      
+          // Update hidden inputs to send the selected price range to the backend
+          priceMinInput.value = minVal;
+          priceMaxInput.value = maxVal;
+      
+          // Optionally submit the form to update the results
+          form.submit();
+        }
+      </script>
+      
 {% endblock %}

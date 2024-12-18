@@ -38,7 +38,6 @@
                                                 <th>ID</th>
                                                 <th>NAME</th>
                                                 <th>IMAGE</th>
-                                                <th>STORE</th>
                                                 <th>EDIT</th>
                                                 <th>DELETE</th>
                                             </tr>
@@ -49,7 +48,6 @@
                                             <td>{{instance.id}}</td>
                                             <td>{{instance.name}}</td>
                                             <td><img src="{{instance.image.url}}" alt="image" style="width: 70px;"></td>
-                                            <td>{{instance.store}}</td>
                                             <td><a href="{% url 'manager:slider_edit' id=instance.id %}"><button type="button" class="btn mb-1 btn-primary">Edit</button></a></td>
                                             <td><a href="{% url 'manager:slider_delete' id=instance.id %}"><button type="button" class="btn mb-1 btn-danger" >Delete</button></a></td>
                                         </tr>

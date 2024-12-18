@@ -7,30 +7,29 @@ from users.models import User
 from django.db.models import Sum
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from .forms import SeatBookingForm
+from .forms import BusSeatStatusForm
 from django.views.decorators.csrf import csrf_exempt
 
 @login_required(login_url='/login/')
 def seat_selection(request, id):
-    buses = get_object_or_404(Bus, id=id)
-    seats = Bus.objects.all()
+    bus = get_object_or_404(Bus, id=id)
+    seats = BusSeatStatus.objects.filter(buses=bus)
+    if request.method == "POST":
+        selected_seats = request.POST.getlist('selected_seats')
+        for id in selected_seats:
+            seat = BusSeatStatus.objects.get(id=id)
+            if seat.status == "available":
+                seat.status = "booked"
+                seat.save()
+        return render(request, 'web/bus-books.html', {'bus': bus, 'selected_seats': selected_seats})
 
-    if request.method == 'POST':
-        form = SeatBookingForm(request.POST)
-        if form.is_valid():
-            seat_ids = form.cleaned_data['seat_ids'].split(',')
-            for seat_id in seat_ids:
-                seat = BusSeat.objects.get(id=seat_id)
-                if seat.status == 'available':
-                    seat.status = 'booked'
-                    seat.save()
-            return redirect('booking_confirmation')  
-    form = SeatBookingForm()
-    return render(request, 'bus-seat.html', {'buses': buses, 'seats': seats, 'form': form})
+    context = {
+        'bus': bus,
+        'seats': seats,
+    }
+    return render(request, 'web/bus-seat.html', context=context)
 
-def get_seat_status(request,id):
-    seats = BusSeat.objects.filter(train_id=id).values('id', 'seat_number', 'status')
-    return JsonResponse(list(seats), safe=False)
+
 
 
 @login_required(login_url='/login/')
@@ -42,15 +41,22 @@ def index(request):
     price = request.GET.get('price')
     selected_airline = request.GET.get('category', 'all')
     selected_stop = request.GET.get('Stop', '')
+    selected_airline = request.GET.get('airline', None)
+    price_min = request.GET.get('price_min', None)
+    price_max = request.GET.get('price_max', None)
+    
+    if selected_airline and selected_airline != 'all':
+        flights = flights.filter(airline__name=selected_airline)
+
+    if price_min and price_max:
+        flights = flights.filter(price__range=(price_min, price_max))
 
     if request.method == "POST":
-        # Get the data from the form
         adults = int(request.POST.get('adults', 0))
         children = int(request.POST.get('children', 0))
         infants = int(request.POST.get('infants', 0))
         travel_class = request.POST.get('class', 'economy')
         
-        # Update session data or save to a database
         request.session['travel_details'] = {
             'adults': adults,
             'children': children,
@@ -60,7 +66,6 @@ def index(request):
         
         return JsonResponse({'message': 'Travel details updated successfully!'})
 
-    # Default values
     travel_details = request.session.get('travel_details', {
         'adults': 1,
         'children': 0,

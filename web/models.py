@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import User
 from datetime import timedelta
-
+from django.core.exceptions import ValidationError
 
 
 class Flight(models.Model):
@@ -123,6 +123,7 @@ class Bus(models.Model):
     arrival_time = models.TimeField()
     arrival_code = models.CharField(max_length=10)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_seat = models.IntegerField(default=0)
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     
@@ -135,24 +136,36 @@ class Bus(models.Model):
 
     def __str__(self):
         return self.buses.name
-class BusSeat(models.Model):
-    SEAT_TYPES = [
-        ('upper', 'Upper'),
-        ('lower', 'Lower'),
+    
+    
+class BusSeatStatus(models.Model):
+    SEAT_SIDES = [
+        ('A', 'Side A'),
+        ('B', 'Side B'),
     ]
-    STATUS = [
+    SEAT_STATUS = [
         ('available', 'Available'),
         ('booked', 'Booked'),
     ]
 
-    buses = models.ForeignKey(Bus, on_delete=models.CASCADE, related_name='seats')
-    seat_number = models.CharField(max_length=10)
-    seat_type = models.CharField(max_length=10, choices=SEAT_TYPES)
-    status = models.CharField(max_length=10, choices=STATUS, default='available')
+    seat_side = models.CharField(max_length=1, choices=SEAT_SIDES, default='A')
+    seat_number = models.IntegerField()
+    status = models.CharField(max_length=10, choices=SEAT_STATUS, default='available')
+    buses = models.ForeignKey(Bus, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.buses.bus_numbers} - {self.seat_number} ({self.seat_type})"
-    
+        return f"{self.buses.bus_numbers} - {self.seat_number} ({self.seat_side})"
+
+
+    def clean(self):
+        if self._state.adding:
+            if self.buses.seats.count() >= self.buses.total_seat:
+                raise ValidationError("Cannot add more seats than the total seats available for this bus.")
+
+    class Meta:
+        ordering = ['seat_side', 'seat_number']
+        
+        
 class Buses(models.Model):
     name = models.CharField(max_length=255) 
     

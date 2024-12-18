@@ -12,64 +12,36 @@
 <section class="wrapper p-40">
     <div class="flex  items-center border rounded-2xl px-6 py-3 bg-white">
         <div class="">
-            <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
-                <form method="post" id="seat-booking-form">
-                    {% csrf_token %}
-                    <input type="hidden" name="seat_ids" id="seat-ids">
-                    <div class="grid grid-cols-2 gap-6">
-                        <div>
-                            <p class="text-gray-700 font-semibold mb-4">Upper</p>
-                            <div class="grid grid-cols-8 gap-4" id="upper-row">
-                                {% for seat in seats %}
-                                    {% if seat.seat_type == 'upper' %}
-                                        <div 
-                                            class="seat w-12 h-8 flex items-center justify-center rounded cursor-pointer 
-                                            {% if seat.status == 'booked' %} bg-red-300 {% else %} bg-gray-300 {% endif %}" 
-                                            data-seat-id="{{ seat.id }}"
-                                            data-status="{{ seat.status }}">
-                                            {{ seat.seat_number }}
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
+            <div class="max-w-lg mx-auto p-6 rounded-lg shadow-lg">
+                <div class="max-w-lg mx-auto p-6 rounded-lg ">
+                    <h2 class="text-2xl font-semibold mb-4">Select Your Seats for {{ buses.total_seat }}</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-8 gap-4">
+                            {% for seat in seats %}
+                                <label class="cursor-pointer">
+                                    <input 
+                                        type="checkbox" 
+                                        name="selected_seats" 
+                                        value="{{ seat.id }}" 
+                                        {% if seat.status == "booked" %}disabled{% endif %}
+                                        class="hidden"
+                                    />
+                                    <div 
+                                        class="w-12 h-8 flex items-center justify-center rounded 
+                                               {% if seat.status == 'booked' %} bg-red-500 text-white {% else %} bg-green-500 text-black {% endif %}">
+                                        {{ seat.seat_number }}
+                                    </div>
+                                </label>
+                            {% endfor %}
                         </div>
-                        
-                        <!-- Lower Row -->
-                        <div>
-                            <p class="text-gray-700 font-semibold mb-4">Lower</p>
-                            <div class="grid grid-cols-8 gap-4" id="lower-row">
-                                {% for seat in seats %}
-                                    {% if seat.seat_type == 'lower' %}
-                                        <div 
-                                            class="seat w-12 h-8 flex items-center justify-center rounded cursor-pointer 
-                                            {% if seat.status == 'booked' %} bg-red-300 {% else %} bg-gray-300 {% endif %}" 
-                                            data-seat-id="{{ seat.id }}"
-                                            data-status="{{ seat.status }}">
-                                            {{ seat.seat_number }}
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Book</button>
-                </form>
-            </div>
-        </div>
-            
-
-        <div class="ml-20">
-            <div class="bg-white shadow p-4 rounded-lg max-w-md mx-auto" id="boarding-points">
-                <div class="mt-6 flex justify-between items-center">
-                    <div class="text-gray-700">
-                        <span class="font-medium">Seat Selected:</span> <span>0</span>
-                    </div>
-                    <div class="text-gray-700">
-                        <span class="font-medium">Base Fare:</span> <span>&#8377; 0</span>
-                    </div>
+                        <button 
+                            type="submit" 
+                            class="mt-4 py-2 px-6 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                            Book Seats
+                        </button>
+                    </form>
                 </div>
-                
-                <button disabled class="mt-4 w-full bg-gray-300 seat text-gray-500 py-2 rounded-lg font-medium cursor-not-allowed">Continue</button>
             </div>
         </div>
     </div>
@@ -113,48 +85,4 @@
     </div>
 </section>
 
-
-<script>
-    const selectedSeats = new Set();
-
-    document.querySelectorAll('.seat').forEach(seat => {
-        seat.addEventListener('click', function() {
-            const seatId = this.getAttribute('data-seat-id');
-            const status = this.getAttribute('data-status');
-            
-            if (status === 'booked') return; // Prevent selecting booked seats
-            
-            if (selectedSeats.has(seatId)) {
-                selectedSeats.delete(seatId);
-                this.classList.remove('bg-green-300');
-                this.classList.add('bg-gray-300');
-            } else {
-                selectedSeats.add(seatId);
-                this.classList.remove('bg-gray-300');
-                this.classList.add('bg-green-300');
-            }
-
-            document.getElementById('seat-ids').value = Array.from(selectedSeats).join(',');
-        });
-    });
-</script>
-
-
-<script>
-    setInterval(() => {
-        fetch('/buses/{{ buses.id }}/seats/status/')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(seat => {
-                    const seatElement = document.querySelector(`[data-seat-id="${seat.id}"]`);
-                    if (seat.status === 'booked') {
-                        seatElement.classList.remove('bg-gray-300', 'bg-green-300');
-                        seatElement.classList.add('bg-red-300');
-                        seatElement.setAttribute('data-status', 'booked');
-                    }
-                });
-            });
-    }, 5000);
-    
-</script>
 {% endblock %}
