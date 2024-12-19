@@ -126,18 +126,16 @@ class Bus(models.Model):
     total_seat = models.IntegerField(default=0)
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
-    
     class Meta:
         db_table = "bus"
         verbose_name = "bus"
         verbose_name_plural = "buses"
         ordering = ["-id"]
 
-
     def __str__(self):
         return self.buses.name
     
-    
+
 class BusSeatStatus(models.Model):
     SEAT_SIDES = [
         ('A', 'Side A'),
@@ -151,21 +149,19 @@ class BusSeatStatus(models.Model):
     seat_side = models.CharField(max_length=1, choices=SEAT_SIDES, default='A')
     seat_number = models.IntegerField()
     status = models.CharField(max_length=10, choices=SEAT_STATUS, default='available')
-    buses = models.ForeignKey(Bus, on_delete=models.CASCADE)
+    buses = models.ForeignKey(Bus, on_delete=models.CASCADE, related_name='seats')
 
     def __str__(self):
         return f"{self.buses.bus_numbers} - {self.seat_number} ({self.seat_side})"
 
-
     def clean(self):
-        if self._state.adding:
-            if self.buses.seats.count() >= self.buses.total_seat:
+        if self._state.adding: 
+            current_seat_count = BusSeatStatus.objects.filter(buses=self.buses).count()
+            if current_seat_count >= self.buses.total_seat:
                 raise ValidationError("Cannot add more seats than the total seats available for this bus.")
 
     class Meta:
         ordering = ['seat_side', 'seat_number']
-        
-        
 class Buses(models.Model):
     name = models.CharField(max_length=255) 
     

@@ -7,27 +7,33 @@ from users.models import User
 from django.db.models import Sum
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from .forms import BusSeatStatusForm
+import json
 from django.views.decorators.csrf import csrf_exempt
+
 
 @login_required(login_url='/login/')
 def seat_selection(request, id):
-    bus = get_object_or_404(Bus, id=id)
-    seats = BusSeatStatus.objects.filter(buses=bus)
+    bus = Bus(id=id)
+
     if request.method == "POST":
-        selected_seats = request.POST.getlist('selected_seats')
-        for id in selected_seats:
-            seat = BusSeatStatus.objects.get(id=id)
-            if seat.status == "available":
-                seat.status = "booked"
+        selected_seat_ids = request.POST.get('selected_seats', '').split(',')
+
+        seats = BusSeatStatus.objects.filter(buses=bus, id__in=selected_seat_ids)
+
+        for seat in seats:
+            if seat.status != 'booked':
+                seat.status = 'booked'
                 seat.save()
-        return render(request, 'web/bus-books.html', {'bus': bus, 'selected_seats': selected_seats})
+
+        return JsonResponse({"message": "Seats booked successfully!"}, status=200)
+
+    seats = BusSeatStatus.objects.filter(buses=bus)
 
     context = {
-        'bus': bus,
-        'seats': seats,
+        "bus": bus,
+        "seats": seats,
     }
-    return render(request, 'web/bus-seat.html', context=context)
+    return render(request, 'web/bus-seat.html', context)
 
 
 
@@ -201,6 +207,15 @@ def train(request):
     price = request.GET.get('price')
     selected_trainses = request.GET.get('category', 'all')
     selected_stop = request.GET.get('Stop', '')
+    selected_train = request.GET.get('train', None)
+    price_min = request.GET.get('price_min', None)
+    price_max = request.GET.get('price_max', None)
+    
+    if selected_train and selected_train != 'all':
+        trains = trains.filter(train__name=selected_train)
+
+    if price_min and price_max:
+        trains = trains.filter(price__range=(price_min, price_max))
 
     if selected_stop:
         if selected_stop == 'Non Stop':
@@ -260,6 +275,15 @@ def bus(request):
     price = request.GET.get('price')
     selected_bus = request.GET.get('category', 'all')
     selected_stop = request.GET.get('Stop', '')
+    selected_bus = request.GET.get('bus', None)
+    price_min = request.GET.get('price_min', None)
+    price_max = request.GET.get('price_max', None)
+    
+    if selected_bus and selected_bus != 'all':
+        bus = bus.filter(bus__name=selected_bus)
+
+    if price_min and price_max:
+        bus = bus.filter(price__range=(price_min, price_max))
 
     if selected_stop:
         if selected_stop == 'Non Stop':
@@ -323,7 +347,7 @@ def flight_books(request, id):
         cartbill.totel_amount = fligths.price + 100  
         cartbill.offer_amount = 0.00 
         cartbill.save()
-    else:
+    else:   
         cartbill = CartBill.objects.create(
             customer=customer,
             item_total=float(fligths.price), 

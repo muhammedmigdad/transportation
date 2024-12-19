@@ -1,88 +1,53 @@
 {% extends 'base/web-base.html' %}
-
 {% load static %}
 
 {% block container %}
-
-
 {% include 'includes/header.html' %}
 
-
-
 <section class="wrapper p-40">
-    <div class="flex  items-center border rounded-2xl px-6 py-3 bg-white">
-        <div class="">
-            <div class="max-w-lg mx-auto p-6 rounded-lg shadow-lg">
-                <div class="max-w-lg mx-auto p-6 rounded-lg ">
-                    <h2 class="text-2xl font-semibold mb-4">Select Your Seats for {{ buses.total_seat }}</h2>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="grid grid-cols-8 gap-4">
-                            {% for seat in seats %}
-                                <label class="cursor-pointer">
-                                    <input 
-                                        type="checkbox" 
-                                        name="selected_seats" 
-                                        value="{{ seat.id }}" 
-                                        {% if seat.status == "booked" %}disabled{% endif %}
-                                        class="hidden"
-                                    />
-                                    <div 
-                                        class="w-12 h-8 flex items-center justify-center rounded 
-                                               {% if seat.status == 'booked' %} bg-red-500 text-white {% else %} bg-green-500 text-black {% endif %}">
-                                        {{ seat.seat_number }}
-                                    </div>
-                                </label>
-                            {% endfor %}
-                        </div>
-                        <button 
-                            type="submit" 
-                            class="mt-4 py-2 px-6 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-                            Book Seats
-                        </button>
-                    </form>
-                </div>
+    <div class="max-w-lg mx-auto p-6 rounded-lg shadow-lg bg-white">
+        <form id="seat-selection-form" method="POST">
+            {% csrf_token %}
+            <div class="grid grid-cols-8 gap-4">
+                {% for seat in seats %}
+                    <div 
+                        class="seat {{ seat.status }} w-12 h-8 flex items-center justify-center rounded cursor-pointer
+                        {% if seat.status == 'booked' %} bg-red-500 text-white pointer-events-none {% else %} bg-green-500 text-black {% endif %}" 
+                        data-seat-id="{{ seat.id }}"
+                    >
+                        {{ seat.seat_number }}
+                    </div>
+                {% endfor %}
             </div>
-        </div>
-    </div>
-
-    <div>
-        {% for bus in bus %}
-        <div class="border bg-white px-5 md:px-20 py-5 md:py-10 mt-5 rounded-2xl">
-        <div class="flex flex-wrap justify-between items-center">
-            <img class="w-[100px] h-[100px]" src="{{ bus.image.url }}" alt="Logo">
-            <ul class="ml-14">
-            <h1 class="text-[#000] text-[20px] font-semibold">{{ bus.buses }}</h1>
-            <h2 class="text-[16px] font-medium text-gray-400">{{ bus.bus_numbers }}</h2>
-            </ul>
-            <ul class="ml-14">
-            <h3 class="text-[20px] font-semibold text-black">{{ bus.departure_time|date:"H:i" }}</h3>
-            <h5 class="text-[16px] font-medium text-gray-400">{{ bus.departure_code }}</h5>
-            </ul>
-            <ul class="ml-14">
-            <span class="text-[16px] font-medium text-gray-400">
-                {{ bus.duration }}
-            </span>
-            <div class="border-b-2 border-gray-500 w-14"></div>
-            <h3 class="text-[16px] font-medium text-gray-400">{{ bus.stops }}</h3>
-            </ul>
-            <ul class="ml-14">
-            <span class="text-[20px] font-semibold text-black">{{ bus.arrival_time|date:"H:i" }}</span>
-            <p class="text-[16px] font-medium text-[#ff2a2a]">{{ bus.arrival_code }}</p>
-            </ul>
-            <ul class="ml-14">
-            <h1 class="text-[#000] text-[20px] font-semibold">₹{{ bus.price }}</h1>
-            {% if bus.discount %}
-            <h2 class="text-[16px] font-medium text-orange-400">Extra ₹{{ bus.discount}} Off</h2>
-            {% endif %}
-            </ul>
-            <div class="transition-transform bg-orange-400 duration-300 ml-14 hover:scale-110 hover:bg-orange-500 border px-3 py-2 rounded-2xl">
-                <a href="{% url 'web:bus-seat' %}" class=" block text-[30px] font-semibold text-white">Book</a>
-            </div>
-        </div>
-        </div>
-    {% endfor %}
+            <input type="hidden" name="selected_seats" id="selected-seats" value="">
+            <button 
+                type="submit" 
+                class="mt-4 py-2 px-6 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                Book Seats
+            </button>
+        </form>
     </div>
 </section>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectedSeatsInput = document.getElementById('selected-seats');
+        const seatElements = document.querySelectorAll('.seat:not(.booked)');
+
+        seatElements.forEach(seat => {
+            seat.addEventListener('click', () => {
+                // Toggle selection state
+                seat.classList.toggle('bg-blue-500');
+                seat.classList.toggle('text-white');
+
+                // Update selected seat IDs
+                const selectedSeats = Array.from(seatElements)
+                    .filter(s => s.classList.contains('bg-blue-500'))
+                    .map(s => s.dataset.seatId);
+                selectedSeatsInput.value = selectedSeats.join(',');
+            });
+        });
+    });
+</script>
 {% endblock %}
+

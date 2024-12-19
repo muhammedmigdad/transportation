@@ -8,33 +8,8 @@
 {% include 'includes/header.html' %}
 
         <section class="wrapper pt-44 p-10"> 
-            <div class="flex flex-col lg:flex-row justify-between items-center">
-            <div class="flex flex-wrap justify-center lg:justify-start items-center gap-4 lg:gap-10">
-                {% for category in categories %}
-                <a href="#" class="flex flex-col items-center transition-transform duration-300 hover:scale-110">
-                    <img
-                    class="w-[75px] h-[75px] sm:w-[120px] sm:h-[90px] md:w-[130px] md:h-[95px] lg:w-[150px] lg:h-[100px] rounded-xl"
-                    src="{{ category.image.url }}"
-                    alt="images"
-                    />
-                    <h1
-                    class="text-[18px] sm:text-[22px] md:text-[26px] lg:text-[30px] font-bold text-[#434242] transition-transform duration-300 hover:scale-110 hover:text-[#000] mt-2"
-                    >
-                    {{ category.name }}
-                    </h1>
-                </a>
-                {% endfor %}
-            </div>
-            <h3
-                class="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] text-[#e93a3a] font-medium mt-6 lg:mt-0 text-center lg:text-right"
-            >
-                Book Flights, Trains & Buses
-            </h3>
-            </div>
-            
-            <h1 class="text-[30px] mt-6 font-bold text-black">Why Book With Yatra?</h1>
 
-            <div class="px-6 py-6 rounded-xl bg-blue-400 mt-7">
+            <div class="px-6 py-6 rounded-xl bg-[#000000] mt-7">
                 <div class="border bg-white p-5 sm:p-8 lg:p-10 mt-5 rounded-xl">
                 <form action="">
                     <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
@@ -69,6 +44,34 @@
             <div>
             </section>
             </div>
+            <section class="wrapper">
+                
+            <div class="flex flex-col lg:flex-row justify-between items-center">
+                <div class="flex flex-wrap justify-center lg:justify-start items-center gap-4 lg:gap-10">
+                    {% for category in categories %}
+                    <a href="#" class="flex flex-col items-center transition-transform duration-300 hover:scale-110">
+                        <img
+                        class="w-[75px] h-[75px] sm:w-[120px] sm:h-[90px] md:w-[130px] md:h-[95px] lg:w-[150px] lg:h-[100px] rounded-xl"
+                        src="{{ category.image.url }}"
+                        alt="images"
+                        />
+                        <h1
+                        class="text-[18px] sm:text-[22px] md:text-[26px] lg:text-[30px] font-bold text-[#434242] transition-transform duration-300 hover:scale-110 hover:text-[#000] mt-2"
+                        >
+                        {{ category.name }}
+                        </h1>
+                    </a>
+                    {% endfor %}
+                </div>
+                <h3
+                    class="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] text-[#e93a3a] font-medium mt-6 lg:mt-0 text-center lg:text-right"
+                >
+                    Book Flights, Trains & Buses
+                </h3>
+                </div>
+                
+                <h1 class="text-[30px] mt-6 font-bold text-black">Why Book With Yatra?</h1>
+            </section>
             <section class=" py-10 wrapper">
                 <section class=" swiper mySwiper">
                     <div class="swiper-wrapper">
@@ -93,6 +96,27 @@
                     
 
                     <h1 class="text-lg md:text-2xl lg:text-3xl text-red-500 font-bold mb-6">Filter by</h1>
+
+                    <div class="p-20 mb-10">
+                        <form method="GET" id="price-range-form">
+                          <input type="hidden" name="price_min" id="price-min" value="30">
+                          <input type="hidden" name="price_max" id="price-max" value="10000">
+                      
+                          <div class="relative w-full max-w-full">
+                            <input min="30" max="10000" class="thumb absolute h-0 left-0 outline-none z-[3] w-full" type="range" value="30" id="left-slider">
+                            
+                            <input min="30" max="10000" class="thumb absolute h-0 right-0 outline-none z-[4] w-full" type="range" value="10000" id="right-slider">
+                            
+                            <div class="relative w-full">
+                              <div class="absolute rounded-30 h-px z-[1] w-full border-b border-tertiary"></div>
+                              <div class="absolute right-0 rounded-30 h-[3px] z-[2] text-selection bg-current progress-bar" style="left: 0%; width: 100%;"></div>
+                              <div class="absolute left-0 text-secondary text-sm mt-3 min-price" id="min-price">30</div>
+                    
+                              <div class="absolute right-0 text-secondary text-sm mt-3 max-price" id="max-price">10000</div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>   
                     <hr class="border-2 mb-4 border-gray-900">
                     <form action="#" method="get">
                     <div class="mb-6">
@@ -458,6 +482,32 @@
             
         
             </script>
+
+            <script>
+                const leftSlider = document.getElementById('left-slider');
+                const rightSlider = document.getElementById('right-slider');
+                const progressBar = document.querySelector('.progress-bar');
+                const minPriceLabel = document.getElementById('min-price');
+                const maxPriceLabel = document.getElementById('max-price');
+                const priceMinInput = document.getElementById('price-min');
+                const priceMaxInput = document.getElementById('price-max');
+                const form = document.getElementById('price-range-form');
+                leftSlider.addEventListener('input', updateRange);
+                rightSlider.addEventListener('input', updateRange);
+                function updateRange() {
+                  const minVal = parseInt(leftSlider.value);
+                  const maxVal = parseInt(rightSlider.value);
+                  const percentage = (minVal - 30) / (10000 - 30) * 100;
+                  progressBar.style.left = `${percentage}%`;
+                  progressBar.style.width = `${(maxVal - minVal) / (10000 - 30) * 100}%`;
+                  minPriceLabel.textContent = minVal;
+                  maxPriceLabel.textContent = maxVal;
+                  priceMinInput.value = minVal;
+                  priceMaxInput.value = maxVal;
+              
+                  form.submit();
+                }
+              </script>
 
 
 {% endblock %}
