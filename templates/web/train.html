@@ -7,43 +7,41 @@
 
 {% include 'includes/header.html' %}
 
-        <section class="wrapper pt-44 p-10"> 
-
-            <div class="px-6 py-6 rounded-xl bg-[#000000] mt-7">
-                <div class="border bg-white p-5 sm:p-8 lg:p-10 mt-5 rounded-xl">
-                <form action="">
-                    <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
-                    <input 
-                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
-                        type="text" 
-                        name="name" 
-                        placeholder="From" 
-                    />
-                    <input 
-                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
-                        type="text" 
-                        name="name" 
-                        placeholder="To" 
-                    />
-                    <input 
-                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto" 
-                        type="date" 
-                        name="Date" 
-                        required
-                    />
-                    <button 
-                        type="submit" 
-                        class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-100 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
-                    >
-                        Search
-                    </button>
-                    </ul>
+            <section class="wrapper pt-44 p-10"> 
+                <div class="px-6 py-6 rounded-xl bg-[#000000] mt-7">
+                    <div class="border bg-white p-5 sm:p-8 lg:p-10 mt-5 rounded-xl">
+                        <form action="" method="GET">
+                            <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
+                                <input 
+                                    class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+                                    type="text" 
+                                    name="from" 
+                                    placeholder="From" 
+                                />
+                                <input 
+                                    class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+                                    type="text" 
+                                    name="to" 
+                                    placeholder="To" 
+                                />
+                                <input 
+                                    class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto" 
+                                    type="date" 
+                                    name="date" 
+                                    required
+                                />
+                                <button 
+                                    type="submit" 
+                                    class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-100 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
+                                >
+                                    Search
+                                </button>
+                            </ul>
+                        </form>
                     </div>
-                </form>
                 </div>
-            <div>
             </section>
-            </div>
+
             <section class="wrapper">
                 
             <div class="flex flex-col lg:flex-row justify-between items-center">
@@ -169,7 +167,7 @@
                 </div>
                 </div>
             
-                <div class="w-full md:w-2/3 md:ml-10">
+             <div class="w-full md:w-2/3 md:ml-10">
                 <h1 class="text-lg md:text-xl font-semibold text-black mb-5">Short By</h1>
                 <form action="" method="get">
                     <div class="flex  justify-between overflow-x-auto whitespace-nowrap space-x-4 items-center bg-white rounded-2xl p-5">
@@ -189,41 +187,54 @@
                 </form>
             
                 {% for train in trains %}
-                    <div class="border bg-white px-5 md:px-20 py-5 md:py-10 mt-5 rounded-2xl">
+                <div class="border bg-white px-5 md:px-20 py-5 md:py-10 mt-5 rounded-2xl">
                     <div class="flex flex-wrap justify-between items-center">
-                        <img class="w-[100px] h-[100px]" src="{{ train.image.url }}" alt="Logo">
-                        <ul class="ml-14">
-                        <h1 class="text-[#000] text-[20px] font-semibold">{{ train.trains }}</h1>
-                        <h2 class="text-[16px] font-medium text-gray-400">{{ train.train_numbers }}</h2>
+                        
+                        <!-- Train Image -->
+                        <img class="w-[100px] h-[100px]" src="{{ train.image.url }}" alt="Train Image of {{ train.trains }}">
+
+                        <!-- Train Information -->
+                        <ul class="ml-6">
+                            <h1 class="text-[#000] text-[20px] font-semibold">{{ train.trains }}</h1>
+                            <h2 class="text-[16px] font-medium text-gray-400">{{ train.train_numbers }}</h2>
                         </ul>
-                        <ul class="ml-14">
-                        <h3 class="text-[20px] font-semibold text-black">{{ train.departure_time|date:"H:i" }}</h3>
-                        <h5 class="text-[16px] font-medium text-gray-400">{{ train.departure_code }}</h5>
+
+                        <!-- Departure Details -->
+                        <ul class="ml-6">
+                            <h3 class="text-[20px] font-semibold text-black">{{ train.departure_time|date:"H:i" }}</h3>
+                            <h5 class="text-[16px] font-medium text-gray-400">{{ train.departure_code }}</h5>
                         </ul>
-                        <ul class="ml-14">
-                        <span class="text-[16px] font-medium text-gray-400">
-                            {{ train.duration }}
-                        </span>
-                        <div class="border-b-2 border-gray-500 w-14"></div>
-                        <h3 class="text-[16px] font-medium text-gray-400">{{ train.stops }}</h3>
+
+                        <!-- Duration and Stops -->
+                        <ul class="ml-6">
+                            <span class="text-[16px] font-medium text-gray-400">{{ train.duration }}</span>
+                            <div class="border-b-2 border-gray-500 w-14"></div>
+                            <h3 class="text-[16px] font-medium text-gray-400">{{ train.stops }}</h3>
                         </ul>
-                        <ul class="ml-14">
-                        <span class="text-[20px] font-semibold text-black">{{ train.arrival_time|date:"H:i" }}</span>
-                        <p class="text-[16px] font-medium text-[#ff2a2a]">{{ train.arrival_code }}</p>
+
+                        <!-- Arrival Details -->
+                        <ul class="ml-6">
+                            <span class="text-[20px] font-semibold text-black">{{ train.arrival_time|date:"H:i" }}</span>
+                            <p class="text-[16px] font-medium text-[#ff2a2a]">{{ train.arrival_code }}</p>
                         </ul>
-                        <ul class="ml-14">
-                        <h1 class="text-[#000] text-[20px] font-semibold">₹{{ train.price }}</h1>
-                        {% if train.discount %}
-                        <h2 class="text-[16px] font-medium text-orange-400">Extra ₹{{ train.discount}} Off</h2>
-                        {% endif %}
+
+                        <!-- Price and Discount -->
+                        <ul class="ml-6">
+                            <h1 class="text-[#000] text-[20px] font-semibold">₹{{ train.price }}</h1>
+                            {% if train.discount %}
+                                <h2 class="text-[16px] font-medium text-orange-400">Extra ₹{{ train.discount }} Off</h2>
+                            {% endif %}
                         </ul>
-                        <div class="transition-transform bg-orange-400 duration-300 ml-14 hover:scale-110 hover:bg-orange-500 border px-3 py-2 rounded-2xl">
-                            <a href="{% url 'web:train-seat' %}" class=" block text-[30px] font-semibold text-white">Seats</a>
+
+                        <!-- Seats Button -->
+                        <div class="transition-transform bg-orange-400 duration-300 ml-6 hover:scale-110 hover:bg-orange-500 border px-3 py-2 rounded-2xl">
+                            <a href="{% url 'web:train-seat' %}" class="block text-[30px] font-semibold text-white">Seats</a>
                         </div>
                     </div>
-                    </div>
-                {% endfor %}
                 </div>
+            {% endfor %}
+
+             </div>
             </div>
 
             <div class="p-4">

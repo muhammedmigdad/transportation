@@ -6,41 +6,45 @@
 
 {% include 'includes/header.html' %}
 
-        <section class="wrapper pt-44 p-10"> 
-            <div class="px-6 py-6 rounded-xl bg-[#000] mt-7">
-                <div class="border bg-white p-5 sm:p-8 lg:p-10 mt-5 rounded-xl">
-                <form action="">
-                    <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
-                    <input 
-                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
-                        type="text" 
-                        name="name" 
-                        placeholder="From" 
-                    />
-                    <input 
-                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
-                        type="text" 
-                        name="name" 
-                        placeholder="To" 
-                    />
-                    <input 
-                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto" 
-                        type="date" 
-                        name="Date" 
-                        required
-                    />
-                    <button 
-                        type="submit" 
-                        class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-100 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
-                    >
-                        Search
-                    </button>
-                    </ul>
+            <section class="wrapper pt-44 p-10"> 
+                <div class="px-6 py-6 rounded-xl bg-[#000] mt-7">
+                    <div class="border bg-white p-5 sm:p-8 lg:p-10 mt-5 rounded-xl">
+                        <form action="" method="get">
+                            <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
+                                <!-- From Input -->
+                                <input 
+                                    class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+                                    type="text" 
+                                    name="from" 
+                                    placeholder="From" 
+                                />
+                                <!-- To Input -->
+                                <input 
+                                    class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+                                    type="text" 
+                                    name="to"  
+                                    placeholder="To" 
+                                />
+                                <!-- Date Input -->
+                                <input 
+                                    class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto" 
+                                    type="date" 
+                                    name="date" 
+                                    required
+                                />
+                                <!-- Search Button -->
+                                <button 
+                                    type="submit" 
+                                    class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-100 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
+                                >
+                                    Search
+                                </button>
+                            </ul>
+                        </form>
                     </div>
-                </form>
                 </div>
-            <div>
             </section>
+
             <section class="wrapper">
                 <div class="flex flex-col lg:flex-row justify-between items-center">
                     <div class="flex flex-wrap justify-center lg:justify-start items-center gap-4 lg:gap-10">
@@ -185,32 +189,32 @@
                     <div class="border bg-white px-5 md:px-20 py-5 md:py-10 mt-5 rounded-2xl">
                     <div class="flex flex-wrap justify-between items-center">
                         <img class="w-[100px] h-[100px]" src="{{ bus.image.url }}" alt="Logo">
-                        <ul class="ml-14">
+                        <ul class="ml-6">
                         <h1 class="text-[#000] text-[20px] font-semibold">{{ bus.buses }}</h1>
                         <h2 class="text-[16px] font-medium text-gray-400">{{ bus.bus_numbers }}</h2>
                         </ul>
-                        <ul class="ml-14">
+                        <ul class="ml-6">
                         <h3 class="text-[20px] font-semibold text-black">{{ bus.departure_time|date:"H:i" }}</h3>
                         <h5 class="text-[16px] font-medium text-gray-400">{{ bus.departure_code }}</h5>
                         </ul>
-                        <ul class="ml-14">
+                        <ul class="ml-6">
                         <span class="text-[16px] font-medium text-gray-400">
                             {{ bus.duration }}
                         </span>
                         <div class="border-b-2 border-gray-500 w-14"></div>
                         <h3 class="text-[16px] font-medium text-gray-400">{{ bus.stops }}</h3>
                         </ul>
-                        <ul class="ml-14">
+                        <ul class="ml-6">
                         <span class="text-[20px] font-semibold text-black">{{ bus.arrival_time|date:"H:i" }}</span>
                         <p class="text-[16px] font-medium text-[#ff2a2a]">{{ bus.arrival_code }}</p>
                         </ul>
-                        <ul class="ml-14">
+                        <ul class="ml-6">
                         <h1 class="text-[#000] text-[20px] font-semibold">₹{{ bus.price }}</h1>
                         {% if bus.discount %}
                         <h2 class="text-[16px] font-medium text-orange-400">Extra ₹{{ bus.discount}} Off</h2>
                         {% endif %}
                         </ul>
-                        <div class="transition-transform bg-orange-400 duration-300 ml-14 hover:scale-110 hover:bg-orange-500 border px-3 py-2 rounded-2xl">
+                        <div class="transition-transform bg-orange-400 duration-300 ml-6 hover:scale-110 hover:bg-orange-500 border px-3 py-2 rounded-2xl">
                             <a href="{% url 'web:bus-seat' %}" class=" block text-[30px] font-semibold text-white">Book</a>
                         </div>
                     </div>

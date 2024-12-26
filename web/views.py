@@ -8,6 +8,7 @@ from django.db.models import Sum
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 import json
+from datetime import date
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -16,21 +17,23 @@ def seat_selection(request, id):
     bus = Bus(id=id)
 
     if request.method == "POST":
-        selected_seat_ids = request.POST.get('selected_seats', '').split(',')
+        # selected_seat_ids = request.POST.get('selected_seats', '').split(',')
 
-        seats = BusSeatStatus.objects.filter(buses=bus, id__in=selected_seat_ids)
+        # seats = BusSeatStatus.objects.filter(buses=bus, id__in=selected_seat_ids)
 
-        for seat in seats:
-            if seat.status != 'booked':
-                seat.status = 'booked'
-                seat.save()
+        # for seat in seats:
+        #     if seat.status != 'booked':
+        #         seat.status = 'booked'
+        #         seat.save()
 
-        return JsonResponse({"message": "Seats booked successfully!"}, status=200)
+        # return JsonResponse({"message": "Seats booked successfully!"}, status=200)
+        pass
 
     seats = BusSeatStatus.objects.filter(buses=bus)
+    print(seats)
 
     context = {
-        "bus": bus,
+        "bus": bus, 
         "seats": seats,
     }
     return render(request, 'web/bus-seat.html', context)
@@ -119,12 +122,25 @@ def index(request):
     elif sort_option == 'Faster':
         flights = flights.order_by('duration')  
         
+    departure_code = request.GET.get('from', '').strip()
+    arrival_code = request.GET.get('to', '').strip()
+    travel_date = request.GET.get('date', None)
+    
+    
+    if departure_code:
+        flights = flights.filter(departure_code__icontains=departure_code)
+    if arrival_code:
+        flights = flights.filter(arrival_code__icontains=arrival_code)
+    if travel_date:
+        flights = flights.filter(departure_date=travel_date)
+    
+
     context = {
         'categories': categories,
         'sliders': sliders,
         'flights': flights,
-        "airlineses": airlineses,
-        "travel_details":travel_details
+        'airlineses': airlineses,
+        'travel_details': travel_details,
     }
 
     return render(request, 'web/index.html', context=context)
@@ -258,6 +274,20 @@ def train(request):
         trains = trains.order_by('price')  
     elif sort_option == 'Faster':
         trains = trains.order_by('duration')  
+        
+    departure_code = request.GET.get('from', '').strip()
+    arrival_code = request.GET.get('to', '').strip()
+    travel_date = request.GET.get('date', None)
+
+    # Apply filters
+    if departure_code:
+        trains = trains.filter(departure_code__icontains=departure_code)
+    if arrival_code:
+        trains = trains.filter(arrival_code__icontains=arrival_code)
+    if travel_date:
+        trains = trains.filter(departure_date=travel_date)
+
+    
     
     context = {
         'categories': categories,
@@ -327,6 +357,18 @@ def bus(request):
         bus = bus.order_by('price')  
     elif sort_option == 'Faster':
         bus = bus.order_by('duration')  
+        
+    departure_code = request.GET.get('from', '').strip()  
+    arrival_code = request.GET.get('to', '').strip()    
+    travel_date = request.GET.get('date', None)  
+
+    if departure_code:
+        bus = bus.filter(departure_code__icontains=departure_code)  
+    if arrival_code:
+        bus = bus.filter(arrival_code__icontains=arrival_code) 
+    if travel_date:
+        bus = bus.filter(departure_date=travel_date)  
+
     
     context = {
         'categories': categories,
@@ -336,6 +378,8 @@ def bus(request):
     }
     return render(request, 'web/bus.html', context=context)
 
+
+@login_required(login_url='/login/')
 def flight_books(request, id):
     user = request.user
     customer = Customer.objects.get(user=user)
@@ -343,16 +387,16 @@ def flight_books(request, id):
     if CartBill.objects.filter(customer=customer).exists():
         cartbill = CartBill.objects.get(customer=customer)
         cartbill.item_total = float(fligths.price)  
-        cartbill.tax_charge = 100.00 
-        cartbill.totel_amount = fligths.price + 100  
+        cartbill.tax_charge = 1500.00 
+        cartbill.totel_amount = fligths.price + 1500  
         cartbill.offer_amount = 0.00 
         cartbill.save()
     else:   
         cartbill = CartBill.objects.create(
             customer=customer,
             item_total=float(fligths.price), 
-            tax_charge=100.00, 
-            totel_amount=fligths.price + 100,  
+            tax_charge=1500.00, 
+            totel_amount=fligths.price + 1500,  
             offer_amount=0.00  
         )
         cartbill.save()
@@ -428,6 +472,8 @@ def flight_books(request, id):
     return render(request, 'web/flight-books.html', context=context)
 
 
+
+@login_required(login_url='/login/')
 def offer(request):
     sliders = Slider.objects.all()
     
@@ -445,16 +491,16 @@ def train_books(request, id):
     if CartBill.objects.filter(customer=customer).exists():
         cartbill = CartBill.objects.get(customer=customer)
         cartbill.item_total = float(trains.price)  
-        cartbill.tax_charge = 100.00 
-        cartbill.totel_amount = trains.price + 100  
+        cartbill.tax_charge = 50.00 
+        cartbill.totel_amount = trains.price + 50  
         cartbill.offer_amount = 0.00 
         cartbill.save()
     else:
         cartbill = CartBill.objects.create(
             customer=customer,
             item_total=float(trains.price), 
-            tax_charge=100.00, 
-            totel_amount=trains.price + 100,  
+            tax_charge=50.00, 
+            totel_amount=trains.price + 50,  
             offer_amount=0.00  
         )
         cartbill.save()
@@ -528,6 +574,9 @@ def train_books(request, id):
 
     return render(request, 'web/train-books.html',context=context)
 
+
+
+@login_required(login_url='/login/')
 def bus_books(request, id):  
     user = request.user
     customer = Customer.objects.get(user=user)
@@ -535,16 +584,16 @@ def bus_books(request, id):
     if CartBill.objects.filter(customer=customer).exists():
         cartbill = CartBill.objects.get(customer=customer)
         cartbill.item_total = float(buses.price)  
-        cartbill.tax_charge = 100.00 
-        cartbill.totel_amount = buses.price + 100  
+        cartbill.tax_charge = 70.00 
+        cartbill.totel_amount = buses.price + 70  
         cartbill.offer_amount = 0.00 
         cartbill.save()
     else:
         cartbill = CartBill.objects.create(
             customer=customer,
             item_total=float(buses.price), 
-            tax_charge=100.00, 
-            totel_amount=buses.price + 100,  
+            tax_charge=70.00, 
+            totel_amount=buses.price + 70,  
             offer_amount=0.00  
         )
         cartbill.save()
@@ -619,6 +668,8 @@ def bus_books(request, id):
     return render(request, 'web/bus-books.html',context=context)
 
 
+
+@login_required(login_url='/login/')
 def bus_seat(request):
     
     bus = Bus.objects.all()
@@ -629,6 +680,9 @@ def bus_seat(request):
     }
     
     return render(request, 'web/bus-seat.html', context=context)
+
+
+@login_required(login_url='/login/')
 def train_seat(request):
     
     trains = Train.objects.all()
@@ -639,6 +693,27 @@ def train_seat(request):
     }
     
     return render(request, 'web/train-seat.html', context=context)
+
+@login_required(login_url='/login/')
+def flight_class(request):
+    flights = Flight.objects.all()
+    
+    if request.method == "POST":
+        adults = int(request.POST.get("adults", 0))
+        children = int(request.POST.get("children", 0))
+        infants = int(request.POST.get("infants", 0))
+        travel_class = request.POST.get("travel-class")
+        more_travellers = request.POST.get("more-travellers") == "on"
+        
+        print(f"Adults: {adults}, Children: {children}, Infants: {infants}, Class: {travel_class}, More Travellers: {more_travellers}")
+        
+        return render(request, "flight-books.html", {
+            "flights": flights,
+            "message": "Your selection has been submitted!"
+        })
+
+    return render(request, 'web/flight-class.html')
+    
     
 
  
