@@ -122,18 +122,17 @@ def index(request):
     elif sort_option == 'Faster':
         flights = flights.order_by('duration')  
         
-    departure_code = request.GET.get('from', '').strip()
-    arrival_code = request.GET.get('to', '').strip()
+    departure_name = request.GET.get('from', '').strip()
+    arrival_name = request.GET.get('to', '').strip()
     travel_date = request.GET.get('date', None)
-    
-    
-    if departure_code:
-        flights = flights.filter(departure_code__icontains=departure_code)
-    if arrival_code:
-        flights = flights.filter(arrival_code__icontains=arrival_code)
+
+    if departure_name:
+        flights = flights.filter(departure_name__icontains=departure_name)
+    if arrival_name:
+        flights = flights.filter(arrival_name__icontains=arrival_name)
     if travel_date:
-        flights = flights.filter(departure_date=travel_date)
-    
+        flights = flights.filter(date=travel_date)
+
 
     context = {
         'categories': categories,
@@ -275,17 +274,17 @@ def train(request):
     elif sort_option == 'Faster':
         trains = trains.order_by('duration')  
         
-    departure_code = request.GET.get('from', '').strip()
-    arrival_code = request.GET.get('to', '').strip()
+    departure_name = request.GET.get('from', '').strip()
+    arrival_name = request.GET.get('to', '').strip()
     travel_date = request.GET.get('date', None)
 
     # Apply filters
-    if departure_code:
-        trains = trains.filter(departure_code__icontains=departure_code)
-    if arrival_code:
-        trains = trains.filter(arrival_code__icontains=arrival_code)
+    if departure_name:
+        trains = trains.filter(departure_name__icontains=departure_name)
+    if arrival_name:
+        trains = trains.filter(arrival_name__icontains=arrival_name)
     if travel_date:
-        trains = trains.filter(departure_date=travel_date)
+        trains = trains.filter(date=travel_date)
 
     
     
@@ -358,16 +357,16 @@ def bus(request):
     elif sort_option == 'Faster':
         bus = bus.order_by('duration')  
         
-    departure_code = request.GET.get('from', '').strip()  
-    arrival_code = request.GET.get('to', '').strip()    
+    departure_name = request.GET.get('from', '').strip()  
+    arrival_name = request.GET.get('to', '').strip()    
     travel_date = request.GET.get('date', None)  
 
-    if departure_code:
-        bus = bus.filter(departure_code__icontains=departure_code)  
-    if arrival_code:
-        bus = bus.filter(arrival_code__icontains=arrival_code) 
+    if departure_name:
+        bus = bus.filter(departure_name__icontains=departure_name)  
+    if arrival_name:
+        bus = bus.filter(arrival_name__icontains=arrival_name) 
     if travel_date:
-        bus = bus.filter(departure_date=travel_date)  
+        bus = bus.filter(date=travel_date)  
 
     
     context = {

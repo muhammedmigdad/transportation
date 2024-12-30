@@ -3,86 +3,94 @@
 {% block container %}
 {% include 'includes/header.html' %}
 
-<section class="wrapper pt-40">
-    <h1 class="text-[40px] text-black text-center font-bold p-5">Travel Class</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <div class="relative w-64 p-4 bg-white border border-gray-300 rounded-lg shadow-md">
-            <!-- Adults -->
-            <div class="flex items-center justify-between py-2">
-                <div>
-                    <p class="font-semibold">Adults</p>
-                    <p class="text-sm text-gray-500">(12+ Years)</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <button type="button" class="px-2 py-1 text-xl font-semibold text-gray-700 bg-gray-200 rounded">-</button>
-                    <input type="number" name="adults" value="3" class="w-10 text-center border rounded" />
-                    <button type="button" class="px-2 py-1 text-xl font-semibold text-gray-700 bg-gray-200 rounded">+</button>
-                </div>
-            </div>
-            
-            <!-- Children -->
-            <div class="flex items-center justify-between py-2">
-                <div>
-                    <p class="font-semibold">Children</p>
-                    <p class="text-sm text-gray-500">(2-12 Years)</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <button type="button" class="px-2 py-1 text-xl font-semibold text-gray-700 bg-gray-200 rounded">-</button>
-                    <input type="number" name="children" value="5" class="w-10 text-center border rounded" />
-                    <button type="button" class="px-2 py-1 text-xl font-semibold text-gray-700 bg-gray-200 rounded">+</button>
-                </div>
-            </div>
-            
-            <!-- Infants -->
-            <div class="flex items-center justify-between py-2">
-                <div>
-                    <p class="font-semibold">Infants</p>
-                    <p class="text-sm text-gray-500">(0-2 Years)</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <button type="button" class="px-2 py-1 text-xl font-semibold text-gray-700 bg-gray-200 rounded">-</button>
-                    <input type="number" name="infants" value="0" class="w-10 text-center border rounded" />
-                    <button type="button" class="px-2 py-1 text-xl font-semibold text-gray-700 bg-gray-200 rounded">+</button>
-                </div>
-            </div>
-          
-            <!-- More than 9 Travellers -->
-            <div class="flex items-center py-3">
-                <input type="checkbox" id="more-travellers" name="more-travellers" class="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring focus:ring-blue-200" />
-                <label for="more-travellers" class="ml-2 text-sm text-gray-700">More than 9 Travellers</label>
-            </div>
-          
-            <!-- Travel Class Options -->
-            <div class="pt-4 space-y-2">
-                <p class="text-sm font-semibold text-gray-700">Travel Class</p>
-                <label class="flex items-center space-x-2">
-                    <input type="radio" name="travel-class" value="economy" class="w-4 h-4 text-blue-500 border-gray-300 focus:ring focus:ring-blue-200" />
-                    <span class="text-sm text-gray-700">Economy</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio" name="travel-class" value="premium-economy" class="w-4 h-4 text-blue-500 border-gray-300 focus:ring focus:ring-blue-200" />
-                    <span class="text-sm text-gray-700">Premium Economy</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio" name="travel-class" value="business" class="w-4 h-4 text-blue-500 border-gray-300 focus:ring focus:ring-blue-200" />
-                    <span class="text-sm text-gray-700">Business</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio" name="travel-class" value="first-class" class="w-4 h-4 text-blue-500 border-gray-300 focus:ring focus:ring-blue-200" />
-                    <span class="text-sm text-gray-700">First Class</span>
-                </label>
-            </div>
-          
-            <!-- Done Button -->
-            <div class="pt-4">
-                <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none">
-                    Done
-                </button>
-            </div>
-        </div>
-    </form>
-    
+<section class=" bg-black">
+   <section class="wrapper pt-40">
+    <h1 class="text-[40px] text-orange-300 text-center font-bold p-5">Travel Class</h1>
+    <div class="flex items-center">
+     <div class="w-[50%]">
+         <form method="POST">
+             {% csrf_token %}
+             <div class="relative w-[50%] p-8 bg-[#494848] border mb-10 border-gray-500 rounded-lg shadow-md">
+                 <!-- Adults -->
+                 <div class="flex items-center justify-between py-2">
+                     <div>
+                         <p class="font-semibold text-red-400">Adults</p>
+                         <p class="text-sm text-white">(12+ Years)</p>
+                     </div>
+                     <div class="flex items-center space-x-2">
+                         <button type="button" class="px-2 py-1 text-xl font-semibold text-red-400  bg-gray-200 rounded">-</button>
+                         <input type="number" name="adults" value="3" class="w-10 text-center border rounded" />
+                         <button type="button" class="px-2 py-1 text-xl font-semibold text-red-400  bg-gray-200 rounded">+</button>
+                     </div>
+                 </div>
+                 
+                 <!-- Children -->
+                 <div class="flex items-center justify-between py-2">
+                     <div>
+                         <p class="font-semibold text-red-400">Children</p>
+                         <p class="text-sm text-white">(2-12 Years)</p>
+                     </div>
+                     <div class="flex items-center space-x-2">
+                         <button type="button" class="px-2 py-1 text-xl font-semibold text-red-400  bg-gray-200 rounded">-</button>
+                         <input type="number" name="children" value="5" class="w-10 text-center border rounded" />
+                         <button type="button" class="px-2 py-1 text-xl font-semibold text-red-400  bg-gray-200 rounded">+</button>
+                     </div>
+                 </div>
+                 
+                 <!-- Infants -->
+                 <div class="flex items-center justify-between py-2">
+                     <div>
+                         <p class="font-semibold text-red-400">Infants</p>
+                         <p class="text-sm text-white">(0-2 Years)</p>
+                     </div>
+                     <div class="flex items-center space-x-2">
+                         <button type="button" class="px-2 py-1 text-xl font-semibold text-red-400  bg-gray-200 rounded">-</button>
+                         <input type="number" name="infants" value="0" class="w-10 text-center border rounded" />
+                         <button type="button" class="px-2 py-1 text-xl font-semibold text-red-400  bg-gray-200 rounded">+</button>
+                     </div>
+                 </div>
+               
+                 <!-- More than 9 Travellers -->
+                 <div class="flex items-center py-3">
+                     <input type="checkbox" id="more-travellers" name="more-travellers" class="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring focus:ring-blue-200" />
+                     <label for="more-travellers" class="ml-2 text-sm text-white">More than 9 Travellers</label>
+                 </div>
+               
+                 <!-- Travel Class Options -->
+                 <div class="pt-4 space-y-2">
+                     <p class="text-sm font-semibold text-red-400 ">Travel Class</p>
+                     <label class="flex items-center space-x-2">
+                         <input type="radio" name="travel-class" value="economy" class="w-4 h-4 text-blue-500 border-gray-300 focus:ring focus:ring-blue-200" />
+                         <span class="text-sm text-white">Economy</span>
+                     </label>
+                     <label class="flex items-center space-x-2">
+                         <input type="radio" name="travel-class" value="premium-economy" class="w-4 h-4 text-blue-500 border-gray-300 focus:ring focus:ring-blue-200" />
+                         <span class="text-sm text-white">Premium Economy</span>
+                     </label>
+                     <label class="flex items-center space-x-2">
+                         <input type="radio" name="travel-class" value="business" class="w-4 h-4 text-blue-500 border-gray-300 focus:ring focus:ring-blue-200" />
+                         <span class="text-sm text-white">Business</span>
+                     </label>
+                     <label class="flex items-center space-x-2">
+                         <input type="radio" name="travel-class" value="first-class" class="w-4 h-4 text-blue-500 border-gray-300 focus:ring focus:ring-blue-200" />
+                         <span class="text-sm text-white">First Class</span>
+                     </label>
+                 </div>
+               
+                 <!-- Done Button -->
+                 <div class="pt-4">
+                     <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none">
+                         Submit
+                     </button>
+                 </div>
+             </div>
+         </form>
+     </div>
+     <div class="w-[50%] p10">
+         <img src="{% static 'web/images/flight-bg1.png' %}" alt="Travel Class" class=" w-[100%] h-[100%]" />
+     </div>
+    </div>
+    </section>
 </section>
 
 
@@ -109,7 +117,7 @@
 
       <!-- Important Links -->
       <div class="border-t py-4 px-4 sm:px-6 lg:px-8">
-        <h3 class="text-gray-700 font-semibold mb-4 text-lg">Important Links</h3>
+        <h3 class="text-white font-semibold text-red-400 mb-4 text-lg">Important Links</h3>
         <div class="flex flex-wrap gap-3 md:gap-4">
           <a href="#" class="text-blue-600 hover:underline text-sm">Indigo Flight Status</a>
           <a href="#" class="text-blue-600 hover:underline text-sm">Air India Flight Status</a>
