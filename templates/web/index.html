@@ -126,11 +126,12 @@
             <select name="category" class="border border-gray-300 rounded-lg p-2 w-full">
               <option value="all" {% if selected_airline == 'all' %}selected{% endif %}>All Airlines</option>
               {% for airline in airlineses %}
-              <option value="{{ airline.name }}" {% if selected_airline == airline.name %}selected{% endif %}>
+              <option value="{{ airline.id }}" {% if selected_airline == airline.id %}selected{% endif %}>
                 {{ airline.name }}
-              </option>
+            </option>            
               {% endfor %}
-            </select>
+          </select>
+          
             
           </div>
   
@@ -222,7 +223,7 @@
     
           <!-- Book Button -->
           <div class="flex justify-center md:justify-start">
-            <a href="{% url 'web:flight-class'%}" class="transition-transform bg-orange-400 duration-300 hover:scale-110 hover:bg-orange-500 border px-6 py-3 text-white text-lg sm:text-xl font-semibold rounded-2xl">
+            <a href="{% url 'web:flight-class' id=flight.id %}" class="transition-transform bg-orange-400 duration-300 hover:scale-110 hover:bg-orange-500 border px-6 py-3 text-white text-lg sm:text-xl font-semibold rounded-2xl">
               Book
             </a>
           </div>
@@ -293,16 +294,15 @@
   </section>
 
   
-  <div class="mt-6 flex overflow-hidden overflow-x-scroll scroll-smooth">
-    <div class="flex gap-10 px-10">
-      <img class="w-[410px] h-[200px] rounded-3xl object-cover" src="{% static 'web/images/offer1.png' %}" alt="Offer 1">
-      <img class="w-[410px] h-[200px] rounded-3xl object-cover" src="{% static 'web/images/offer2.png' %}" alt="Offer 2">
-      <img class="w-[410px] h-[200px] rounded-3xl object-cover" src="{% static 'web/images/offer4.png' %}" alt="Offer 4">
-      <img class="w-[410px] h-[200px] rounded-3xl object-cover" src="{% static 'web/images/offer3.png' %}" alt="Offer 3">
-      <img class="w-[410px] h-[200px] rounded-3xl object-cover" src="{% static 'web/images/offers.png' %}" alt="Offer 5">
-      <img class="w-[410px] h-[200px] rounded-3xl object-cover" src="{% static 'web/images/offer5.png' %}" alt="Offer 6">
+    <div class=" mt-6 flex overflow-hidden  overflow-x-scroll scroll-smooth  smooth-scroll ">
+      <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer1.png' %}" alt="images">
+      <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer2.png' %}" alt="images">
+      <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer4.png' %}" alt="images">
+      <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer3.png' %}" alt="images">
+      <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offers.png' %}" alt="images">
+      <img class="ml-10 w-[410px] rounded-3xl h-[200px]" src="{% static 'web/images/offer5.png' %}" alt="images">
+
     </div>
-  </div>
 </section>
 
 

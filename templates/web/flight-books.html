@@ -8,7 +8,7 @@
 
 
 
-    <section class="wrapper pt-40 ">
+    <section class="wrapper mb-10 pt-40 ">
       <div class="flex flex-wrap items-center gap-6">
         <div class="w-full md:w-[60%] ">
           <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 border border-gray-200">
@@ -17,9 +17,14 @@
             <p class="text-gray-600 mb-4 text-sm md:text-base">
               {{ cart_items.departure_time|date:"D, d M" }} {{ cart_items.duration }} 
             </p>
-      
+            <h3 class="font-bold">Summary:</h3>
+            <p>Adults: {{ adults }}</p>
+            <p>Children: {{ children }}</p>
+            <p>Infants: {{ infants }}</p>
+            <p>More than 9 Travellers: {% if more_travellers %}Yes{% else %}No{% endif %}</p>
+            <p>Travel Class: {{ travel_class }}</p>
             <!-- Alert Section -->
-            <div class="bg-yellow-100 text-yellow-800 p-4 rounded-lg mb-4">
+            <div class="bg-yellow-100 mt-4 text-yellow-800 p-4 rounded-lg mb-4">
               <p class="text-sm">
                 You searched for a flight to {{ departure_airport }}, but you have selected {{ arrival_airport }} as the arrival airport.
               </p>
@@ -78,7 +83,7 @@
           </div>
         </div>
       
-        <div class="w-full md:w-[35%]">
+        <div class="w-full md:w-[35%] mb-10">
           <div class="border py-4 px-5 rounded-2xl bg-gray-100">
             <!-- Payment Details Header -->
             <h1 class="text-[30px] md:text-[40px] font-bold text-[#000] text-center p-6">Payment Details</h1>
@@ -140,7 +145,7 @@
             </div>
       
             <!-- Continue Button -->
-            <div class="flex items-center justify-center mt-6">
+            <div class="flex items-center  justify-center mt-6">
               <a
                 href="#"
                 class="px-10 py-4 rounded-2xl bg-orange-500 text-white text-[20px] md:text-[25px] font-semibold hover:bg-orange-600 hover:text-black transition-transform duration-300 transform hover:scale-105"

@@ -17,7 +17,7 @@ urlpatterns = [
    path("bus-books/<int:id>/", views.bus_books, name="bus-books"),
    path("bus-seat/", views.bus_seat, name="bus-seat"),
    path("train-seat/", views.train_seat, name="train-seat"),
-   path("flight-class/", views.flight_class, name="flight-class"),
+   path("flight-class/<int:id>/", views.flight_class, name="flight-class"),
    path('seat_selection/<int:id>/', views.seat_selection, name='seat_selection'),
    
 ]
