@@ -8,159 +8,167 @@
 
 
 
-    <section class="wrapper mb-10 pt-40 ">
-      <div class="flex flex-wrap items-center gap-6">
-        <div class="w-full md:w-[60%] ">
+   <section class=" bg-black ">
+    <section class="wrapper  pt-40  ">
+      <div id="content" class="flex flex-wrap items-center gap-6">
+        <div class="w-full md:w-[45%]">
           <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 border border-gray-200">
-            <!-- Flight Route and Date -->
-            <h2 class="text-lg md:text-xl font-bold mb-2">{{ cart_items.departure_airport }} → {{ cart_items.arrival_airport }}</h2>
-            <p class="text-gray-600 mb-4 text-sm md:text-base">
-              {{ cart_items.departure_time|date:"D, d M" }} {{ cart_items.duration }} 
-            </p>
-            <h3 class="font-bold">Summary:</h3>
-            <p>Adults: {{ adults }}</p>
-            <p>Children: {{ children }}</p>
-            <p>Infants: {{ infants }}</p>
-            <p>More than 9 Travellers: {% if more_travellers %}Yes{% else %}No{% endif %}</p>
-            <p>Travel Class: {{ travel_class }}</p>
-            <!-- Alert Section -->
-            <div class="bg-yellow-100 mt-4 text-yellow-800 p-4 rounded-lg mb-4">
-              <p class="text-sm">
-                You searched for a flight to {{ departure_airport }}, but you have selected {{ arrival_airport }} as the arrival airport.
+              <h1 class="text-[30px] font-semibold text-black text-center p-5">Flight Details</h1>
+              
+              <!-- Flight Route and Date -->
+              <h2 class="text-lg md:text-xl font-bold mb-2">{{ flightbill.departure_airport }} → {{ flightbill.arrival_airport }}</h2>
+              <p class="text-gray-600 mb-4 text-[20px] font-medium md:text-base">
+                  {{ flightbill.departure_time|date:"D, d M" }} {{ flightbill.duration }}
               </p>
-            </div>
       
-            <!-- Airline and Status -->
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-              <div>
-                <h3 class="text-base md:text-lg font-semibold">{{ cart_items.airline_name }}</h3>
-                <p class="text-gray-500 text-sm">{{ cart_items.cart_items_code }}</p>
-                <div class="mt-1 text-green-600 text-sm font-medium">{{ cart_items.status }}</div>
-              </div>
-            </div>
+              <h3 class="font-bold text-[20px] text-red-500">Summary:</h3>
+              <p class="text-[20px] font-medium">Adults: {{ adults }}</p>
+              <p class="text-[20px] font-medium">Children: {{ children }}</p>
+              <p class="text-[20px] font-medium">Infants: {{ infants }}</p>
+              <p class="text-[20px] font-medium">More than 9 Travellers: {% if more_travellers %}Yes{% else %}No{% endif %}</p>
+              <p class="text-[20px] font-medium">Travel Class: {{ travel_class }}</p>
       
-            <!-- Flight Timings and Duration -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-              <!-- Departure Info -->
-              <div>
-                <h4 class="font-bold text-lg">{{ cart_items.departure_time|time:"H:i" }}</h4>
-                <p class="text-sm text-gray-500">{{ cart_items.departure_airport }}</p>
-                <p class="text-sm text-gray-400">Terminal {{ cart_items.terminal }}</p>
+              <!-- Alert Section -->
+              <div class="bg-yellow-100 mt-4 text-yellow-800 p-4 rounded-lg mb-4">
+                  <p class="text-[20px] font-medium">
+                      You searched for a flight to {{ flightbill.departure_airport }}, but you have selected {{ flightbill.arrival_airport }} as the arrival airport.
+                  </p>
               </div>
       
-              <!-- Duration -->
-              <div class="hidden md:block">
-                <p class="text-gray-500">{{ cart_items.duration }}</p>
-                <div class="border-t border-gray-300 my-2"></div>
+              <!-- Airline and Status -->
+              <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                  <div>
+                      <h3 class="text-base md:text-lg font-semibold">{{ flightbill.airline_name }}</h3>
+                      <p class="text-gray-500 text-[20px] font-medium">{{ flightbill.flight_code }}</p>
+                      <div class="mt-1 text-green-600 text-[20px]  font-medium">{{ flightbill.status }}</div>
+                  </div>
               </div>
       
-              <!-- Arrival Info -->
-              <div>
-                <h4 class="font-bold text-lg">{{ cart_items.arrival_time|time:"H:i" }}</h4>
-                <p class="text-sm text-gray-500">{{ cart_items.arrival_airport }}</p>
-              </div>
-            </div>
+              <!-- Flight Timings and Duration -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                  <!-- Departure Info -->
+                  <div>
+                      <h4 class="font-bold text-lg">{{ flightbill.departure_time|time:"H:i" }}</h4>
+                      <p class="text-[20px] font-medium text-gray-500">{{ flightbill.departure_airport }}</p>
+                  </div>
       
-            <!-- Baggage and Payment Details -->
-            <div class="mt-6 space-y-3">
-              <div class="flex justify-between text-sm">
-                <p class="font-medium">Baggage</p>
-                <p>{{ cart_items.baggage_allowance }}</p>
+                  <!-- Duration -->
+                  <div class="hidden md:block">
+                      <p class="text-gray-500">{{ flightbill.duration }}</p>
+                      <div class="border-t border-gray-300 my-2"></div>
+                  </div>
+      
+                  <!-- Arrival Info -->
+                  <div>
+                      <h4 class="font-bold text-lg">{{ flightbill.arrival_time|time:"H:i" }}</h4>
+                      <p class="text-[20px] font-medium text-gray-500">{{ flightbill.arrival_airport }}</p>
+
+                  </div>
               </div>
-              <div class="flex justify-between text-sm">
-                <p class="font-medium">Cabin</p>
-                <p>{{ cart_items.cabin_baggage }}</p>
+      
+              <!-- Baggage and Payment Details -->
+              <div class="mt-6 space-y-3">
+                  <div class="flex justify-between text-[18px] font-medium">
+                      <p class="font-medium">Baggage</p>
+                      <p>{{ flightbill.baggage_allowance }}</p>
+                  </div>
+                  <div class="flex justify-between text-[18px] font-medium">
+                      <p class="font-medium">Cabin</p>
+                      <p>{{ flightbill.cabin_baggage }}</p>
+                  </div>
+                  <div class="flex justify-between text-[18px] font-medium">
+                      <p class="font-medium">Check-in</p>
+                      <p>{{ flightbill.check_in_baggage }}</p>
+                  </div>
+                  <div class="flex justify-between text-[18px]  font-bold border-t pt-3">
+                      <p>To Pay</p>
+                      <p>₹{{ flight.price }}</p>
+                  </div>
               </div>
-              <div class="flex justify-between text-sm">
-                <p class="font-medium">Check-in</p>
-                <p>{{ cart_items.check_in_baggage }}</p>
-              </div>
-              <div class="flex justify-between text-sm font-bold border-t pt-3">
-                <p>To Pay</p>
-                <p>₹{{ flightbill.fligths.price }}</p>
-              </div>
-            </div>
           </div>
-        </div>
-      
-        <div class="w-full md:w-[35%] mb-10">
-          <div class="border py-4 px-5 rounded-2xl bg-gray-100">
-            <!-- Payment Details Header -->
-            <h1 class="text-[30px] md:text-[40px] font-bold text-[#000] text-center p-6">Payment Details</h1>
-      
-            <!-- Coupon Code Section -->
-            <div class="max-w-md mx-auto px-6 py-6 bg-white shadow-md rounded-lg border border-gray-200">
-              <div class="w-full border-b border-gray-300 py-4">
-                <form class="flex flex-col sm:flex-row items-center justify-between gap-4" method="post" action="">
-                  {% csrf_token %}
-                  <input
-                    type="text"
-                    placeholder="Coupon Code"
-                    name="code"
-                    class="w-full sm:w-auto py-2 px-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#2AC489]"
-                  >
-                  <button
-                    type="submit"
-                    class="px-6 py-2 bg-[#2AC489] text-white font-medium rounded-md hover:bg-[#239d72] transition"
-                  >
-                    APPLY
-                  </button>
-                </form>
-      
-                <!-- Error Message -->
-                {% if error_message %}
-                <div class="mt-4 text-red-500 font-bold bg-red-50 p-3 rounded-md">
-                  {{ error_message }}
-                </div>
-                {% endif %}
-      
-                <!-- Success Message -->
-                {% if success_message %}
-                <div class="mt-4 text-green-500 font-bold bg-green-50 p-3 rounded-md">
-                  {{ success_message }}
-                </div>
-                {% endif %}
-              </div>
-      
-              <!-- Bill Details Section -->
-              <div class="w-full border-b border-gray-300 py-4">
-                <h2 class="text-lg font-semibold mb-4">BILL DETAILS</h2>
-                <div class="flex justify-between text-sm mb-2">
-                  <p>Item Total</p>
-                  <p>₹{{ cartbill.item_total }}</p>
-                </div>
-                <div class="flex justify-between text-sm mb-2">
-                  <p>Offer Applied</p>
-                  <p>-₹{{ cartbill.offer_amount }}</p>
-                </div>
-                <div class="flex justify-between text-sm mb-2">
-                  <p>Tax Charges</p>
-                  <p>₹{{ cartbill.tax_charge }}</p>
-                </div>
-                <div class="flex justify-between text-lg font-bold border-t pt-2 mt-2">
-                  <p>To Pay</p>
-                  <p>₹{{ cartbill.total_amount }}</p>
-                </div>
-              </div>
-            </div>
-      
-            <!-- Continue Button -->
-            <div class="flex items-center  justify-center mt-6">
-              <a
-                href="#"
-                class="px-10 py-4 rounded-2xl bg-orange-500 text-white text-[20px] md:text-[25px] font-semibold hover:bg-orange-600 hover:text-black transition-transform duration-300 transform hover:scale-105"
-              >
-                Continue
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
       
+    
+        <div class="w-full md:w-[45%] ">
+            <div class="border py-4 px-5 rounded-2xl bg-gray-100">
+                <h1 class="text-[30px] md:text-[35px] font-semi+bold text-[#000] text-center p-6">Payment Details</h1>
+                <div class="max-w-md mx-auto px-6 py-6 bg-white shadow-md rounded-lg border border-gray-200">
+                    <div class="w-full border-b border-gray-300 py-4">
+                      <a href="{% url 'web:offer' %}"><h1 class="text-[20px] font-medium text-red-500 mb-2">Offers</h1></a>
+                        <form class="flex flex-col gap-4" method="post" action="">
+                            {% csrf_token %}
+                            <input
+                                type="text"
+                                placeholder="Coupon Code"
+                                name="code"
+                                class="w-full sm:w-auto py-2 px-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#2AC489]"
+                            >
+                            <button
+                                type="submit"
+                                class="px-6 py-2 bg-[#2AC489] text-white font-medium rounded-md hover:bg-[#239d72] transition"
+                            >
+                                APPLY
+                            </button>
+                        </form>
+    
+                        {% if error_message %}
+                        <div class="mt-4 text-red-500 font-bold bg-red-50 p-3 rounded-md">
+                            {{ error_message }}
+                        </div>
+                        {% endif %}
+    
+                        <!-- Success Message -->
+                        {% if success_message %}
+                        <div class="mt-4 text-green-500 font-bold bg-green-50 p-3 rounded-md">
+                            {{ success_message }}
+                        </div>
+                        {% endif %}
+                    </div>
+    
+                    <!-- Bill Details Section -->
+                    <div class="w-full border-b border-gray-300 py-4">
+                        <h2 class="text-lg font-semibold mb-4">BILL DETAILS</h2>
+                        <div class="flex justify-between text-sm mb-2">
+                            <p class="text -[20px] font-medium">Item Total</p>
+                            <p class="text -[20px] font-medium">₹{{ cartbill.item_total }}</p>
+                        </div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <p class="text -[20px] font-medium">Offer Applied</p>
+                            <p class="text -[20px] font-medium">-₹{{ cartbill.offer_amount }}</p>
+                        </div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <p class="text -[20px] font-medium">Tax Charges</p>
+                            <p class="text -[20px] font-medium">₹{{ cartbill.tax_charge }}</p>
+                        </div>
+                        <div class="flex justify-between text-lg font-bold border-t pt-2 mt-2">
+                            <p class="text -[20px] font-medium">To Pay</p>
+                            <p class="text -[20px] font-medium">₹{{ cartbill.totel_amount }}</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Continue Button -->
+                <div class="flex items-center justify-center mt-6">
+                    <a
+                        href="#"
+                        class="px-10 py-4 rounded-2xl bg-orange-400 text-white text-[20px] md:text-[25px] font-semibold hover:bg-orange-500 hover:text-black "
+                    >
+                        Continue
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+      <div class="flex justify-center items-center pb-10 mt-6">
+        <button  onclick="downloadPDF()" class="px-10 py-4 rounded-2xl bg-green-400 text-black text-[20px] md:text-[25px] font-semibold hover:bg-green-500 hover:text-white transition-transform duration-300 ">Download</button>
+
+      </div>
     </section>
 
+   </section>
 
-    <footer class="text-[#6f6a6a]">
+    <footer class="text-[#6f6a6a] ">
       <div class="w-full bg-white shadow-sm">
   
         <!-- Airlines List -->
@@ -227,5 +235,19 @@
         </div>
       </div>
     </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
+    <script>
+      function downloadPDF() {
+          const element = document.getElementById('content');
+          const options = {
+              margin: 10,
+              filename: 'flight_details.pdf',
+              image: { type: 'jpeg', quality: 0.98 },
+              html2canvas: { scale: 2 },
+              jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          };
+          html2pdf().from(element).set(options).save();
+      }
+  </script>
 {% endblock %}

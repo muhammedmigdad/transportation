@@ -103,17 +103,17 @@
           <form method="GET" id="price-range-form">
             <input type="hidden" name="price_min" id="price-min" value="1000">
             <input type="hidden" name="price_max" id="price-max" value="100000">
-        
+          
             <div class="relative w-full max-w-full">
               <input min="1000" max="100000" class="thumb absolute h-0 left-0 outline-none z-[3] w-full" type="range" value="1000" id="left-slider">
-              
+          
               <input min="1000" max="100000" class="thumb absolute h-0 right-0 outline-none z-[4] w-full" type="range" value="100000" id="right-slider">
-              
+          
               <div class="relative w-full">
                 <div class="absolute rounded-30 h-px z-[1] w-full border-b border-tertiary"></div>
                 <div class="absolute right-0 rounded-30 h-[3px] z-[2] text-selection bg-current progress-bar" style="left: 0%; width: 100%;"></div>
                 <div class="absolute left-0 text-secondary text-sm mt-3 min-price" id="min-price">1000</div>
-      
+          
                 <div class="absolute right-0 text-secondary text-sm mt-3 max-price" id="max-price">100000</div>
               </div>
             </div>
@@ -126,13 +126,12 @@
             <select name="category" class="border border-gray-300 rounded-lg p-2 w-full">
               <option value="all" {% if selected_airline == 'all' %}selected{% endif %}>All Airlines</option>
               {% for airline in airlineses %}
-              <option value="{{ airline.id }}" {% if selected_airline == airline.id %}selected{% endif %}>
+              <option value="{{ airline.name }}" {% if selected_airline == airline.name %}selected{% endif %}>
                 {{ airline.name }}
             </option>            
               {% endfor %}
           </select>
-          
-            
+
           </div>
   
           <div class="mb-6">
@@ -443,14 +442,31 @@
         const priceMinInput = document.getElementById('price-min');
         const priceMaxInput = document.getElementById('price-max');
         const form = document.getElementById('price-range-form');
+      
         leftSlider.addEventListener('input', updateRange);
         rightSlider.addEventListener('input', updateRange);
+      
         function updateRange() {
-          const minVal = parseInt(leftSlider.value);
-          const maxVal = parseInt(rightSlider.value);
-          const percentage = (minVal - 1000) / (100000 - 1000) * 100;
-          progressBar.style.left = `${percentage}%`;
-          progressBar.style.width = `${(maxVal - minVal) / (100000 - 1000) * 100}%`;
+          let minVal = parseInt(leftSlider.value);
+          let maxVal = parseInt(rightSlider.value);
+      
+          // Ensure the left slider is not greater than the right slider and vice versa
+          if (minVal > maxVal) {
+            minVal = maxVal;
+            leftSlider.value = minVal;
+          }
+      
+          if (maxVal < minVal) {
+            maxVal = minVal;
+            rightSlider.value = maxVal;
+          }
+      
+          const percentageLeft = (minVal - 1000) / (100000 - 1000) * 100;
+          const percentageRight = (maxVal - 1000) / (100000 - 1000) * 100;
+      
+          progressBar.style.left = `${percentageLeft}%`;
+          progressBar.style.width = `${percentageRight - percentageLeft}%`;
+      
           minPriceLabel.textContent = minVal;
           maxPriceLabel.textContent = maxVal;
           priceMinInput.value = minVal;

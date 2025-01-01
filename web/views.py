@@ -12,6 +12,7 @@ from datetime import date
 from django.views.decorators.csrf import csrf_exempt
 
 
+
 @login_required(login_url='/login/')
 def seat_selection(request, id):
     bus = Bus(id=id)
@@ -53,12 +54,17 @@ def index(request):
     selected_airline = request.GET.get('airline', None)
     price_min = request.GET.get('price_min', None)
     price_max = request.GET.get('price_max', None)
-    
+
     if selected_airline and selected_airline != 'all':
         flights = flights.filter(airline__name=selected_airline)
 
     if price_min and price_max:
-        flights = flights.filter(price__range=(price_min, price_max))
+        try:
+            price_min = int(price_min)
+            price_max = int(price_max)
+            flights = flights.filter(price__range=(price_min, price_max))
+        except ValueError:
+            pass 
 
     if request.method == "POST":
         adults = int(request.POST.get('adults', 0))
@@ -423,7 +429,7 @@ def flight_books(request, id):
             duration=fligths.duration,
             departure_airport=fligths.departure_code,
             arrival_airport=fligths.arrival_code,
-            baggage_allowance='20 Kg Total in 2 Pieces',
+            baggage_allowance=' 1 People 20 Kg ',
             cabin_baggage='7 Kg',
             check_in_baggage='20 Kg',
             terminal='IN',
@@ -451,7 +457,7 @@ def flight_books(request, id):
             discount = min(discount, cartbill.item_total)
 
             cartbill.offer_amount = discount
-            cartbill.total_amount = cartbill.item_total + cartbill.tax_charge - discount
+            cartbill.totel_amount = cartbill.item_total + cartbill.tax_charge - discount
             cartbill.save()
             success_message = 'Coupon code applied successfully!'
         except Offer.DoesNotExist:
@@ -709,12 +715,11 @@ def flight_class(request, id):
         more_travellers = request.POST.get('more-travellers', False) == 'on'
         travel_class = request.POST.get('travel-class', 'economy')
 
-        # Update or create CartBill object for the customer
         if CartBill.objects.filter(customer=customer).exists():
             cartbill = CartBill.objects.get(customer=customer)
             cartbill.item_total = flight.price
             cartbill.tax_charge = 1500.00
-            cartbill.total_amount = flight.price + 1500
+            cartbill.totel_amount = flight.price + 1500
             cartbill.offer_amount = 0.00
             cartbill.save()
         else:
@@ -726,7 +731,6 @@ def flight_class(request, id):
                 offer_amount=0.00
             )
 
-        # Update or create FlightBill object for the flight
         if FlightBill.objects.filter(fligths=flight).exists():
             flightbill = FlightBill.objects.get(fligths=flight)
             flightbill.airline_name = flight.airline.name
@@ -739,7 +743,7 @@ def flight_class(request, id):
             flightbill.save()
         else:
             flightbill = FlightBill.objects.create(
-                fligths=flight,  # Use 'fligths' here instead of 'flight'
+                fligths=flight, 
                 airline_name=flight.airline.name,
                 flight_code=flight.flight_numbers,
                 departure_time=flight.departure_time,
@@ -747,7 +751,7 @@ def flight_class(request, id):
                 duration=flight.duration,
                 departure_airport=flight.departure_code,
                 arrival_airport=flight.arrival_code,
-                baggage_allowance='20 Kg Total in 2 Pieces',
+                baggage_allowance=' 1 People _20 Kg ',
                 cabin_baggage='7 Kg',
                 check_in_baggage='20 Kg',
                 terminal='IN',
@@ -757,27 +761,28 @@ def flight_class(request, id):
         error_message = None
         success_message = None
         
-        # Check for coupon code and apply discount
-        if 'code' in request.POST:
-            code = request.POST['code']
-            try:
-                offer = Offer.objects.get(code=code)
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        try:
+            offer = Offer.objects.get(code=code)
 
-                # Apply the offer (percentage or fixed amount)
-                if offer.is_percentage:
-                    discount = round((offer.discount / 100) * cartbill.item_total, 2)
-                else:
-                    discount = offer.discount
+            if offer.is_percentage:
+                discount = round((offer.discount / 100) * cartbill.item_total, 2)
+            else:
+                discount = offer.discount
 
-                discount = min(discount, cartbill.item_total)
+            discount = float(discount)
+            item_total = float(cartbill.item_total)
+            tax_charge = float(cartbill.tax_charge)
 
-                cartbill.offer_amount = discount
-                cartbill.total_amount = cartbill.item_total + cartbill.tax_charge - discount
-                cartbill.save()
+            discount = min(discount, item_total)
 
-                success_message = 'Coupon code applied successfully!'
-            except Offer.DoesNotExist:
-                error_message = 'Invalid coupon code. Please try again.'
+            cartbill.offer_amount = discount
+            cartbill.totel_amount = item_total + tax_charge - discount
+            cartbill.save()
+            success_message = 'Coupon code applied successfully!'
+        except Offer.DoesNotExist:
+            error_message = 'Invalid coupon code. Please try again.'
 
         context = {
             "flight": flight,
