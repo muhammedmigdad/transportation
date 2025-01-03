@@ -17,8 +17,8 @@ class Flight(models.Model):
     arrival_code = models.CharField(max_length=100)
     arrival_name = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateField(null=True, blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price = models.FloatField()
+    discount = models.FloatField( null=True, blank=True)
 
     
     class Meta:
@@ -31,7 +31,28 @@ class Flight(models.Model):
     def __str__(self):
         return self.airline.name
     
+class TravelClassPrice(models.Model):
+    TRAVEL_CLASS_CHOICES = [
+        ('economy', 'Economy'),
+        ('premium-economy', 'Premium Economy'),
+        ('business', 'Business'),
+        ('first-class', 'First Class'),
+    ]
 
+    travel_class = models.CharField(
+        max_length=20,
+        choices=TRAVEL_CLASS_CHOICES,
+        unique=True,
+        verbose_name="Travel Class"
+    )
+    price = models.FloatField(
+        verbose_name="Price"
+    )
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name="Created On")
+    updated_on = models.DateTimeField(auto_now=True, verbose_name="Updated On")
+
+    def __str__(self):
+        return f"{self.get_travel_class_display()} - {self.price}"
 
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -103,8 +124,8 @@ class Train(models.Model):
     arrival_code = models.CharField(max_length=10)
     arrival_name = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateField(null=True, blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price = models.FloatField()
+    discount = models.FloatField( null=True, blank=True)
 
 
     
@@ -130,10 +151,10 @@ class Bus(models.Model):
     arrival_time = models.TimeField()
     arrival_code = models.CharField(max_length=10)
     arrival_name = models.CharField(max_length=100, null=True, blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.FloatField()
     total_seat = models.IntegerField(default=0)
     date = models.DateField(null=True, blank=True)
-    discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    discount = models.FloatField( null=True, blank=True)
 
     class Meta:
         db_table = "bus"

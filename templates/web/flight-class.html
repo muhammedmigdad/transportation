@@ -53,33 +53,19 @@
                         </div>
                     </div>
                 
-                    <!-- More than 9 Travellers -->
-                    <div class="flex items-center py-3">
-                        <input type="checkbox" id="more-travellers" name="more-travellers" class="w-4 h-4 text-blue-500 border-gray-500 rounded focus:ring focus:ring-blue-300" {% if more_travellers %}checked{% endif %} />
-                        <label for="more-travellers" class="ml-2 text-sm text-gray-300">More than 9 Travellers</label>
-                    </div>
                 
                     <!-- Travel Class Options -->
                     <div class="py-4 space-y-3">
                         <p class="font-bold text-white">Travel Class</p>
+                        {% for class_price in travel_class_prices %}
                         <label class="flex items-center space-x-3">
-                            <input type="radio" name="travel-class" value="economy" {% if travel_class == 'economy' %}checked{% endif %} class="w-4 h-4 text-blue-500 border-gray-500 focus:ring focus:ring-blue-300" />
-                            <span class="text-sm text-gray-300">Economy</span>
+                            <input type="radio" name="travel-class" value="{{ class_price.travel_class }}" {% if travel_class == class_price.travel_class %}checked{% endif %} class="w-4 h-4 text-blue-500 border-gray-500 focus:ring focus:ring-blue-300" />
+                            <span class="text-sm text-gray-300">{{ class_price.get_travel_class_display }} ({{ class_price.price }})</span>
                         </label>
-                        <label class="flex items-center space-x-3">
-                            <input type="radio" name="travel-class" value="premium-economy" {% if travel_class == 'premium-economy' %}checked{% endif %} class="w-4 h-4 text-blue-500 border-gray-500 focus:ring focus:ring-blue-300" />
-                            <span class="text-sm text-gray-300">Premium Economy</span>
-                        </label>
-                        <label class="flex items-center space-x-3">
-                            <input type="radio" name="travel-class" value="business" {% if travel_class == 'business' %}checked{% endif %} class="w-4 h-4 text-blue-500 border-gray-500 focus:ring focus:ring-blue-300" />
-                            <span class="text-sm text-gray-300">Business</span>
-                        </label>
-                        <label class="flex items-center space-x-3">
-                            <input type="radio" name="travel-class" value="first-class" {% if travel_class == 'first-class' %}checked{% endif %} class="w-4 h-4 text-blue-500 border-gray-500 focus:ring focus:ring-blue-300" />
-                            <span class="text-sm text-gray-300">First Class</span>
-                        </label>
+                        {% endfor %}
                     </div>
-                
+                    
+                    
                     <div class="pt-4">
                         <button type="submit" class="w-full px-4 py-2 font-bold text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
                             Submit

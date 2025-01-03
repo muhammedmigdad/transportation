@@ -22,15 +22,14 @@
               </p>
       
               <h3 class="font-bold text-[20px] text-red-500">Summary:</h3>
-              <p class="text-[20px] font-medium">Adults: {{ adults }}</p>
-              <p class="text-[20px] font-medium">Children: {{ children }}</p>
-              <p class="text-[20px] font-medium">Infants: {{ infants }}</p>
-              <p class="text-[20px] font-medium">More than 9 Travellers: {% if more_travellers %}Yes{% else %}No{% endif %}</p>
-              <p class="text-[20px] font-medium">Travel Class: {{ travel_class }}</p>
+              <p class="text-[15px] font-medium">Adults: {{ adults }}</p>
+              <p class="text-[15px] font-medium">Children: {{ children }}</p>
+              <p class="text-[15px] font-medium">Infants: {{ infants }}</p>
+              <p class="text-[15px] font-medium">Travel Class: {{ travel_class }}</p>
       
               <!-- Alert Section -->
               <div class="bg-yellow-100 mt-4 text-yellow-800 p-4 rounded-lg mb-4">
-                  <p class="text-[20px] font-medium">
+                  <p class="text-[16px] font-medium">
                       You searched for a flight to {{ flightbill.departure_airport }}, but you have selected {{ flightbill.arrival_airport }} as the arrival airport.
                   </p>
               </div>
@@ -39,8 +38,8 @@
               <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                   <div>
                       <h3 class="text-base md:text-lg font-semibold">{{ flightbill.airline_name }}</h3>
-                      <p class="text-gray-500 text-[20px] font-medium">{{ flightbill.flight_code }}</p>
-                      <div class="mt-1 text-green-600 text-[20px]  font-medium">{{ flightbill.status }}</div>
+                      <p class="text-gray-500 text-[15px] font-medium">{{ flightbill.flight_code }}</p>
+                      <div class="mt-1 text-green-600 text-[15px]  font-medium">{{ flightbill.status }}</div>
                   </div>
               </div>
       
@@ -49,7 +48,7 @@
                   <!-- Departure Info -->
                   <div>
                       <h4 class="font-bold text-lg">{{ flightbill.departure_time|time:"H:i" }}</h4>
-                      <p class="text-[20px] font-medium text-gray-500">{{ flightbill.departure_airport }}</p>
+                      <p class="text-[15px] font-medium text-gray-500">{{ flightbill.departure_airport }}</p>
                   </div>
       
                   <!-- Duration -->
@@ -60,7 +59,7 @@
       
                   <!-- Arrival Info -->
                   <div>
-                      <h4 class="font-bold text-lg">{{ flightbill.arrival_time|time:"H:i" }}</h4>
+                      <h4 class="font-bold text-[15px]">{{ flightbill.arrival_time|time:"H:i" }}</h4>
                       <p class="text-[20px] font-medium text-gray-500">{{ flightbill.arrival_airport }}</p>
 
                   </div>
@@ -68,22 +67,18 @@
       
               <!-- Baggage and Payment Details -->
               <div class="mt-6 space-y-3">
-                  <div class="flex justify-between text-[18px] font-medium">
+                  <div class="flex justify-between text-[15px] font-medium">
                       <p class="font-medium">Baggage</p>
                       <p>{{ flightbill.baggage_allowance }}</p>
                   </div>
-                  <div class="flex justify-between text-[18px] font-medium">
+                  <div class="flex justify-between text-[15px] font-medium">
                       <p class="font-medium">Cabin</p>
                       <p>{{ flightbill.cabin_baggage }}</p>
                   </div>
-                  <div class="flex justify-between text-[18px] font-medium">
+                  <div class="flex justify-between text-[15px] font-medium">
                       <p class="font-medium">Check-in</p>
                       <p>{{ flightbill.check_in_baggage }}</p>
-                  </div>
-                  <div class="flex justify-between text-[18px]  font-bold border-t pt-3">
-                      <p>To Pay</p>
-                      <p>₹{{ flight.price }}</p>
-                  </div>
+                  </div>              
               </div>
           </div>
       </div>

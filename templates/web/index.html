@@ -212,13 +212,6 @@
             <p class="text-sm sm:text-base font-medium text-[#ff2a2a]">{{ flight.arrival_code }}</p>
           </div>
     
-          <!-- Pricing Info -->
-          <div class="text-center md:text-left">
-            <h1 class="text-[#000] text-lg sm:text-xl font-semibold">₹{{ flight.price }}</h1>
-            {% if flight.discount %}
-              <h2 class="text-sm sm:text-base font-medium text-orange-400">Extra ₹{{ flight.discount }} Off</h2>
-            {% endif %}
-          </div>
     
           <!-- Book Button -->
           <div class="flex justify-center md:justify-start">
