@@ -38,11 +38,10 @@ class TravelClassPrice(models.Model):
         ('business', 'Business'),
         ('first-class', 'First Class'),
     ]
-
+    airline = models.ForeignKey('web.Airlines', on_delete=models.CASCADE)
     travel_class = models.CharField(
         max_length=20,
         choices=TRAVEL_CLASS_CHOICES,
-        unique=True,
         verbose_name="Travel Class"
     )
     price = models.FloatField(
@@ -52,7 +51,7 @@ class TravelClassPrice(models.Model):
     updated_on = models.DateTimeField(auto_now=True, verbose_name="Updated On")
 
     def __str__(self):
-        return f"{self.get_travel_class_display()} - {self.price}"
+        return self.airline.name
 
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -262,6 +261,9 @@ class  CartBill(models.Model):
     offer_amount = models.FloatField()
     totel_amount = models.FloatField()
     tax_charge = models.FloatField()
+    adults = models.PositiveIntegerField(default=1, help_text="Number of adults")
+    children = models.PositiveIntegerField(default=0, help_text="Number of children")
+    infants = models.PositiveIntegerField(default=0, help_text="Number of infants")
     
     
     class Meta:

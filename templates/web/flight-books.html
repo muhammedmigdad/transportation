@@ -68,17 +68,17 @@
               <!-- Baggage and Payment Details -->
               <div class="mt-6 space-y-3">
                   <div class="flex justify-between text-[15px] font-medium">
-                      <p class="font-medium">Baggage</p>
-                      <p>{{ flightbill.baggage_allowance }}</p>
-                  </div>
-                  <div class="flex justify-between text-[15px] font-medium">
                       <p class="font-medium">Cabin</p>
                       <p>{{ flightbill.cabin_baggage }}</p>
                   </div>
                   <div class="flex justify-between text-[15px] font-medium">
                       <p class="font-medium">Check-in</p>
                       <p>{{ flightbill.check_in_baggage }}</p>
-                  </div>              
+                  </div>     
+                  <div class="flex justify-between text-[15px]   border-gray-200 font-medium">
+                    <p class="font-medium">To Pay</p>
+                    <p>{{ flightbill.travel_class_price }}</p>
+                </div>           
               </div>
           </div>
       </div>

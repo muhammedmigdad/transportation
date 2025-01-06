@@ -429,7 +429,7 @@ def flight_books(request, id):
             duration=fligths.duration,
             departure_airport=fligths.departure_code,
             arrival_airport=fligths.arrival_code,
-            baggage_allowance=' 1 People 20 Kg ',
+            baggage_allowance=' Per Traveller',
             cabin_baggage='7 Kg',
             check_in_baggage='20 Kg',
             terminal='IN',
@@ -533,7 +533,7 @@ def train_books(request, id):
             duration=trains.duration,
             departure_stop=trains.departure_code,
             arrival_stop=trains.arrival_code,
-            baggage_allowance='10 Kg ',
+            baggage_allowance='Per Traveller',
             cabin_baggage='3 Kg',
             check_in_baggage='10 Kg',
             terminal='IN',
@@ -626,7 +626,7 @@ def bus_books(request, id):
             duration=buses.duration,
             departure_stop=buses.departure_code,
             arrival_stop=buses.arrival_code,
-            baggage_allowance='5 Kg ',
+            baggage_allowance='Per Traveller ',
             cabin_baggage='2 Kg',
             check_in_baggage='5 Kg',
             terminal='IN',
@@ -721,17 +721,13 @@ def flight_class(request, id):
         travel_class = request.POST.get('travel-class', 'economy')
 
         try:
-            selected_class = TravelClassPrice.objects.get(travel_class=travel_class)
+            selected_class = TravelClassPrice.objects.get(airline=flight.airline, travel_class=travel_class)
             travel_class_price = float(selected_class.price)
         except TravelClassPrice.DoesNotExist:
-            travel_class_price = 0.0
+            travel_class_price = 0.0  
 
-        adult_price = travel_class_price
-        child_price = travel_class_price
-        infant_price = travel_class_price
-        total_price = (adults * adult_price) + (children * child_price) + (infants * infant_price)
-
-        tax_rate = 10.0
+        total_price = (adults + children + infants) * travel_class_price
+        tax_rate = 10.0  
         tax_charge = round((tax_rate / 100) * total_price, 2)
 
         cartbill, created = CartBill.objects.get_or_create(
@@ -739,34 +735,44 @@ def flight_class(request, id):
             defaults={
                 'item_total': total_price,
                 'tax_charge': tax_charge,
-                'totel_amount': total_price + tax_charge,
+                'totel_amount': total_price + tax_charge,  
                 'offer_amount': 0.00,
+                'adults': adults,
+                'children': children,
+                'infants': infants,
             }
         )
+
         if not created:
             cartbill.item_total = total_price
             cartbill.tax_charge = tax_charge
             cartbill.totel_amount = total_price + tax_charge
             cartbill.offer_amount = 0.00
+            cartbill.adults = adults
+            cartbill.children = children
+            cartbill.infants = infants
             cartbill.save()
 
+        # Create or update the FlightBill
         flightbill, created = FlightBill.objects.get_or_create(
             fligths=flight,
             defaults={
-                'airline_name': flight.airline.name,
+                'airline_name': flight.airline.name,  # Store airline name correctly
                 'flight_code': flight.flight_numbers,
                 'departure_time': flight.departure_time,
                 'arrival_time': flight.arrival_time,
                 'duration': flight.duration,
                 'departure_airport': flight.departure_code,
                 'arrival_airport': flight.arrival_code,
-                'baggage_allowance': '1 Person - 20 Kg',
+                'baggage_allowance': 'Per Traveller',
                 'cabin_baggage': '7 Kg',
                 'check_in_baggage': '20 Kg',
                 'terminal': 'IN',
                 'status': 'On-time',
+                'price': travel_class_price  # Store the correct price for the selected travel class
             }
         )
+
         if not created:
             flightbill.airline_name = flight.airline.name
             flightbill.flight_code = flight.flight_numbers
@@ -775,13 +781,13 @@ def flight_class(request, id):
             flightbill.duration = flight.duration
             flightbill.departure_airport = flight.departure_code
             flightbill.arrival_airport = flight.arrival_code
+            flightbill.price = travel_class_price  # Update price if necessary
             flightbill.save()
 
         error_message = None
         success_message = None
-
-        if request.method == 'POST':
-            code = request.POST.get('code')
+        code = request.POST.get('code')
+        if code:
             try:
                 offer = Offer.objects.get(code=code)
 
@@ -792,29 +798,26 @@ def flight_class(request, id):
                 discount = min(discount, cartbill.item_total)
 
                 cartbill.offer_amount = discount
-
-                item_total = cartbill.item_total
-                tax_charge = cartbill.tax_charge
-                cartbill.totel_amount = item_total + tax_charge - discount
-
+                cartbill.totel_amount = cartbill.item_total + cartbill.tax_charge - discount
                 cartbill.save()
+
                 success_message = 'Coupon code applied successfully!'
             except Offer.DoesNotExist:
                 error_message = 'Invalid coupon code. Please try again.'
 
-            context = {
-                "flight": flight,
-                "cartbill": cartbill,
-                "flightbill": flightbill,
-                "travel_class_prices": travel_class_prices,
-                "error_message": error_message,
-                "success_message": success_message,
-                "adults": adults,
-                "children": children,
-                "infants": infants,
-                "travel_class": travel_class,
-            }
-            return render(request, "web/flight-books.html", context)
+        context = {
+            "flight": flight,
+            "cartbill": cartbill,
+            "flightbill": flightbill,
+            "travel_class_prices": travel_class_prices,
+            "error_message": error_message,
+            "success_message": success_message,
+            "adults": adults,
+            "children": children,
+            "infants": infants,
+            "travel_class": travel_class,
+        }
+        return render(request, "web/flight-books.html", context)
 
     context = {
         "flight": flight,
