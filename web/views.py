@@ -157,27 +157,24 @@ def login(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=email, password=password)
         
         if user is not None:
-            auth_login  (request,user)
+            auth_login(request, user)
             return HttpResponseRedirect(reverse('web:index'))
-        
         else:
             context = {
                 'error': True,
-                'message': 'Invalid  Email or Password'
+                'message': 'Invalid Email or Password'
             }
             return render(request, 'web/login.html', context=context)
-            
-        
-    else:
-        return render(request, 'web/login.html')
     
-def  validate_email(request):
+    return render(request, 'web/login.html')
+    
+def validate_email(request):
     email = request.GET.get('email', None)
     data = {
-        'is_valid' : User.objects.filter(email__iexact=email).exists()
+        'is_valid': User.objects.filter(email__iexact=email).exists()
     }
     return JsonResponse(data)
 
@@ -191,30 +188,27 @@ def register(request):
         if User.objects.filter(email=email).exists():
             context = {
                 'error': True,
-                'message': 'Email Aleardy Exists'
+                'message': 'Email Already Exists'
             }
             return render(request, 'web/register.html', context=context)
         
-        else:
-            
-        
-        
-            user = User.objects.create_user(
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                password=password,
-                is_customer=True
-            )
-            user.save()
-            customer = Customer.objects.create(
-                user=user
-            )
-            customer.save()
-            return HttpResponseRedirect(reverse('web:login'))
-    else:
-        return render(request, 'web/register.html')
-    
+        user = User.objects.create_user(
+            username=email,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            password=password
+        )
+        user.save()
+
+        user.is_customer = True
+        user.save()
+        customer = Customer.objects.create(user=user)
+        customer.save()
+
+        return HttpResponseRedirect(reverse('web:login'))
+
+    return render(request, 'web/register.html')
     
 def logout(request):
     auth_logout(request)
@@ -753,11 +747,10 @@ def flight_class(request, id):
             cartbill.infants = infants
             cartbill.save()
 
-        # Create or update the FlightBill
         flightbill, created = FlightBill.objects.get_or_create(
             fligths=flight,
             defaults={
-                'airline_name': flight.airline.name,  # Store airline name correctly
+                'airline_name': flight.airline.name,  
                 'flight_code': flight.flight_numbers,
                 'departure_time': flight.departure_time,
                 'arrival_time': flight.arrival_time,
@@ -769,7 +762,7 @@ def flight_class(request, id):
                 'check_in_baggage': '20 Kg',
                 'terminal': 'IN',
                 'status': 'On-time',
-                'price': travel_class_price  # Store the correct price for the selected travel class
+                'price': travel_class_price  
             }
         )
 
@@ -781,7 +774,7 @@ def flight_class(request, id):
             flightbill.duration = flight.duration
             flightbill.departure_airport = flight.departure_code
             flightbill.arrival_airport = flight.arrival_code
-            flightbill.price = travel_class_price  # Update price if necessary
+            flightbill.price = travel_class_price 
             flightbill.save()
 
         error_message = None
@@ -824,3 +817,9 @@ def flight_class(request, id):
         "travel_class_prices": travel_class_prices,
     }
     return render(request, "web/flight-class.html", context)
+
+@login_required(login_url='/login/')
+def flight_details(request):
+
+    return render(request, "web/flight-details.html")
+

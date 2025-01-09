@@ -10,7 +10,7 @@
 
    <section class=" bg-black ">
     <section class="wrapper  pt-40  ">
-      <div id="content" class="flex flex-wrap items-center gap-6">
+      <div class="flex flex-wrap pb-14 items-center gap-6">
         <div class="w-full md:w-[45%]">
           <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 border border-gray-200">
               <h1 class="text-[30px] font-semibold text-black text-center p-5">Flight Details</h1>
@@ -85,9 +85,13 @@
       
     
         <div class="w-full md:w-[45%] ">
-            <div class="border py-4 px-5 rounded-2xl bg-gray-100">
+            <div class="border py-4 px-5 rounded-2xl bg-white">
+                <div class="flex justify-center gap-4">
+                    <img src="{% static 'web/images/payment1.png' %}" alt="Payment Method" class="w-full h-auto object-cover">
+                </div>
+                
                 <h1 class="text-[30px] md:text-[35px] font-semi+bold text-[#000] text-center p-6">Payment Details</h1>
-                <div class="max-w-md mx-auto px-6 py-6 bg-white shadow-md rounded-lg border border-gray-200">
+                <div class="max-w-md mx-auto px-6 py-6  bg-gray-100 shadow-md rounded-lg border border-gray-300">
                     <div class="w-full border-b border-gray-300 py-4">
                       <a href="{% url 'web:offer' %}"><h1 class="text-[20px] font-medium text-red-500 mb-2">Offers</h1></a>
                         <form class="flex flex-col gap-4" method="post" action="">
@@ -145,20 +149,22 @@
                 <!-- Continue Button -->
                 <div class="flex items-center justify-center mt-6">
                     <a
-                        href="#"
+                        href="{% url 'web:flight-details'  %}"
                         class="px-10 py-4 rounded-2xl bg-orange-400 text-white text-[20px] md:text-[25px] font-semibold hover:bg-orange-500 hover:text-black "
                     >
                         Continue
                     </a>
                 </div>
+                <div class="flex flex-wrap justify-center gap-4 mt-4">
+                    <img src="{% static 'web/images/payment0.png' %}" alt="Payment Method" class="w-[120px] h-[50px] sm:w-[150px] sm:h-[60px] object-cover">
+                    <img src="{% static 'web/images/payment00.png' %}" alt="Payment Method" class="w-[120px] h-[50px] sm:w-[150px] sm:h-[60px] object-cover">
+                    <img src="{% static 'web/images/payment000.png' %}" alt="Payment Method" class="w-[120px] h-[50px] sm:w-[150px] sm:h-[60px] object-cover">
+                </div>                
             </div>
         </div>
     </div>
     
-      <div class="flex justify-center items-center pb-10 mt-6">
-        <button  onclick="downloadPDF()" class="px-10 py-4 rounded-2xl bg-green-400 text-black text-[20px] md:text-[25px] font-semibold hover:bg-green-500 hover:text-white transition-transform duration-300 ">Download</button>
 
-      </div>
     </section>
 
    </section>
@@ -230,19 +236,4 @@
         </div>
       </div>
     </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-
-    <script>
-      function downloadPDF() {
-          const element = document.getElementById('content');
-          const options = {
-              margin: 10,
-              filename: 'flight_details.pdf',
-              image: { type: 'jpeg', quality: 0.98 },
-              html2canvas: { scale: 2 },
-              jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-          };
-          html2pdf().from(element).set(options).save();
-      }
-  </script>
 {% endblock %}

@@ -18,6 +18,7 @@ urlpatterns = [
    path("bus-seat/", views.bus_seat, name="bus-seat"),
    path("train-seat/", views.train_seat, name="train-seat"),
    path("flight-class/<int:id>/", views.flight_class, name="flight-class"),
+   path("flight-details/", views.flight_details, name="flight-details"),
    path('seat_selection/<int:id>/', views.seat_selection, name='seat_selection'),
    
 ]
