@@ -10,6 +10,7 @@ from django.http import JsonResponse
 import json
 from datetime import date
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
 
 
 
@@ -137,8 +138,16 @@ def index(request):
     if arrival_name:
         flights = flights.filter(arrival_name__icontains=arrival_name)
     if travel_date:
-        flights = flights.filter(date=travel_date)
+        try:
+            travel_date_obj = datetime.strptime(travel_date, "%Y-%m-%d").date()
+            today_date = datetime.now().date()
 
+            if travel_date_obj >= today_date:
+                flights = flights.filter(date=travel_date)
+            else:
+                flights = flights.none() 
+        except ValueError:
+            flights = flights.none()
 
     context = {
         'categories': categories,
@@ -705,8 +714,11 @@ def flight_class(request, id):
         flight = Flight.objects.get(id=id)
     except Flight.DoesNotExist:
         return redirect('flight_not_found')
-
-    travel_class_prices = TravelClassPrice.objects.all()
+    
+    
+    travel_class_prices = TravelClassPrice.objects.filter(
+        airline=flight.airline,
+    )
 
     if request.method == 'POST':
         adults = int(request.POST.get('adults', 0))
@@ -715,13 +727,13 @@ def flight_class(request, id):
         travel_class = request.POST.get('travel-class', 'economy')
 
         try:
-            selected_class = TravelClassPrice.objects.get(airline=flight.airline, travel_class=travel_class)
+            selected_class = travel_class_prices.get(travel_class=travel_class)
             travel_class_price = float(selected_class.price)
         except TravelClassPrice.DoesNotExist:
-            travel_class_price = 0.0  
+            travel_class_price = 0.0
 
         total_price = (adults + children + infants) * travel_class_price
-        tax_rate = 10.0  
+        tax_rate = 10.0
         tax_charge = round((tax_rate / 100) * total_price, 2)
 
         cartbill, created = CartBill.objects.get_or_create(
@@ -729,7 +741,7 @@ def flight_class(request, id):
             defaults={
                 'item_total': total_price,
                 'tax_charge': tax_charge,
-                'totel_amount': total_price + tax_charge,  
+                'totel_amount': total_price + tax_charge,
                 'offer_amount': 0.00,
                 'adults': adults,
                 'children': children,
@@ -784,19 +796,24 @@ def flight_class(request, id):
             try:
                 offer = Offer.objects.get(code=code)
 
-                if offer.is_percentage:
-                    discount = round((offer.discount / 100) * cartbill.item_total, 2)
+                if cartbill.offer_code == code:
+                    error_message = 'Coupon code has already been applied!'
                 else:
-                    discount = offer.discount
-                discount = min(discount, cartbill.item_total)
+                    if offer.is_percentage:
+                        discount = round((offer.discount / 100) * cartbill.item_total, 2)
+                    else:
+                        discount = offer.discount
+                    discount = min(discount, cartbill.item_total)
 
-                cartbill.offer_amount = discount
-                cartbill.totel_amount = cartbill.item_total + cartbill.tax_charge - discount
-                cartbill.save()
+                    cartbill.offer_amount = discount
+                    cartbill.totel_amount = cartbill.item_total + cartbill.tax_charge - discount
+                    cartbill.offer_code = code 
+                    cartbill.save()
 
-                success_message = 'Coupon code applied successfully!'
+                    success_message = 'Coupon code applied successfully!'
             except Offer.DoesNotExist:
                 error_message = 'Invalid coupon code. Please try again.'
+
 
         context = {
             "flight": flight,

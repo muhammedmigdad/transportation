@@ -258,7 +258,8 @@ class FlightBill(models.Model):
 class  CartBill(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     item_total = models.FloatField()
-    offer_amount = models.FloatField()
+    offer_amount = models.FloatField(default=0.00)
+    offer_code = models.CharField(max_length=50, null=True, blank=True) 
     totel_amount = models.FloatField()
     tax_charge = models.FloatField()
     adults = models.PositiveIntegerField(default=1, help_text="Number of adults")
