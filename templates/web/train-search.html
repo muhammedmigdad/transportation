@@ -1,0 +1,343 @@
+{% extends 'base/web-base.html' %}
+
+{% load static %}
+
+{% block container %}
+
+
+{% include 'includes/header.html' %}
+
+<section class="wrapper pt-44 p-10"> 
+    <div class="px-6 py-6 rounded-xl bg-gray-200 mt-7" >
+        <div class="border bg-white p-5 sm:p-8 lg:p-10 mt-5 rounded-xl">
+            <form action="" method="GET">
+                <ul class="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-3">
+                    <input 
+                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+                        type="text" 
+                        name="from" 
+                        placeholder="From" 
+                    />
+                    <input 
+                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto"
+                        type="text" 
+                        name="to" 
+                        placeholder="To" 
+                    />
+                    <input 
+                        class="py-4 px-10 sm:py-6 sm:px-20 border border-gray-300 rounded-xl bg-[#edebeb] hover:bg-[#e0dede] w-full sm:w-auto" 
+                        type="date" 
+                        name="date" 
+                        required
+                    />
+                    <button 
+                        type="submit" 
+                        class="py-4 px-10 sm:py-6 sm:px-20 text-white text-[18px] sm:text-[24px] transition-transform duration-300 hover:scale-100 font-medium rounded-xl bg-[#6786ee] hover:bg-[#4f72e7] w-full sm:w-auto"
+                    >
+                        Search
+                    </button>
+                </ul>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<section class="wrapper">
+<div class="flex flex-wrap md:flex-nowrap mt-10 items-start">
+    <div class="w-full md:w-1/3 mb-10 md:mb-0">
+    <div class="bg-white p-10 md:p-20 shadow-lg rounded-lg">
+        <ul class="flex justify-center mt-7">
+            <img class=" w-18 h-18 sm:w-24 sm:h-24" src="{% static 'web/images/train1.png' %}" alt="logo">
+            <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'web/images/train1.png' %}" alt="logo">
+            <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'web/images/train1.png' %}" alt="logo">
+        </ul>
+        
+
+        <h1 class="text-lg md:text-2xl lg:text-3xl text-red-500 font-bold mb-6">Filter by</h1>
+
+        <div class="p-20 mb-10">
+            <form method="GET" id="price-range-form">
+                <input type="hidden" name="price_min" id="price-min" value="30">
+                <input type="hidden" name="price_max" id="price-max" value="10000">
+            
+                <div class="relative w-full max-w-full">
+                <input min="30" max="10000" class="thumb absolute h-0 left-0 outline-none z-[3] w-full" type="range" value="30" id="left-slider">
+                
+                <input min="30" max="10000" class="thumb absolute h-0 right-0 outline-none z-[4] w-full" type="range" value="10000" id="right-slider">
+                
+                <div class="relative w-full">
+                    <div class="absolute rounded-30 h-px z-[1] w-full border-b border-tertiary"></div>
+                    <div class="absolute right-0 rounded-30 h-[3px] z-[2] text-selection bg-current progress-bar" style="left: 0%; width: 100%;"></div>
+                    <div class="absolute left-0 text-secondary text-sm mt-3 min-price" id="min-price">30</div>
+        
+                    <div class="absolute right-0 text-secondary text-sm mt-3 max-price" id="max-price">10000</div>
+                </div>
+                </div>
+            </form>
+            </div>   
+        <hr class="border-2 mb-4 border-gray-900">
+        <form action="#" method="get">
+        <div class="mb-6">
+            <h3 class="text-sm md:text-lg font-semibold mb-3">Trains</h3>
+            <select name="category" class="border border-gray-300 rounded-lg p-2 w-full">
+            <option value="all" {% if selected_trainses == 'all' %}selected{% endif %}>All trainses</option>
+            {% for trainses in trainses %}
+            <option value="{{ trainses.name }}" {% if selected_trainses == trainses.name %}selected{% endif %}>
+                {{ trainses.name }}
+            </option>
+            {% endfor %}
+            </select>
+            
+        </div>
+
+        <div class="mb-6">
+            <h3 class="text-sm md:text-lg font-semibold mb-3">Stops</h3>
+            <select name="Stop" id="Stop" class="border border-gray-300 rounded-lg p-2 w-full">
+            <option value="">All Stops</option>
+            <option value="Non Stop" id="stope1">Non Stop</option>
+            <option value="one Stop" id="stope2">one Stop</option>
+            <option value="Limited Stop" id="stope2">Limited Stop</option>
+            </select>
+        </div>
+
+        <div class="mb-6">
+            <h3 class="text-sm md:text-lg font-semibold mb-3">Price</h3>
+            <select name="price" id="price" class="border border-gray-300 px-3 py-2 rounded-lg w-full">
+            <option value="">Select a price range</option>
+            <option value="500-20000" id="price2">3000-20000</option>
+            <option value="500-1000" id="price2">500-1000</option>
+            <option value="1000-2000" id="price3">1000-2000</option>
+            <option value="2000-4000" id="price4">2000-4000</option>
+            <option value="4000-6000" id="price5">4000-6000</option>
+            <option value="6000-8000" id="price6">6000-8000</option>
+            <option value="8000-10000" id="price7">8000-10000</option>
+            <option value="10000-20000" id="price8">10000-20000</option>
+        </select>
+        </div>
+
+        <div class="mt-6">
+            <button type="submit" class="text-sm md:text-base font-medium bg-blue-600 text-white px-5 py-2 rounded-xl w-full hover:bg-blue-700 transition duration-300">Apply Filter</button>
+        </div>
+        </form>
+        <ul class="flex justify-center mt-7">
+        <img class=" w-18 h-18 sm:w-24 sm:h-24" src="{% static 'web/images/train1.png' %}" alt="logo">
+        <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'web/images/train1.png' %}" alt="logo">
+        <img class=" w-18 h-18 sm:w-24 sm:h-24 ml-5" src="{% static 'web/images/train1.png' %}" alt="logo">
+        </ul>
+    </div>
+    </div>
+
+    <div class="w-full md:w-2/3 md:ml-10">
+    <h1 class="text-lg md:text-xl font-semibold text-black mb-5">Short By</h1>
+    <form action="" method="get">
+        <div class="flex  justify-between overflow-x-auto whitespace-nowrap space-x-4 items-center bg-white rounded-2xl p-5">
+        <a href="?sort=default" class="text-center w-1/4">
+            <button type="button" class="text-base font-medium text-gray-400 hover:text-red-500 hover:scale-110 transition-transform duration-300">Default</button>
+        </a>
+        <a href="?sort=Faster" class="text-center w-1/4">
+            <button type="button" class="text-base font-medium text-gray-400 hover:text-red-500 hover:scale-110 transition-transform duration-300">Faster</button>
+        </a>
+        <a href="?sort=high-low" class="text-center w-1/4">
+            <button type="button" class="text-base font-medium text-gray-400 hover:text-red-500 hover:scale-110 transition-transform duration-300">High-Low</button>
+        </a>
+        <a href="?sort=low-high" class="text-center w-1/4">
+            <button type="button" class="text-base font-medium text-gray-400 hover:text-red-500 hover:scale-110 transition-transform duration-300">Low-High</button>
+        </a>
+        </div>
+    </form>
+
+    {% for train in trains %}
+    <div class="border bg-white px-5 md:px-10 lg:px-20 py-5 md:py-10 mt-5 rounded-2xl">
+        <div class="flex flex-col md:flex-row flex-wrap justify-between items-center gap-6">
+            <!-- Airline Logo -->
+            <img class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] object-cover" src="{{ train.image.url }}" alt="Train Image of {{ train.trains }}">
+    
+            <!-- Airline Info -->
+            <div class="text-center md:text-left">
+            <h1 class="text-[#000] text-lg sm:text-xl font-semibold">{{ train.trains }}</h1>
+            <h2 class="text-sm sm:text-base font-medium text-gray-400">{{ train.train_numbers }}</h2>
+            </div>
+    
+            <!-- Departure Info -->
+            <div class="text-center md:text-left">
+            <h3 class="text-lg sm:text-xl font-semibold text-black">{{ train.departure_time|date:"H:i" }}</h3>
+            <h5 class="text-sm sm:text-base font-medium text-gray-400">{{ train.departure_code }}</h5>
+            </div>
+    
+            <!-- Flight Duration -->
+            <div class="text-center md:text-left">
+            <span class="text-sm sm:text-base font-medium text-gray-400">{{ train.duration }}</span>
+            <div class="border-b-2 border-gray-500 w-14 mx-auto md:mx-0 my-2"></div>
+            <h3 class="text-sm sm:text-base font-medium text-gray-400">{{ train.stops }}</h3>
+            </div>
+    
+            <!-- Arrival Info -->
+            <div class="text-center md:text-left">
+            <h3 class="text-lg sm:text-xl font-semibold text-black">{{ train.arrival_time|date:"H:i" }}</h3>
+            <p class="text-sm sm:text-base font-medium text-[#ff2a2a]">{{ train.arrival_code }}</p>
+            </div>
+    
+            <div class="transition-transform bg-orange-400 duration-300 ml-6 hover:scale-110 hover:bg-orange-500 border px-3 py-2 rounded-2xl">
+            <a href="{% url 'web:train-books' id=train.id %}" class="block text-[30px] font-semibold text-white">Seats</a>
+        </div>
+        </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-[20px] font-medium text-red-500 mt-10">No trains found matching your criteria.</p>
+        {% endfor %}
+    </div>
+</div>
+</section>
+
+
+<footer class="text-[#6f6a6a] pt-10">
+<div class="w-full bg-white shadow-sm">
+
+    <!-- Airlines List -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 py-6 px-4 sm:px-6 lg:px-8 text-center">
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">22691 Rajdhani Exp</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">12425 Jammu Rajdhani</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">12916 Ashram Express</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">13123 Sdah Smi Express</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">Bengaluru To Chennai Trains</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">Delhi To Jaipur Trains</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">TRIVANDRUM EXP/p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">ERNAD EXPRESS</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">PARASURAM EXP</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">MNGLA LKSDP EXP</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">WEST COAST EXP</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">NETRAVATI EXP</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">MAQ CHENNAI EXP</p>
+    <p class="text-gray-800 font-medium hover:text-blue-600 cursor-pointer">YESVANTPUR EXP</p>
+    </div>
+
+    <!-- Important Links -->
+    <div class="border-t py-4 px-4 sm:px-6 lg:px-8">
+    <h3 class="text-gray-700 font-semibold mb-4 text-lg">Important Links</h3>
+    <div class="flex flex-wrap gap-3 md:gap-4">
+        <a href="#" class="text-blue-600 hover:underline text-sm">22691 Rajdhani Exp Train Status</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">12425 Jammu Rajdhani Train Status</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">12916 Ashram Express Train Status</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">Train Status</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">13123 Sdah Smi Express Train Status</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">Student Train Booking</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">Senior Citizen Train Booking</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">Armed Forces Train Booking</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">Bengaluru To Chennai Trains Train Status</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">International Trains</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">Trains Offers</a>
+        <a href="#" class="text-blue-600 hover:underline text-sm">Travel Stories</a>
+    </div>
+    </div>
+</div>
+
+<!-- Footer Bottom -->
+<div class="bg-gray-100 py-6">
+    <div class="text-center text-gray-500 text-sm">
+    &copy; 2024 Le Travenues Technology Ltd. India. All brands are trademarks of their respective owners.
+    <div class="flex justify-center flex-wrap space-x-4 mt-2">
+        <a href="#" class="hover:underline">Privacy</a>
+        <a href="#" class="hover:underline">Terms of Use</a>
+        <a href="#" class="hover:underline">Career</a>
+        <a href="#" class="hover:underline">Customer Service</a>
+        <a href="#" class="hover:underline">Advertise with us</a>
+        <a href="#" class="hover:underline">About Us</a>
+        <a href="#" class="hover:underline">Investor Relations</a>
+        <a href="#" class="hover:underline">CSR</a>
+    </div>
+    </div>
+
+    <!-- Social Media Links -->
+    <div class="flex justify-center space-x-4 mt-4">
+    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" class="w-6 h-6"></a>
+    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Twitter" class="w-6 h-6"></a>
+    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" class="w-6 h-6"></a>
+    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733561.png" alt="LinkedIn" class="w-6 h-6"></a>
+    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733590.png" alt="YouTube" class="w-6 h-6"></a>
+    </div>
+</div>
+</footer>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script src="./js/index.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+    var swiper = new Swiper(".mySwiper", {
+    spaceBetween: 30,
+    centeredSlides: true,
+    autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+    },
+    breakpoints: {
+        499: {
+            slidesPerView: 1,
+            spaceBetweenSlides: 30
+        },
+        999: {
+            slidesPerView: 3,
+            spaceBetweenSlides: 40
+        }
+    },
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    });
+</script>
+<script>
+    const searchBar = document.getElementById('search-bar');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    const profileMenuButton = document.getElementById('profile-menu-button');
+    const profileMenu = document.getElementById('profile-menu');
+
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+    profileMenuButton.addEventListener('click', () => {
+        profileMenu.classList.toggle('hidden');
+    });
+
+
+
+</script>
+
+<script>
+    const leftSlider = document.getElementById('left-slider');
+    const rightSlider = document.getElementById('right-slider');
+    const progressBar = document.querySelector('.progress-bar');
+    const minPriceLabel = document.getElementById('min-price');
+    const maxPriceLabel = document.getElementById('max-price');
+    const priceMinInput = document.getElementById('price-min');
+    const priceMaxInput = document.getElementById('price-max');
+    const form = document.getElementById('price-range-form');
+    leftSlider.addEventListener('input', updateRange);
+    rightSlider.addEventListener('input', updateRange);
+    function updateRange() {
+        const minVal = parseInt(leftSlider.value);
+        const maxVal = parseInt(rightSlider.value);
+        const percentage = (minVal - 30) / (10000 - 30) * 100;
+        progressBar.style.left = `${percentage}%`;
+        progressBar.style.width = `${(maxVal - minVal) / (10000 - 30) * 100}%`;
+        minPriceLabel.textContent = minVal;
+        maxPriceLabel.textContent = maxVal;
+        priceMinInput.value = minVal;
+        priceMaxInput.value = maxVal;
+
+        form.submit();
+    }
+</script>
+
+
+{% endblock %}

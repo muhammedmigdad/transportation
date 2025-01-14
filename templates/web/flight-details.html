@@ -6,51 +6,51 @@
 
 
 {% include 'includes/header.html' %}
+<section class="wrapper">
+    <div class="flex flex-col gap-6 p-6 pt-40 min-h-screen items-center">
+        <!-- Flight and Payment Details -->
+        <div id="content" class="bg-white shadow-md rounded-2xl p-6 w-full max-w-4xl">
+            <!-- Flight Details -->
+            <h2 class="text-[30px] font-bold mb-4">Flight Details</h2>
+            <div class="flex justify-between mb-4">
+                <span class="font-semibold">CCJ → DOH</span>
+                <span class="text-[17px] font-medium text-gray-600">4:25:00</span>
+            </div>
+            <div class="flex justify-between mb-2 mt-2">
+                <span class="font-semibold">Total Travels</span>
+                <span class="text-[17px] font-medium text-gray-600">4</span>
+            </div>
+            <p class="text-[20px] font-medium text-green-600 mb-4">Qatar Airways</p>
+            <p class="bg-green-100 text-center text-red-500 text-sm p-2 rounded-md mb-4">
+                You searched for CCJ but selected DOH as the arrival airport.
+            </p>
 
-<div class="flex flex-col gap-6 p-6 pt-40 min-h-screen items-center">
-    <!-- Flight and Payment Details -->
-    <div id="content" class="bg-white shadow-md rounded-2xl p-6 w-full max-w-4xl">
-        <!-- Flight Details -->
-        <h2 class="text-[30px] font-bold mb-4">Flight Details</h2>
-        <div class="flex justify-between mb-4">
-            <span class="font-semibold">CCJ → DOH</span>
-            <span class="text-[17px] font-medium text-gray-600">4:25:00</span>
+            <!-- Payment Summary -->
+            <h2 class="text-[30px] font-bold mb-4">Payment Details</h2>
+            <div class="flex flex-col gap-2 mb-4">
+                <div class="flex justify-between">
+                    <span class="text-[17px] font-medium">Item Total:</span>
+                    <span class="text-[17px] font-medium">₹29997.0</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-[17px] font-medium">Offer :</span>
+                    <span class="text-[17px] text-green-500 font-medium">-₹220.0</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-[17px] font-medium">Tax Charges:</span>
+                    <span class="text-[17px]  font-medium">₹2999.7</span>
+                </div>
+                <div class="flex justify-between font-bold border-t pt-2">
+                    <span class="text-[22px]  font-medium">To Pay:</span>
+                    <span class="text-[22px] text-red-500 font-medium">₹32996.7</span>
+                </div>
+            </div>
         </div>
-        <div class="flex justify-between mb-2 mt-2">
-            <span class="font-semibold">Total Travels</span>
-            <span class="text-[17px] font-medium text-gray-600">4</span>
-        </div>
-        <p class="text-[20px] font-medium text-green-600 mb-4">Qatar Airways</p>
-        <p class="bg-green-100 text-center text-red-500 text-sm p-2 rounded-md mb-4">
-            You searched for CCJ but selected DOH as the arrival airport.
-        </p>
-
-        <!-- Payment Summary -->
-        <h2 class="text-[30px] font-bold mb-4">Payment Details</h2>
-        <div class="flex flex-col gap-2 mb-4">
-            <div class="flex justify-between">
-                <span class="text-[17px] font-medium">Item Total:</span>
-                <span class="text-[17px] font-medium">₹29997.0</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-[17px] font-medium">Offer :</span>
-                <span class="text-[17px] text-green-500 font-medium">-₹220.0</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-[17px] font-medium">Tax Charges:</span>
-                <span class="text-[17px] font-medium">₹2999.7</span>
-            </div>
-            <div class="flex justify-between font-bold border-t pt-2">
-                <span class="text-[22px]  font-medium">To Pay:</span>
-                <span class="text-[22px] text-red-500 font-medium">₹32996.7</span>
-            </div>
+        <div class="flex justify-center items-center mt-6">
+            <button onclick="downloadPDF()" class="px-10 py-4 rounded-2xl bg-green-400 text-black text-[20px] md:text-[25px] font-semibold hover:bg-green-500 hover:text-white transition-transform duration-300">Download</button>
         </div>
     </div>
-    <div class="flex justify-center items-center mt-6">
-        <button onclick="downloadPDF()" class="px-10 py-4 rounded-2xl bg-green-400 text-black text-[20px] md:text-[25px] font-semibold hover:bg-green-500 hover:text-white transition-transform duration-300">Download</button>
-    </div>
-</div>
-
+</section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
 <script>
