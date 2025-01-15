@@ -457,96 +457,10 @@ def bus(request):
 
 
 @login_required(login_url='/login/')
-def flight_books(request, id):
-    user = request.user
-    customer = Customer.objects.get(user=user)
-    fligths = Flight.objects.get(id=id)
-    if CartBill.objects.filter(customer=customer).exists():
-        cartbill = CartBill.objects.get(customer=customer)
-        cartbill.item_total = float(fligths.price)  
-        cartbill.tax_charge = 1500.00 
-        cartbill.totel_amount = fligths.price + 1500  
-        cartbill.offer_amount = 0.00 
-        cartbill.save()
-    else:   
-        cartbill = CartBill.objects.create(
-            customer=customer,
-            item_total=float(fligths.price), 
-            tax_charge=1500.00, 
-            totel_amount=fligths.price + 1500,  
-            offer_amount=0.00  
-        )
-        cartbill.save()
-
-        
-        
-    if FlightBill.objects.filter(fligths=fligths).exists():
-        flightbill = FlightBill.objects.get(fligths=fligths)
-        flightbill.airline_name = fligths.airline.name 
-        flightbill.flight_code = fligths.flight_numbers
-        flightbill.departure_time = fligths.departure_time
-        flightbill.arrival_time = fligths.arrival_time
-        flightbill.duration = fligths.duration
-        flightbill.departure_airport = fligths.departure_code
-        flightbill.arrival_airport = fligths.arrival_code
-        flightbill.fligths.price
-        flightbill.save()
-    else:
-        flightbill = FlightBill.objects.create(
-            fligths=fligths,
-            airline_name=fligths.airline.name, 
-            flight_code=fligths.flight_numbers,
-            departure_time=fligths.departure_time,
-            arrival_time=fligths.arrival_time,
-            duration=fligths.duration,
-            departure_airport=fligths.departure_code,
-            arrival_airport=fligths.arrival_code,
-            baggage_allowance=' Per Traveller',
-            cabin_baggage='7 Kg',
-            check_in_baggage='20 Kg',
-            terminal='IN',
-            status='On-time'
-        )
+def flight_books(request):
 
 
-
-    cart_items = FlightBill.objects.get(fligths=fligths)
-    
-    
-    error_message = None
-    
-
-    if request.method == 'POST':
-        code = request.POST.get('code')
-        try:
-            offer = Offer.objects.get(code=code) 
-            
-            if offer.is_percentage:
-                discount = round((offer.discount / 100) * cartbill.item_total, 2)
-            else:
-                discount = offer.discount
-
-            discount = min(discount, cartbill.item_total)
-
-            cartbill.offer_amount = discount
-            cartbill.totel_amount = cartbill.item_total + cartbill.tax_charge - discount
-            cartbill.save()
-            success_message = 'Coupon code applied successfully!'
-        except Offer.DoesNotExist:
-            error_message = 'Invalid coupon code. Please try again.'
-
-
-    context = {
-        "cart_items": cart_items,
-        "fligths": fligths,
-        "flightbill": flightbill,
-        "cartbill": cartbill,
-        "error_message": error_message,
-        "success_message": success_message if 'success_message' in locals() else None,
-
-    }
-
-    return render(request, 'web/flight-books.html', context=context)
+    return render(request, 'web/flight-books.html')
 
 
 
@@ -790,7 +704,7 @@ def flight_class(request, id):
     )
 
     if request.method == 'POST':
-        adults = int(request.POST.get('adults', 0))
+        adults = int(request.POST.get('adults', 1))
         children = int(request.POST.get('children', 0))
         infants = int(request.POST.get('infants', 0))
         travel_class = request.POST.get('travel-class', 'economy')
@@ -829,7 +743,7 @@ def flight_class(request, id):
             cartbill.save()
 
         flightbill, created = FlightBill.objects.get_or_create(
-            fligths=flight,
+            fligths=flight,customer=customer,
             defaults={
                 'airline_name': flight.airline.name,  
                 'flight_code': flight.flight_numbers,
@@ -842,8 +756,8 @@ def flight_class(request, id):
                 'cabin_baggage': '7 Kg',
                 'check_in_baggage': '20 Kg',
                 'terminal': 'IN',
-                'status': 'On-time',
-                'price': travel_class_price  
+                'status': '70% On-time',
+                'travel_class_price': total_price     
             }
         )
 
@@ -855,7 +769,7 @@ def flight_class(request, id):
             flightbill.duration = flight.duration
             flightbill.departure_airport = flight.departure_code
             flightbill.arrival_airport = flight.arrival_code
-            flightbill.price = travel_class_price 
+            flightbill.price = total_price 
             flightbill.save()
 
         error_message = None
@@ -906,132 +820,7 @@ def flight_class(request, id):
 
 
 @login_required(login_url='/login/')
-def flight_details(request, id):
-    user = request.user
-    customer = Customer.objects.get(user=user)
+def flight_details(request):
 
-    try:
-        flight = Flight.objects.get(id=id)
-    except Flight.DoesNotExist:
-        return redirect('flight_not_found')
-    
-    
-    travel_class_prices = TravelClassPrice.objects.filter(
-        airline=flight.airline,
-    )
-
-    if request.method == 'POST':
-        adults = int(request.POST.get('adults', 0))
-        children = int(request.POST.get('children', 0))
-        infants = int(request.POST.get('infants', 0))
-        travel_class = request.POST.get('travel-class', 'economy')
-
-        try:
-            selected_class = travel_class_prices.get(travel_class=travel_class)
-            travel_class_price = float(selected_class.price)
-        except TravelClassPrice.DoesNotExist:
-            travel_class_price = 0.0
-
-        total_price = (adults + children + infants) * travel_class_price
-        tax_rate = 10.0
-        tax_charge = round((tax_rate / 100) * total_price, 2)
-
-        cartbill, created = CartBill.objects.get_or_create(
-            customer=customer,
-            defaults={
-                'item_total': total_price,
-                'tax_charge': tax_charge,
-                'totel_amount': total_price + tax_charge,
-                'offer_amount': 0.00,
-                'adults': adults,
-                'children': children,
-                'infants': infants,
-            }
-        )
-
-        if not created:
-            cartbill.item_total = total_price
-            cartbill.tax_charge = tax_charge
-            cartbill.totel_amount = total_price + tax_charge
-            cartbill.offer_amount = 0.00
-            cartbill.adults = adults
-            cartbill.children = children
-            cartbill.infants = infants
-            cartbill.save()
-
-        flightbill, created = FlightBill.objects.get_or_create(
-            fligths=flight,
-            defaults={
-                'airline_name': flight.airline.name,  
-                'flight_code': flight.flight_numbers,
-                'departure_time': flight.departure_time,
-                'arrival_time': flight.arrival_time,
-                'duration': flight.duration,
-                'departure_airport': flight.departure_code,
-                'arrival_airport': flight.arrival_code,
-                'baggage_allowance': 'Per Traveller',
-                'cabin_baggage': '7 Kg',
-                'check_in_baggage': '20 Kg',
-                'terminal': 'IN',
-                'status': 'On-time',
-                'price': travel_class_price  
-            }
-        )
-
-        if not created:
-            flightbill.airline_name = flight.airline.name
-            flightbill.flight_code = flight.flight_numbers
-            flightbill.departure_time = flight.departure_time
-            flightbill.arrival_time = flight.arrival_time
-            flightbill.duration = flight.duration
-            flightbill.departure_airport = flight.departure_code
-            flightbill.arrival_airport = flight.arrival_code
-            flightbill.price = travel_class_price 
-            flightbill.save()
-
-        error_message = None
-        success_message = None
-        code = request.POST.get('code')
-        if code:
-            try:
-                offer = Offer.objects.get(code=code)
-
-                if cartbill.offer_code == code:
-                    error_message = 'Coupon code has already been applied!'
-                else:
-                    if offer.is_percentage:
-                        discount = round((offer.discount / 100) * cartbill.item_total, 2)
-                    else:
-                        discount = offer.discount
-                    discount = min(discount, cartbill.item_total)
-
-                    cartbill.offer_amount = discount
-                    cartbill.totel_amount = cartbill.item_total + cartbill.tax_charge - discount
-                    cartbill.offer_code = code 
-                    cartbill.save()
-
-                    success_message = 'Coupon code applied successfully!'
-            except Offer.DoesNotExist:
-                error_message = 'Invalid coupon code. Please try again.'
-
-
-        context = {
-            "flight": flight,
-            "cartbill": cartbill,
-            "flightbill": flightbill,
-            "travel_class_prices": travel_class_prices,
-            "error_message": error_message,
-            "success_message": success_message,
-            "adults": adults,
-            "children": children,
-            "infants": infants,
-            "travel_class": travel_class,
-        }
-        return render(request, "web/flight-books.html", context)
-
-    context = {
-        "flight": flight,
-        "travel_class_prices": travel_class_prices,
-    }
-    return render(request, "web/flight-details.html", context)
+    return render(request, "web/flight-details.html")
 

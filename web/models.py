@@ -237,6 +237,7 @@ class Offer(models.Model):
     
     
 class FlightBill(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     fligths = models.ForeignKey(Flight, on_delete=models.CASCADE)
     airline_name = models.CharField(max_length=255)
     flight_code = models.CharField(max_length=50)
@@ -250,6 +251,7 @@ class FlightBill(models.Model):
     check_in_baggage = models.CharField(max_length=50)
     terminal = models.CharField(max_length=50, blank=True, null=True)
     status = models.CharField(max_length=100) 
+    travel_class_price = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.flight_code} - {self.airline_name}"

@@ -17,12 +17,12 @@ urlpatterns = [
    path("bus-search/", views.bus_search, name="bus-search"),
    path("flight-books/<int:id>/", views.flight_books, name="flight-books"),
    path("offer/", views.offer, name="offer"),
-   path("train-books/<int:id>/", views.train_books, name="train-books"),
+   path("train-books/", views.train_books, name="train-books"),
    path("bus-books/<int:id>/", views.bus_books, name="bus-books"),
    path("bus-seat/", views.bus_seat, name="bus-seat"),
    path("train-seat/", views.train_seat, name="train-seat"),
    path("flight-class/<int:id>/", views.flight_class, name="flight-class"),
-   path("flight-details/<int:id>/", views.flight_details, name="flight-details"),
+   path("flight-details/", views.flight_details, name="flight-details"),
    path('seat_selection/<int:id>/', views.seat_selection, name='seat_selection'),
    
 ]
