@@ -456,13 +456,6 @@ def bus(request):
     return render(request, 'web/bus.html', context=context)
 
 
-@login_required(login_url='/login/')
-def flight_books(request):
-
-
-    return render(request, 'web/flight-books.html')
-
-
 
 @login_required(login_url='/login/')
 def offer(request):
@@ -698,7 +691,6 @@ def flight_class(request, id):
     except Flight.DoesNotExist:
         return redirect('flight_not_found')
     
-    
     travel_class_prices = TravelClassPrice.objects.filter(
         airline=flight.airline,
     )
@@ -772,39 +764,12 @@ def flight_class(request, id):
             flightbill.price = total_price 
             flightbill.save()
 
-        error_message = None
-        success_message = None
-        code = request.POST.get('code')
-        if code:
-            try:
-                offer = Offer.objects.get(code=code)
-
-                if cartbill.offer_code == code:
-                    error_message = 'Coupon code has already been applied!'
-                else:
-                    if offer.is_percentage:
-                        discount = round((offer.discount / 100) * cartbill.item_total, 2)
-                    else:
-                        discount = offer.discount
-                    discount = min(discount, cartbill.item_total)
-
-                    cartbill.offer_amount = discount
-                    cartbill.totel_amount = cartbill.item_total + cartbill.tax_charge - discount
-                    cartbill.offer_code = code 
-                    cartbill.save()
-
-                    success_message = 'Coupon code applied successfully!'
-            except Offer.DoesNotExist:
-                error_message = 'Invalid coupon code. Please try again.'
-
 
         context = {
             "flight": flight,
             "cartbill": cartbill,
             "flightbill": flightbill,
             "travel_class_prices": travel_class_prices,
-            "error_message": error_message,
-            "success_message": success_message,
             "adults": adults,
             "children": children,
             "infants": infants,
@@ -813,11 +778,85 @@ def flight_class(request, id):
         return render(request, "web/flight-books.html", context)
 
     context = {
-        "flight": flight,
-        "travel_class_prices": travel_class_prices,
+            "flight": flight,
+            "cartbill": cartbill,
+            "flightbill": flightbill,
+            "travel_class_prices": travel_class_prices,
+            "adults": adults,
+            "children": children,
+            "infants": infants,
+            "travel_class": travel_class,
     }
     return render(request, "web/flight-class.html", context)
 
+@login_required(login_url='/login/')
+def flight_books(request, id):
+    user = request.user
+    customer = Customer.objects.get(user=user)
+
+    flight = Flight.objects.get(id=id)
+
+    travel_class_prices = TravelClassPrice.objects.filter(airline=flight.airline)
+
+    try:
+        selected_class = travel_class_prices.get()
+        travel_class_price = float(selected_class.price)
+    except TravelClassPrice.DoesNotExist:
+        travel_class_price = 0.0
+
+    total_price = travel_class_price
+    tax_rate = 10.0
+    tax_charge = round((tax_rate / 100) * total_price, 2)
+
+    cartbill, created = CartBill.objects.get_or_create(
+        customer=customer,
+        defaults={
+            'item_total': total_price,
+            'tax_charge': tax_charge,
+            'totel_amount': total_price + tax_charge,
+            'offer_amount': 0.00,
+        }
+    )
+    if not created:
+        cartbill.item_total = total_price
+        cartbill.tax_charge = tax_charge
+        cartbill.totel_amount = total_price + tax_charge
+        cartbill.offer_amount = 0.00
+        cartbill.save()
+    code = request.POST.get('code')
+    error_message = None
+    success_message = None
+
+    if code:
+        try:
+            offer = Offer.objects.get(code=code)
+
+            if cartbill.offer_code == code:
+                error_message = 'Coupon code has already been applied!'
+            else:
+                if offer.is_percentage:
+                    discount = round((offer.discount / 100) * cartbill.item_total, 2)
+                else:
+                    discount = offer.discount
+
+                discount = min(discount, cartbill.item_total)
+
+                cartbill.offer_amount = discount
+                cartbill.totel_amount = cartbill.item_total + cartbill.tax_charge - discount
+                cartbill.offer_code = code
+                cartbill.save()
+
+                success_message = 'Coupon code applied successfully!'
+        except Offer.DoesNotExist:
+            error_message = 'Invalid coupon code. Please try again.'
+
+    context = {
+        "cartbill": cartbill,
+        "error_message": error_message,
+        "success_message": success_message,
+        "flight": flight,
+    }
+    return render(request, "web/flight-books.html", context)
 
 @login_required(login_url='/login/')
 def flight_details(request):
